@@ -1,0 +1,8 @@
+name: Spells
+main: aor.spells.Spells
+version: 2.0
+commands:
+#   command_name:
+#      description:
+#      usage: |
+#           /command_name [arg1] [arg2] etc...
