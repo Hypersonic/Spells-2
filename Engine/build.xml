@@ -12,7 +12,7 @@
     <property name="source" value="1.6"/>
     <path id="Spells 2.0 Engine.classpath">
         <pathelement location="bin"/>
-        <pathelement location="../../Desktop/Bukkit Test Server/bukkit-1.2.5-R4.1-20120701.060055-19.jar"/>
+        <pathelement location="../lib/bukkit.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
