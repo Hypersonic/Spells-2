@@ -34,6 +34,12 @@
             <src path="src"/>
             <classpath refid="Spells 2.0 Engine.classpath"/>
         </javac>
+        <jar file="bin/spells.jar">
+            <fileset dir="bin">
+                <include name="**/*.class"/>
+            </fileset>
+            <fileset file="plugin.yml"/>
+        </jar>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects">
         <ant antfile="build.xml" dir="${Spells 2.0 Spells.location}" inheritAll="false" target="clean"/>
