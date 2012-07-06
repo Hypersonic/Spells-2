@@ -8,3 +8,6 @@
 
 # OSX crap
 .DS_Store
+
+# Ant Build Scripts
+build.xml
