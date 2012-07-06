@@ -35,7 +35,7 @@ public class Spells extends JavaPlugin{
 				spelldir.mkdir();
 				log.warning("no spells folder exists, so it was created.");
 			}
-			catch (Exception e) {
+			catch (Exception e) { //TODO: Make this error more specific in different cases, if they exist
 				log.warning("No spells folder exists and the plugin can't create it, because the directory is write protected");
 			}
 			return;
