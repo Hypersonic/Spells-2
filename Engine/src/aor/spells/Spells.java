@@ -31,12 +31,14 @@ public class Spells extends JavaPlugin{
 	private void loadSpells(){
 		File spelldir=new File("plugins/spells/");
 		if(!spelldir.exists()){
+			if(spelldir.canWrite()){
 				try {
-                    spelldir.mkdir();
-					log.warning("no spells folder exists, so it was created.");
-				} catch (Exception e) {
-				    log.warning("No spells folder exists and the plugin can't create it, because the directory is write protected");
-                }
+					spelldir.createNewFile();
+					log.warning("No spells folder exists, so it was created.");
+				} catch (IOException e) {}
+			}
+			else{
+				log.warning("No spells folder exists and the plugin can't create it, because the directory is write protected");
 			}
 			return;
 		}
