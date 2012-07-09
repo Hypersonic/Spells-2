@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
 
+import org.bukkit.entity.Player;
+
 import aor.spells.Spell;
 import aor.spells.SpellSet;
 
@@ -16,6 +18,14 @@ public class ExampleSpellSet extends SpellSet{
 		@Override
 		public String getDescription() {
 			return "";
+		}
+		@Override
+		public void cast() {
+			
+		}
+		@Override
+		public boolean checkRequirements(Player player) {
+			return false;
 		}
 	}
 
