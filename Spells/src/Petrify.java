@@ -12,8 +12,6 @@ import aor.spells.Spell;
  */
 public class Petrify extends Spell {
 
-	private static final int MAXDISTANCE = 200; // Sets the maximum distance.
-
 	public Petrify(){
 		
 	}
