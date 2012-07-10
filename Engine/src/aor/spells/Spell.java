@@ -16,9 +16,6 @@ public abstract class Spell implements Listener {
 		return true;
 	}
 	public void removeRequirements(Player player){}
-	public void requirementsNotMetMessage(Player player){
-		player.sendMessage(ChatColor.RED+"You don't don't meet the requirements to cast "+getName());
-	}
 	public static boolean inInventory(Player player, ArrayList<ItemStack> items){
 		return inInventory(player.getInventory(),items);
 	}

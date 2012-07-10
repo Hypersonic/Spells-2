@@ -123,7 +123,6 @@ public final class Spells extends JavaPlugin implements Listener{
 		final Player player=e.getPlayer();
 		if(!spell.checkRequirements(e.getPlayer())){
 			e.setCancelled(true);
-			spell.requirementsNotMetMessage(player);
 			return;
 		}
 		spell.removeRequirements(player);
