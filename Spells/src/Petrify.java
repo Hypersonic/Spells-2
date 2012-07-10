@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import aor.spells.Spell;
 
 /**
- * Causes mobs around the player to turn into stone pillars.
+ * Causes mobs around the player to turn into sand blocks.
  * @author Yulli
  */
 public class Petrify extends Spell {
@@ -24,7 +24,7 @@ public class Petrify extends Spell {
 	
 	@Override
 	public String getDescription() {
-		return "Causes mobs around the player to turn into stone pillars.";
+		return "Causes mobs around the player to turn into sand blocks.";
 	}
 
 	@Override
