@@ -31,12 +31,10 @@ public class Petrify extends Spell {
 		int petrifySize = 5;
 		if (player.getLevel() > 100) {
 			petrifySize = 30;
-			player.sendMessage("You feel the great arcane energies of your ancestors build up inside of you...");
+			player.sendMessage("A wave of power erupts from your body, freezing all who would dare approach you...");
 		} else if (player.getLevel() > 30) {
 			petrifySize = 10;
-			player.sendMessage("You feel a power building within you, ready to explode, and focus your mind...");
-		} else {
-			player.sendMessage("You feel a power awaken within you, and you prepare to strike...");
+			player.sendMessage("As the power of death rises through your body, you focus, channelling it forwards...");
 		}
         for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
             if (target instanceof LivingEntity) {
