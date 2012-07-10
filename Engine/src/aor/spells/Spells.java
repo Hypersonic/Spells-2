@@ -19,7 +19,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.PluginClassLoader;
 
-final public class Spells extends JavaPlugin implements Listener{
+public final class Spells extends JavaPlugin implements Listener{
 	public static final Logger log = Logger.getLogger("Minecraft");
 	private HashMap<Player,SpellBook> spellBooks=new HashMap<Player,SpellBook>();
 	private Spell[] spells;

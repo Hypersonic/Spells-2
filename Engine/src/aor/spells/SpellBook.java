@@ -1,6 +1,6 @@
 package aor.spells;
 
-public class SpellBook {
+public final class SpellBook {
 	private int current;
 	public int getCurrentSpellID() {
 		return current;
