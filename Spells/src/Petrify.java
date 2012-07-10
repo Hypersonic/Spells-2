@@ -40,8 +40,7 @@ public class Petrify extends Spell {
         for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
             Location jythionAPukkit = target.getLocation();
             target.remove();
-            player.getWorld().getBlockAt(jythionAPukkit).setType(Material.STONE);
-            player.getWorld().getBlockAt(jythionAPukkit).getRelative(0, -1, 0).setType(Material.STONE);
+            player.getWorld().getBlockAt(jythionAPukkit).setType(Material.SAND);
         }
 	}
 }
