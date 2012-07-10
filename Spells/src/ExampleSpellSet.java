@@ -20,12 +20,16 @@ public class ExampleSpellSet extends SpellSet{
 			return "";
 		}
 		@Override
-		public void cast() {
+		public void cast(Player player) {
 			
 		}
 		@Override
 		public boolean checkRequirements(Player player) {
 			return false;
+		}
+		@Override
+		public void removeRequirements(Player player) {
+			
 		}
 	}
 
