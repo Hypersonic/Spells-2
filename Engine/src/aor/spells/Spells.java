@@ -16,6 +16,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.PluginClassLoader;
 
@@ -127,5 +128,13 @@ public final class Spells extends JavaPlugin implements Listener{
 		}
 		spell.removeRequirements(player);
 		spell.cast(player);
+	}
+	@EventHandler(priority=EventPriority.MONITOR)
+	public void onLogin(PlayerLoginEvent e){
+		spellBooks.put(e.getPlayer(), new SpellBook());
+	}
+	@EventHandler(priority=EventPriority.MONITOR)
+	public void onLogoff(PlayerLoginEvent e){
+		spellBooks.remove(e.getPlayer());
 	}
 }
