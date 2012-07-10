@@ -39,9 +39,11 @@ public class Petrify extends Spell {
 			player.sendMessage("You feel a power awaken within you, and you prepare to strike...");
 		}
         for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
-            Location jythionAPukkit = target.getLocation();
-            target.remove();
-            player.getWorld().getBlockAt(jythionAPukkit).setType(Material.SAND);
+            if (target instanceof LivingEntity) {
+                Location jythionAPukkit = target.getLocation();
+                target.remove();
+                player.getWorld().getBlockAt(jythionAPukkit).setType(Material.SAND);
+            }
         }
 	}
 }
