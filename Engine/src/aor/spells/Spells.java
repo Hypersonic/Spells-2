@@ -37,7 +37,7 @@ public final class Spells extends JavaPlugin implements Listener{
 		if(!spelldir.exists()){
 			try {
 				spelldir.mkdir();
-				log.warning("no spells folder exists, so it was created.");
+				log.warning("No spells folder exists, so it was created.");
 			}
 			catch (Exception e) { //TODO: Make this error more specific in different cases, if they exist
 				log.warning("No spells folder exists and the plugin can't create it, because the directory is write protected.");
@@ -47,7 +47,7 @@ public final class Spells extends JavaPlugin implements Listener{
 		}
 		loadSpells(spelldir);
 		if(spells==null||spells.length==0){
-			log.warning("No Spells Loaded!");
+			log.warning("No Spells loaded!");
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
@@ -62,7 +62,7 @@ public final class Spells extends JavaPlugin implements Listener{
 			spellBooks.put(players[i], new SpellBook());
 		}
 		getServer().getPluginManager().registerEvents(this, this);
-		log.info("Spells 2.0 Enabled");
+		log.info("Spells 2.0 enabled");
 	}
 	private void loadSpells(File spelldir){
 		final ArrayList<Spell> loadedSpells=new ArrayList<Spell>();
