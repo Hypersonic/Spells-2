@@ -48,17 +48,20 @@ public class Flamethrower extends Spell {
         List<Block> seenBlocks = player.getLineOfSight(null, MAXDISTANCE);
         List<Block> burnBlocks = player.getLineOfSight(null, MAXDISTANCE);
         for (Block block : seenBlocks) {
-            burnBlocks.add(block.getRelative(BlockFace.UP));
-            burnBlocks.add(block.getRelative(BlockFace.DOWN));
-            burnBlocks.add(block.getRelative(BlockFace.NORTH));
-            burnBlocks.add(block.getRelative(BlockFace.EAST));
-            burnBlocks.add(block.getRelative(BlockFace.SOUTH));
-            burnBlocks.add(block.getRelative(BlockFace.WEST));
+            for (int i = 0; i < block.getLocation().distance(player.getLocation())/3; i++) {
+                burnBlocks.add(block.getRelative(BlockFace.UP, i));
+                burnBlocks.add(block.getRelative(BlockFace.DOWN, i));
+                burnBlocks.add(block.getRelative(BlockFace.NORTH, i));
+                burnBlocks.add(block.getRelative(BlockFace.EAST, i));
+                burnBlocks.add(block.getRelative(BlockFace.SOUTH, i));
+                burnBlocks.add(block.getRelative(BlockFace.WEST, i));
+            }
+            
         }
         Location playerLoc = player.getLocation();
         for (Block block : burnBlocks) {
             if (block.getType() == Material.AIR &&
-                    block.getLocation().distance(playerLoc) > 1.5 
+                    block.getLocation().distance(playerLoc) > 2 
                 ) {
                 block.setType(Material.FIRE);
             }
