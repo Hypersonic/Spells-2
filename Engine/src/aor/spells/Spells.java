@@ -33,7 +33,19 @@ public final class Spells extends JavaPlugin implements Listener{
 		log.info("Spells 2.0 Disabled");
 	}
 	public void onEnable() {
-		loadSpells();
+		final File spelldir=new File("plugins/spells/");
+		if(!spelldir.exists()){
+			try {
+				spelldir.mkdir();
+				log.warning("no spells folder exists, so it was created.");
+			}
+			catch (Exception e) { //TODO: Make this error more specific in different cases, if they exist
+				log.warning("No spells folder exists and the plugin can't create it, because the directory is write protected.");
+			}
+			Bukkit.getServer().getPluginManager().disablePlugin(this);
+			return;
+		}
+		loadSpells(spelldir);
 		if(spells==null||spells.length==0){
 			log.warning("No Spells Loaded!");
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
@@ -52,19 +64,8 @@ public final class Spells extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(this, this);
 		log.info("Spells 2.0 Enabled");
 	}
-	private void loadSpells(){
+	private void loadSpells(File spelldir){
 		final ArrayList<Spell> loadedSpells=new ArrayList<Spell>();
-		final File spelldir=new File("plugins/spells/");
-		if(!spelldir.exists()){
-			try {
-				spelldir.mkdir();
-				log.warning("no spells folder exists, so it was created.");
-			}
-			catch (Exception e) { //TODO: Make this error more specific in different cases, if they exist
-				log.warning("No spells folder exists and the plugin can't create it, because the directory is write protected.");
-			}
-			return;
-		}
 		final PluginClassLoader loader=(PluginClassLoader) Spells.class.getClassLoader();
 		try{
 			loader.addURL(spelldir.toURI().toURL());
@@ -99,6 +100,7 @@ public final class Spells extends JavaPlugin implements Listener{
 					t.printStackTrace();
 				}
 			}
+			else if(f.isDirectory())loadSpells(f);
 		}
 		spells=new Spell[loadedSpells.size()];
 		for(int i=0;i<spells.length;i++){
