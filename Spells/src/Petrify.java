@@ -1,10 +1,10 @@
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
-import org.bukkit.Material;
-import org.bukkit.Location;
 
 import aor.spells.Spell;
 
@@ -30,10 +30,10 @@ public class Petrify extends Spell {
 	@Override
 	public void cast(Player player) {
 		int petrifySize;
-		if (player.getLevel() > 100) {
+		if (player.getLevel() >= 100) {
 			petrifySize = 30;
 			player.sendMessage("A wave of power erupts from your body, freezing all who would dare approach you...");
-		} else if (player.getLevel() > 30) {
+		} else if (player.getLevel() >= 30) {
 			petrifySize = 10;
 			player.sendMessage("As the power of death rises through your body, you focus, channelling it forwards...");
 		} else{

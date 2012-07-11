@@ -35,10 +35,10 @@ public class Explosion extends Spell {
 	public void cast(Player player) {
 		final Block targetBlock=player.getTargetBlock(null, MAXDISTANCE);
 		int explosionSize = 5;
-		if (player.getLevel() > 100) {
+		if (player.getLevel() >= 100) {
 			explosionSize = 30;
 			player.sendMessage("You feel the great arcane energies of your ancestors build up inside of you...");
-		} else if (player.getLevel() > 30) {
+		} else if (player.getLevel() >= 30) {
 			explosionSize = 10;
 			player.sendMessage("You feel a power building within you, ready to explode, and focus on your target...");
 		} else {
