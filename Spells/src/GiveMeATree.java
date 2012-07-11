@@ -34,7 +34,7 @@ public class GiveMeATree extends Spell {
 	public void cast(Player player) {
         final Block target = player.getTargetBlock(null, MAXDISTANCE);
         final Block above = target.getRelative(BlockFace.UP);
-        if (target.getType().equals(Material.DIRT) && above.getType().equals(Material.AIR)) {
+        if ((target.getType().equals(Material.GRASS) || target.getType().equals(Material.DIRT)) && above.getType().equals(Material.AIR)) {
             target.getWorld().generateTree(above.getLocation(), TreeType.TREE);
         }
     }
