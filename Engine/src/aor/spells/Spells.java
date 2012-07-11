@@ -136,11 +136,11 @@ public final class Spells extends JavaPlugin implements Listener{
 		spell.cast(player);
 	}
 	@EventHandler(priority=EventPriority.MONITOR)
-	public void onLogin(PlayerLoginEvent e){
+	public void onLogin(PlayerJoinEvent e){
 		spellBooks.put(e.getPlayer(), new SpellBook());
 	}
 	@EventHandler(priority=EventPriority.MONITOR)
-	public void onLogoff(PlayerLoginEvent e){
+	public void onLogoff(PlayerQuitEvent e){
 		spellBooks.remove(e.getPlayer());
 	}
 }
