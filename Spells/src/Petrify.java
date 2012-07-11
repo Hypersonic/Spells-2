@@ -41,7 +41,7 @@ public class Petrify extends Spell {
 		}
         for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
             if (target instanceof Tameable) {
-                tamed = true;
+                tamed = target.isTamed();
             }
             if (target instanceof LivingEntity && !(target instanceof Player) && !(target instanceof EnderDragon) && !(tamed) {
                 Location entityLocation = target.getLocation();
