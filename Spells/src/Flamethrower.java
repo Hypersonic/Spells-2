@@ -54,7 +54,10 @@ public class Flamethrower extends Spell {
                 burnBlocks.add(block.getRelative(BlockFace.NORTH, i));
                 burnBlocks.add(block.getRelative(BlockFace.EAST, i));
                 burnBlocks.add(block.getRelative(BlockFace.SOUTH, i));
-                burnBlocks.add(block.getRelative(BlockFace.WEST, i));
+                burnBlocks.add(block.getRelative(BlockFace.NORTH_EAST, i));
+                burnBlocks.add(block.getRelative(BlockFace.NORTH_WEST, i));
+                burnBlocks.add(block.getRelative(BlockFace.SOUTH_EAST, i));
+                burnBlocks.add(block.getRelative(BlockFace.SOUTH_WEST, i));
             }
             
         }
