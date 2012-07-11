@@ -2,48 +2,57 @@ package aor.spells;
 
 import java.util.ArrayList;
 import java.lang.Runnable;
-
-import org.bukkit.Bukkit;
+import java.lang.reflect.Method;
 
 public class Runner implements Runnable{
-
+	private ArrayList<ArrayList<RunData>> data=new ArrayList<ArrayList<RunData>>();
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
-	/*public ArrayList<ArrayList<Object[]>> main=new ArrayList<ArrayList<Object[]>>(0);
-	public ArrayList<ArrayList<Integer>> spellId=new ArrayList<ArrayList<Integer>>(0);
-	private boolean stop=false;
-	public Runner(){}
-	public void run(){
-		for(int i=0;i<plugin.playersWithCooldowns.size();i++){
-			for(int i2=0;i2<plugin.spellList.size();i2++){
-				plugin.cooldowns.get(plugin.playersWithCooldowns.get(i))[i2]--;
-			}
-		}
-		if(main.size()==0){
-			main.add(new ArrayList<Object[]>(0));
-			spellId.add(new ArrayList<Integer>(0));
-		}
-		for(int i=0;i<main.get(0).size();i++){
-			plugin.spellList.get(spellId.get(0).get(i)).run(main.get(0).get(i));
-		}
-		main.remove(0);
-		spellId.remove(0);
-		if(stop){
-			while(main.size()>0){
-				for(int i=0;i<main.get(0).size();i++){
-					plugin.spellList.get(spellId.get(0).get(i)).run(main.get(0).get(i));
+		if(data.size()>0){
+			final ArrayList<RunData> currentData=data.remove(0);
+			if(currentData==null)return;
+			for(RunData data:currentData){
+				final Spell spell=data.getSpell();
+				final Method method=data.getMethod();
+				final Object[] params=data.getParams();
+				if(method==null){
+					spell.run(params);
 				}
-				main.remove(0);
+				else{
+					try {
+						method.invoke(spell, params);
+					} catch (Exception e) {}
+				}
 			}
-		}
-		else{
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin,this,1L);
 		}
 	}
 	public void stop(){
-		stop=true;
-	}*/
+		while(data.size()>0)run();
+	}
+	public void schedule(int millis,Spell spell,Method method, Object... args){
+		while(data.size()<millis){
+			data.add(null);
+		}
+		if(data.get(millis)==null)data.set(millis, new ArrayList<RunData>(1));
+		data.get(millis).add(new RunData(spell, method, args));
+	}
+	private class RunData{
+		private Spell spell;
+		private Method method;
+		private Object[] params;
+		public RunData(Spell spell,Method method,Object[] params){
+			this.spell=spell;
+			this.method=method;
+			this.params=params;
+		}
+		public Spell getSpell(){
+			return spell;
+		}
+		public Method getMethod(){
+			return method;
+		}
+		public Object[] getParams(){
+			return params;
+		}
+	}
 }

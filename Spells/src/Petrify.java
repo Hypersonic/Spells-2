@@ -1,10 +1,8 @@
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
-import org.bukkit.block.Block;
 import org.bukkit.Material;
 import org.bukkit.Location;
 
@@ -43,7 +41,7 @@ public class Petrify extends Spell {
 			player.sendMessage("");//TODO make a message
 		}
 		for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
-			if(!(target instanceof Creature) || target instanceof Tameable || target instanceof EnderDragon)continue;
+			if(!(target instanceof Creature) || (target instanceof Tameable && ((Tameable)target).isTamed()) || target instanceof EnderDragon)continue;
 			Location entityLocation = target.getLocation();
 			target.remove();
 			player.getWorld().getBlockAt(entityLocation).setType(Material.SAND);

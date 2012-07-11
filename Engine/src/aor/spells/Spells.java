@@ -24,8 +24,11 @@ public final class Spells extends JavaPlugin implements Listener{
 	public static final Logger log = Logger.getLogger("Minecraft");
 	private HashMap<Player,SpellBook> spellBooks=new HashMap<Player,SpellBook>();
 	private Spell[] spells;
+	static final Runner runner=new Runner();
 	static int numberOfSpells;
 	public void onDisable() {
+		Bukkit.getServer().getScheduler().cancelTasks(this);
+		runner.stop();
 		spells=null;
 		log.info("Spells 2.0 Disabled");
 	}
@@ -41,6 +44,7 @@ public final class Spells extends JavaPlugin implements Listener{
 			log.info(spell.getName());
 			getServer().getPluginManager().registerEvents(spell, this);
 		}
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, runner, 1, 1);
 		final Player[] players=Bukkit.getServer().getOnlinePlayers();
 		for(int i=0;i<players.length;i++){
 			spellBooks.put(players[i], new SpellBook());
