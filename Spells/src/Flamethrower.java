@@ -29,7 +29,7 @@ public class Flamethrower extends Spell {
 	
 	@Override
 	public String getDescription() {
-		return "Creates a line of fire in the direction that the player is looking at, for a few seconds";
+		return "Creates a line of fire in the direction that the player is looking at for a few seconds";
 	}
 	
     @Override
