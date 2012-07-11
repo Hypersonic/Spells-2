@@ -42,7 +42,7 @@ public class Petrify extends Spell {
                 tamed = true;
             }
             if (target instanceof LivingEntity && !(target instanceof Player) && !(target instanceof EnderDragon) && !tamed ) {
-                Location jythionAPukkit = target.getLocation();
+                Location entityLocation = target.getLocation();
                 target.remove();
                 player.getWorld().getBlockAt(entityLocation).setType(Material.SAND);
             }
