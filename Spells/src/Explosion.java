@@ -34,7 +34,7 @@ public class Explosion extends Spell {
 	@Override
 	public void cast(Player player) {
 		final Block targetBlock=player.getTargetBlock(null, MAXDISTANCE);
-		int explosionSize = 5;
+		int explosionSize;
 		if (player.getLevel() >= 100) {
 			explosionSize = 30;
 			player.sendMessage("You feel the great arcane energies of your ancestors build up inside of you...");
@@ -42,6 +42,7 @@ public class Explosion extends Spell {
 			explosionSize = 10;
 			player.sendMessage("You feel a power building within you, ready to explode, and focus on your target...");
 		} else {
+			explosionSize = 5;
 			player.sendMessage("You feel a power awaken within you, and you prepare to strike...");
 		}
 		targetBlock.getWorld().createExplosion(targetBlock.getLocation().getX(), targetBlock.getLocation().getY(), targetBlock.getLocation().getZ(), explosionSize, false);

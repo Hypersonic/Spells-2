@@ -1,15 +1,16 @@
 package aor.spells;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.lang.Runnable;
 import java.lang.reflect.Method;
 
 public class Runner implements Runnable{
-	private ArrayList<ArrayList<RunData>> data=new ArrayList<ArrayList<RunData>>();
+	private LinkedList<ArrayList<RunData>> data=new LinkedList<ArrayList<RunData>>();
 	@Override
 	public void run() {
 		if(data.size()>0){
-			final ArrayList<RunData> currentData=data.remove(0);
+			final ArrayList<RunData> currentData=data.remove();
 			if(currentData==null)return;
 			for(RunData data:currentData){
 				final Spell spell=data.getSpell();
@@ -21,7 +22,7 @@ public class Runner implements Runnable{
 				else{
 					try {
 						method.invoke(spell, params);
-					} catch (Exception e) {}
+					} catch (Exception e) {assert false:"FAILLL";}
 				}
 			}
 		}
