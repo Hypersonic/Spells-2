@@ -35,7 +35,7 @@ public class Petrify extends Spell {
 		if (player.getLevel() > 100) {
 			petrifySize = 30;
 			player.sendMessage("A wave of power erupts from your body, freezing all who would dare approach you...");
-		} else if (player.getLevel() > 30) {
+		} else if (player.getLevel() >= 30) {
 			petrifySize = 10;
 			player.sendMessage("As the power of death rises through your body, you focus, channelling it forwards...");
 		}
