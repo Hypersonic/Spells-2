@@ -39,7 +39,7 @@ public class Petrify extends Spell {
 			player.sendMessage("As the power of death rises through your body, you focus, channelling it forwards...");
 		}
         for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
-            boolean tamed = false;  
+            boolean tamed = true;
             if (target instanceof Tameable) {
                 Tameable animal = (Tameable)target;
                 tamed = animal.isTamed();
