@@ -1,8 +1,6 @@
 package aor.spells;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -17,19 +15,19 @@ public abstract class Spell implements Listener {
 		return true;
 	}
 	public void removeRequirements(Player player){}
-	public static boolean inInventory(Player player, ArrayList<ItemStack> items){
+	public static boolean inInventory(Player player, Iterable<ItemStack> items){
 		return inInventory(player.getInventory(),items);
 	}
-	public static boolean inInventory(PlayerInventory inventory, ArrayList<ItemStack> items){
+	public static boolean inInventory(PlayerInventory inventory, Iterable<ItemStack> items){
 		for(ItemStack item:items){
 			if(!inventory.contains(item))return false;
 		}
 		return true;
 	}
-	public static void removeFromInventory(Player player, ArrayList<ItemStack> items){
+	public static void removeFromInventory(Player player, Iterable<ItemStack> items){
 		removeFromInventory(player.getInventory(),items);
 	}
-	public static void removeFromInventory(PlayerInventory inventory, ArrayList<ItemStack> items){
+	public static void removeFromInventory(PlayerInventory inventory, Iterable<ItemStack> items){
 		for(ItemStack item:items){
 			inventory.remove(item);
 		}
