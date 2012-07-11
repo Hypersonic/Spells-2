@@ -1,6 +1,8 @@
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 import org.bukkit.block.Block;
 import org.bukkit.Material;
 import org.bukkit.Location;
@@ -42,7 +44,7 @@ public class Petrify extends Spell {
                 tamed = true;
             }
             if (target instanceof LivingEntity && !(target instanceof Player) && !(target instanceof EnderDragon) && !tamed ) {
-                Location jythionAPukkit = target.getLocation();
+                Location entityLocation = target.getLocation();
                 target.remove();
                 player.getWorld().getBlockAt(entityLocation).setType(Material.SAND);
             }
