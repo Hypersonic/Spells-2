@@ -31,7 +31,6 @@ public class Petrify extends Spell {
 	@Override
 	public void cast(Player player) {
 		int petrifySize = 5;
-        boolean tamed;
 		if (player.getLevel() >= 100) {
 			petrifySize = 30;
 			player.sendMessage("A wave of power erupts from your body, freezing all who would dare approach you...");
@@ -40,6 +39,7 @@ public class Petrify extends Spell {
 			player.sendMessage("As the power of death rises through your body, you focus, channelling it forwards...");
 		}
         for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
+            boolean tamed = false;  
             if (target instanceof Tameable) {
                 Tameable animal = (Tameable)target;
                 tamed = animal.isTamed();
