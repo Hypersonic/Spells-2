@@ -43,7 +43,7 @@ public class Petrify extends Spell {
             if (target instanceof Tameable) {
                 tamed = target.isTamed();
             }
-            if (target instanceof LivingEntity && !(target instanceof Player) && !(target instanceof EnderDragon) && !(tamed) {
+            if (target instanceof LivingEntity && !(target instanceof Player) && !(target instanceof EnderDragon) && !(tamed)) {
                 Location entityLocation = target.getLocation();
                 target.remove();
                 player.getWorld().getBlockAt(entityLocation).setType(Material.SAND);
