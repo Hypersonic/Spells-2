@@ -42,7 +42,7 @@ public class Petrify extends Spell {
         for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
             if (target instanceof Tameable) {
                 tamed = true;
-            }
+            } else { tamed = false; }
             if (target instanceof LivingEntity && !(target instanceof Player) && !(target instanceof EnderDragon) && !(tamed)) {
                 Location entityLocation = target.getLocation();
                 target.remove();
