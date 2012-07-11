@@ -4,15 +4,15 @@
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. -->
-<project basedir="." default="build" name="Spells 2.0 Engine">
+<project basedir="." default="build" name="Spells 2.0 Builtin Spells">
     <property environment="env"/>
-    <property name="Spells 2.0 Spells.location" value="../Spells"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.6"/>
     <property name="source" value="1.6"/>
-    <path id="Spells 2.0 Engine.classpath">
+    <path id="Spells 2.0 Builtin Spells.classpath">
         <pathelement location="bin"/>
         <pathelement location="../lib/bukkit.jar"/>
+        <pathelement location="../Engine/bin/spells.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -26,28 +26,16 @@
         <delete dir="bin"/>
     </target>
     <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project,build-refprojects" name="build"/>
+    <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="Spells 2.0 Engine.classpath"/>
+            <classpath refid="Spells 2.0 Builtin Spells.classpath"/>
         </javac>
-        <jar file="bin/spells.jar">
-            <fileset dir="bin">
-                <include name="**/*.class"/>
-            </fileset>
-            <fileset file="plugin.yml"/>
-        </jar>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects">
-        <ant antfile="build.xml" dir="${Spells 2.0 Spells.location}" inheritAll="false" target="clean"/>
-        <ant antfile="build.xml" dir="${Spells 2.0 Spells.location}" inheritAll="false" target="build">
-            <propertyset>
-                <propertyref name="build.compiler"/>
-            </propertyset>
-        </ant>
     </target>
     <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
         <copy todir="${ant.library.dir}">
