@@ -30,9 +30,9 @@ public class Runner implements Runnable{
 	public void stop(){
 		while(data.size()>0)run();
 	}
-	public void schedule(int millis,Spell spell,Method method, Object... args){
-		if(data.size()<millis){
-			while(data.size()<millis){
+		public void schedule(int millis,Spell spell,Method method, Object... args){
+		if(data.size()-1<millis){
+			while(data.size()-1<millis){
 				data.add(null);
 			}
 		}
