@@ -32,12 +32,10 @@ public class Petrify extends Spell {
         boolean tamed;
 		if (player.getLevel() > 100) {
 			petrifySize = 30;
-			player.sendMessage("You feel the great arcane energies of your ancestors build up inside of you...");
+			player.sendMessage("A wave of power erupts from your body, freezing all who would dare approach you...");
 		} else if (player.getLevel() > 30) {
 			petrifySize = 10;
-			player.sendMessage("You feel a power building within you, ready to explode, and focus your mind...");
-		} else {
-			player.sendMessage("You feel a power awaken within you, and you prepare to strike...");
+			player.sendMessage("As the power of death rises through your body, you focus, channelling it forwards...");
 		}
         for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
             if (target instanceof Tameable) {
@@ -46,7 +44,7 @@ public class Petrify extends Spell {
             if (target instanceof LivingEntity && !(target instanceof Player) && !(target instanceof EnderDragon) && !tamed ) {
                 Location jythionAPukkit = target.getLocation();
                 target.remove();
-                player.getWorld().getBlockAt(jythionAPukkit).setType(Material.SAND);
+                player.getWorld().getBlockAt(entityLocation).setType(Material.SAND);
             }
         }
 	}
