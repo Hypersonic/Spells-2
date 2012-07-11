@@ -1,6 +1,8 @@
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 import org.bukkit.block.Block;
 import org.bukkit.Material;
 import org.bukkit.Location;
