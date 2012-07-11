@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Flamethrower extends Spell {
 
-	private static final int MAXDISTANCE = 12; // Sets the maximum distance.
+	private static final int MAXDISTANCE = 12;
 
 	public Flamethrower(){
 		
