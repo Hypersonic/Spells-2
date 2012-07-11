@@ -35,8 +35,8 @@ public class Runner implements Runnable{
 			while(data.size()<millis){
 				data.add(null);
 			}
-			data.addLast(new ArrayList<RunData>(1));
 		}
+		if(data.get(millis)==null)data.set(millis, new ArrayList<RunData>(1));
 		data.get(millis).add(new RunData(spell, method, args));
 	}
 	private class RunData{
