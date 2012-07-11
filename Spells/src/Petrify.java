@@ -1,7 +1,9 @@
 import org.bukkit.entity.Creature;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 import org.bukkit.block.Block;
 import org.bukkit.Material;
 import org.bukkit.Location;
@@ -29,20 +31,22 @@ public class Petrify extends Spell {
 
 	@Override
 	public void cast(Player player) {
-		int petrifySize = 5;
+		int petrifySize;
 		if (player.getLevel() > 100) {
 			petrifySize = 30;
 			player.sendMessage("A wave of power erupts from your body, freezing all who would dare approach you...");
 		} else if (player.getLevel() > 30) {
 			petrifySize = 10;
 			player.sendMessage("As the power of death rises through your body, you focus, channelling it forwards...");
+		} else{
+			petrifySize=5;
+			player.sendMessage("");//TODO make a message
 		}
-        for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
-            if (target instanceof Creature) {
-                Location entityLocation = target.getLocation();
-                target.remove();
-                player.getWorld().getBlockAt(entityLocation).setType(Material.SAND);
-            }
-        }
+		for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
+			if(!(target instanceof Creature) || target instanceof Tameable || target instanceof EnderDragon)continue;
+			Location entityLocation = target.getLocation();
+			target.remove();
+			player.getWorld().getBlockAt(entityLocation).setType(Material.SAND);
+		}
 	}
 }
