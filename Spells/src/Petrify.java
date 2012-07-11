@@ -1,3 +1,4 @@
+import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -37,7 +38,7 @@ public class Petrify extends Spell {
 			player.sendMessage("As the power of death rises through your body, you focus, channelling it forwards...");
 		}
         for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
-            if (target instanceof LivingEntity) {
+            if (target instanceof Creature) {
                 Location entityLocation = target.getLocation();
                 target.remove();
                 player.getWorld().getBlockAt(entityLocation).setType(Material.SAND);

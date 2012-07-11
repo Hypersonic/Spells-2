@@ -1,5 +1,6 @@
 package aor.spells;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
@@ -32,4 +33,11 @@ public abstract class Spell implements Listener {
 			inventory.remove(item);
 		}
 	}
+	public void schedule(int millis,Method m,Object... args){
+		
+	}
+	public void schedule(int millis,Object... args){
+		
+	}
+	public void run(Object... args){}
 }
