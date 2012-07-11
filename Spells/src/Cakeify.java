@@ -32,6 +32,8 @@ public class Cakeify extends Spell {
 	@Override
 	public void cast(Player player) {
         final Block target = player.getTargetBlock(null, MAXDISTANCE);
-        target.setType(Material.CAKE_BLOCK);
+        if (target.getType() != Material.BEDROCK) {
+            target.setType(Material.CAKE_BLOCK);
+        }
     }
 }
