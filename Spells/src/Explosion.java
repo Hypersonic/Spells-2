@@ -1,9 +1,9 @@
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.Material;
 
 import aor.spells.Spell;
 
-import org.bukkit.entity.Player;
-import org.bukkit.block.Block;
-import org.bukkit.Material;
 /**
  * Causes an explosion at the block the player is pointing at.
  */
