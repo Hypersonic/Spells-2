@@ -16,7 +16,7 @@ import aor.spells.Spell;
 public class Waterjet extends Spell {
 
 	private static final int MAXDISTANCE = 16;
-    private Method ignite;
+    private Method douse;
 	public Waterjet(){
 		try {
 			douse = Waterjet.class.getMethod("douse", Player.class);
