@@ -1,11 +1,8 @@
-import aor.spells.Spell;
-
-import org.bukkit.entity.Player;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.Material;
 
-import java.util.List;
-
+import aor.spells.Spell;
 /**
  * Creates a cake where the player is looking at (YUM!)
  */
