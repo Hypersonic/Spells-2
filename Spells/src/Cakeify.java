@@ -24,14 +24,14 @@ public class Cakeify extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
-		return true;
+		if (player.getTargetBlock(null, MAXDISTANCE).getType() == Material.AIR) {
+            player.sendMessage("Nothing in range!");
+        } else return true;
 	}
 	@Override
 	public void cast(Player player) {
         final Block target = player.getTargetBlock(null, MAXDISTANCE);
-        if (target.getType() == Material.AIR) {
-            player.sendMessage("Nothing in range!");
-        } else if (target.getType() != Material.BEDROCK) {
+        if (target.getType() != Material.BEDROCK) {
             target.setType(Material.CAKE_BLOCK);
         }
     }
