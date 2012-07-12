@@ -9,6 +9,7 @@ import org.bukkit.World;
 
 /**
  * Grows a tree where the player is pointing
+ * @author Yulli
  */
 public class GiveMeATree extends Spell {
 
