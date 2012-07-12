@@ -1,13 +1,13 @@
-import aor.spells.Spell;
-
-import org.bukkit.entity.Player;
-import org.bukkit.block.Block;
-import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
-import org.bukkit.Location;
-
 import java.lang.reflect.Method;
 import java.util.List;
+
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.Location;
+import org.bukkit.Material;
+
+import aor.spells.Spell;
 
 /**
  * Creates a line of fire in the direction that the player is looking at for a few seconds
