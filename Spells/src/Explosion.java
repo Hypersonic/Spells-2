@@ -9,7 +9,7 @@ import aor.spells.Spell;
  */
 public class Explosion extends Spell {
 
-	private static final int MAXDISTANCE = 200; // Sets the maximum distance.
+	private static final int MAXDISTANCE = 200;
 
 	public Explosion(){
 		
