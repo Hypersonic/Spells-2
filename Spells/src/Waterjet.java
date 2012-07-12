@@ -45,7 +45,7 @@ public class Waterjet extends Spell {
         }
     }
 
-    public void ignite(Player player){ 
+    public void douse(Player player){ 
         List<Block> seenBlocks = player.getLineOfSight(null, MAXDISTANCE);
         List<Block> douseBlocks = player.getLineOfSight(null, MAXDISTANCE);
         for (Block block : seenBlocks) {
