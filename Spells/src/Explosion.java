@@ -45,6 +45,6 @@ public class Explosion extends Spell {
 			explosionSize = 2;
 			player.sendMessage("You feel a power awaken within you, and you prepare to strike...");
 		}
-		targetBlock.getWorld().createExplosion(targetBlock.getLocation().getX(), targetBlock.getLocation().getY(), targetBlock.getLocation().getZ(), explosionSize, false);
+		targetBlock.getWorld().createExplosion(targetBlock.getLocation(), explosionSize, false);
 	}
 }
