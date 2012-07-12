@@ -50,14 +50,9 @@ public class Waterjet extends Spell {
         List<Block> douseBlocks = player.getLineOfSight(null, MAXDISTANCE);
         for (Block block : seenBlocks) {
             for (int i = 0; i < block.getLocation().distance(player.getLocation())/3; i++) {
-                douseBlocks.add(block.getRelative(BlockFace.DOWN, i));
-                douseBlocks.add(block.getRelative(BlockFace.NORTH, i));
-                douseBlocks.add(block.getRelative(BlockFace.EAST, i));
-                douseBlocks.add(block.getRelative(BlockFace.SOUTH, i));
-                douseBlocks.add(block.getRelative(BlockFace.NORTH_EAST, i));
-                douseBlocks.add(block.getRelative(BlockFace.NORTH_WEST, i));
-                douseBlocks.add(block.getRelative(BlockFace.SOUTH_EAST, i));
-                douseBlocks.add(block.getRelative(BlockFace.SOUTH_WEST, i));
+                for (BlockFace face : BlockFace.values()){
+                    douseBlocks.add(block.getRelative(face, i));
+                }
             }
             
         }

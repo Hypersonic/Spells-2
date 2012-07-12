@@ -49,15 +49,9 @@ public class Flamethrower extends Spell {
         List<Block> burnBlocks = player.getLineOfSight(null, MAXDISTANCE);
         for (Block block : seenBlocks) {
             for (int i = 0; i < block.getLocation().distance(player.getLocation())/3; i++) {
-                burnBlocks.add(block.getRelative(BlockFace.UP, i));
-                burnBlocks.add(block.getRelative(BlockFace.DOWN, i));
-                burnBlocks.add(block.getRelative(BlockFace.NORTH, i));
-                burnBlocks.add(block.getRelative(BlockFace.EAST, i));
-                burnBlocks.add(block.getRelative(BlockFace.SOUTH, i));
-                burnBlocks.add(block.getRelative(BlockFace.NORTH_EAST, i));
-                burnBlocks.add(block.getRelative(BlockFace.NORTH_WEST, i));
-                burnBlocks.add(block.getRelative(BlockFace.SOUTH_EAST, i));
-                burnBlocks.add(block.getRelative(BlockFace.SOUTH_WEST, i));
+                for (BlockFace face : BlockFace.values()){
+                    burnBlocks.add(block.getRelative(face, i));
+                }
             }
             
         }
