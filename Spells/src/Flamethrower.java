@@ -19,7 +19,9 @@ public class Flamethrower extends Spell {
 	public Flamethrower(){
 		try {
 			ignite=Flamethrower.class.getMethod("ignite", Player.class);
-		} catch (Exception e) {assert false:"Who broke it???";}
+		} catch (Exception e) {
+            assert false:"Who broke it???";
+        }
 	}
 	
     @Override
