@@ -1,0 +1,48 @@
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import aor.spells.Spell;
+
+public class Invisibility extends Spell {
+		private Method undo;
+		public Invisibility(){
+			try {
+				undo=Invisibility.class.getMethod("undo", Player.class);
+			} catch (Exception e) {assert false:"Who broke it???";}
+		}
+		@Override
+		public String getName() {
+			return "ABC";
+		}
+		@Override
+		public String getDescription() {
+			return "None";
+		}
+		@Override
+		public void cast(Player player) {
+			for (Player players : Bukkit.getOnlinePlayers()){
+                players.hidePlayer(player);
+            }
+			schedule(600, undo, player);
+		}
+		@Override
+		public boolean checkRequirements(Player player) {
+			return inInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.BONE, 1)}));
+		}
+		@Override
+		public void removeRequirements(Player player) {
+			removeFromInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.BONE, 1)}));
+		}
+		public void undo(Player player){
+			for (Player players : Bukkit.getOnlinePlayers()) {
+                players.showPlayer(player);
+            }
+		}
+	}

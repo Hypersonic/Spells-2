@@ -11,6 +11,9 @@ public abstract class Spell implements Listener {
 	public abstract String getName();
 	public abstract String getDescription();	
 	public abstract void cast(Player player);
+	public String getGroup(){
+		return "";
+	}
 	public boolean checkRequirements(Player player){
 		return true;
 	}
@@ -32,11 +35,11 @@ public abstract class Spell implements Listener {
 			inventory.remove(item);
 		}
 	}
-	public void schedule(int millis,Method m,Object... args){
-		runner.schedule(millis, this, m, args);
+	public void schedule(int ticks,Method m,Object... args){
+		runner.schedule(ticks, this, m, args);
 	}
-	public void schedule(int millis,Object... args){
-		runner.schedule(millis, this, null, args);
+	public void schedule(int ticks,Object... args){
+		runner.schedule(ticks, this, null, args);
 	}
 	public void run(Object... args){}
 }
