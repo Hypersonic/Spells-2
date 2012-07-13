@@ -26,7 +26,10 @@ public class Cakeify extends Spell {
 	public boolean checkRequirements(Player player){
 		if (player.getTargetBlock(null, MAXDISTANCE).getType() == Material.AIR) {
             player.sendMessage("Nothing in range!");
-        } else return true;
+            return false;
+        } else {
+            return true;
+        }
 	}
 	@Override
 	public void cast(Player player) {
