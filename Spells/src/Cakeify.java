@@ -27,6 +27,8 @@ public class Cakeify extends Spell {
 		if (player.getTargetBlock(null, MAXDISTANCE).getType() == Material.AIR) {
             player.sendMessage("Nothing in range!");
             return false;
+        } else if (player.getTargetBlock(null, MAXDISTANCE).getType() == Material.BEDROCK) {
+            return false;
         } else {
             return true;
         }
@@ -34,8 +36,6 @@ public class Cakeify extends Spell {
 	@Override
 	public void cast(Player player) {
         final Block target = player.getTargetBlock(null, MAXDISTANCE);
-        if (target.getType() != Material.BEDROCK) {
-            target.setType(Material.CAKE_BLOCK);
-        }
+        target.setType(Material.CAKE_BLOCK);
     }
 }
