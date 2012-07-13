@@ -11,8 +11,7 @@ public class Explosion extends Spell {
 
 	private static final int MAXDISTANCE = 200;
 
-	public Explosion(){
-		
+	public Explosion(){	
 	}
 	@Override
 	public String getName() {
@@ -25,7 +24,7 @@ public class Explosion extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
-		if(player.getTargetBlock(null, MAXDISTANCE).getType().equals(Material.AIR)){
+		if (player.getTargetBlock(null, MAXDISTANCE).getType().equals(Material.AIR)){
 			player.sendMessage("Could not cast, you're not pointing at anything!");
 			return false;
 		}
