@@ -110,19 +110,22 @@ public class SpellGroup implements Collection<Spell>, Iterable<Spell>{
 		if(group.startsWith(getName()+"."))group=group.replaceFirst(getName()+".", "");
 		Scanner s=new Scanner(group);
 		s.useDelimiter(".");
-		String str=s.next();
-		if(str.equals("")){
-			spells.add(spell);
-		}
-		else{
-			addChild(str);
-			for(SpellGroup child:children){
-				if(child.getName().equals(str)){
-					child.place(spell, group);
-					break;
+		if(s.hasNext()){
+			String str=s.next();
+			if(str.equals("")){
+				spells.add(spell);
+			}
+			else{
+				addChild(str);
+				for(SpellGroup child:children){
+					if(child.getName().equals(str)){
+						child.place(spell, group);
+						break;
+					}
 				}
 			}
 		}
+		else spells.add(spell);
 	}
 	public int groupAndSpellSize() {
 		return spells.size()+children.size();
