@@ -39,7 +39,7 @@ public class Petrify extends Spell {
 			player.sendMessage("As the power of death rises through your body, you focus, channelling it forwards...");
 		} else{
 			petrifySize = 5;
-			player.sendMessage("Yo homey");//TODO make a message
+			player.sendMessage("Energy flows through you, expanding into an orb around your body...");
 		}
 		for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
 			if (target instanceof Slime || target instanceof Creature && !(target instanceof Tameable && ((Tameable)target).isTamed()) && !(target instanceof EnderDragon)) {
