@@ -4,6 +4,7 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Slime;
 import org.bukkit.entity.Tameable;
 
 import aor.spells.Spell;
@@ -37,14 +38,15 @@ public class Petrify extends Spell {
 			petrifySize = 10;
 			player.sendMessage("As the power of death rises through your body, you focus, channelling it forwards...");
 		} else{
-			petrifySize=5;
-			player.sendMessage("");//TODO make a message
+			petrifySize = 5;
+			player.sendMessage("Energy flows through you, expanding into an orb around your body...");
 		}
 		for (Entity target : player.getNearbyEntities(petrifySize/2, petrifySize/2, petrifySize/2)) {
-			if(!(target instanceof Creature) || (target instanceof Tameable && ((Tameable)target).isTamed()) || target instanceof EnderDragon)continue;
-			Location entityLocation = target.getLocation();
-			target.remove();
-			player.getWorld().getBlockAt(entityLocation).setType(Material.SAND);
+			if (target instanceof Slime || target instanceof Creature && !(target instanceof Tameable && ((Tameable)target).isTamed()) && !(target instanceof EnderDragon)) {
+                Location entityLocation = target.getLocation();
+                target.remove();
+                player.getWorld().getBlockAt(entityLocation).setType(Material.SAND);
+            }
 		}
 	}
 }

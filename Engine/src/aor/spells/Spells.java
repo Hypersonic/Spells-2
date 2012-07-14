@@ -17,7 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.PluginClassLoader;
@@ -38,7 +37,7 @@ public final class Spells extends JavaPlugin implements Listener{
 		if(!spelldir.exists()){
 			try {
 				spelldir.mkdir();
-				log.warning("no spells folder exists, so it was created.");
+				log.warning("No spells folder exists, so it was created.");
 			}
 			catch (Exception e) { //TODO: Make this error more specific in different cases, if they exist
 				log.warning("No spells folder exists and the plugin can't create it, because the directory is write protected.");
@@ -62,7 +61,7 @@ public final class Spells extends JavaPlugin implements Listener{
 			spellBooks.put(players[i], new SpellBook(spells));
 		}
 		getServer().getPluginManager().registerEvents(this, this);
-		log.info("Spells 2.0 Enabled");
+		log.info("Spells 2.0 enabled");
 	}
 	private void loadSpells(File spelldir){
 		final ArrayList<Spell> loadedSpells=new ArrayList<Spell>();
@@ -112,21 +111,28 @@ public final class Spells extends JavaPlugin implements Listener{
 		if(player.getItemInHand().getType()==Material.GOLD_HOE){
 			final Action action=e.getAction();
 			final SpellBook book=spellBooks.get(player);
-			final Object SpellOrGroup=book.getCurrentSpellOrGroup();
-			if(SpellOrGroup instanceof Spell){
-				final Spell spell=(Spell)SpellOrGroup;
+			Object spellOrGroup=book.getCurrentSpellOrGroup();
+			if(spellOrGroup instanceof Spell){
+				Spell spell=(Spell)spellOrGroup;
 				if(action.equals(Action.LEFT_CLICK_AIR)||action.equals(Action.LEFT_CLICK_BLOCK)){
 					e.setCancelled(true);
 					Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
 				}
 				else if(action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)){
 					e.setCancelled(true);
-					spellBooks.get(player).nextSpell();
-					player.sendMessage(ChatColor.BLUE+spell.getName()+" selected");
+					book.nextSpell();
+					spellOrGroup=book.getCurrentSpellOrGroup();
+					if(spellOrGroup instanceof Spell){
+						player.sendMessage(ChatColor.BLUE+((Spell)spellOrGroup).getName()+" selected");
+					}
+					else if(spellOrGroup instanceof SpellGroup){
+						player.sendMessage(ChatColor.BLUE+((SpellGroup)spellOrGroup).getName()+" selected");
+					}
+					else assert false:"that's strange";
 				}
 			}
-			else if(SpellOrGroup instanceof SpellGroup){
-				final SpellGroup group=(SpellGroup)SpellOrGroup;
+			else if(spellOrGroup instanceof SpellGroup){
+				final SpellGroup group=(SpellGroup)spellOrGroup;
 				if(action.equals(Action.LEFT_CLICK_AIR)||action.equals(Action.LEFT_CLICK_BLOCK)){
 					e.setCancelled(true);
 					book.goInGroup();
