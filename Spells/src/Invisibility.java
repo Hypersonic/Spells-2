@@ -19,11 +19,11 @@ public class Invisibility extends Spell {
 		}
 		@Override
 		public String getName() {
-			return "ABC";
+			return "Invisibility";
 		}
 		@Override
 		public String getDescription() {
-			return "None";
+			return "Makes you temporarily invisible to other players";
 		}
 		@Override
 		public void cast(Player player) {
