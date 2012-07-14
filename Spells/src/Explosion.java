@@ -3,6 +3,7 @@ import aor.spells.Spell;
 
 import org.bukkit.entity.Player;
 import org.bukkit.block.Block;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 /**
  * Causes an explosion at the block the player is pointing at.
@@ -22,6 +23,10 @@ public class Explosion extends Spell {
 	@Override
 	public String getDescription() {
 		return "Creates an explosion at the block the player is looking at";
+	}
+	@Override
+	public String getGroup(){
+		return "spells.test.";
 	}
 	@Override
 	public boolean checkRequirements(Player player){
