@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class SpellGroup implements Collection<Spell>, Iterable<Spell>{
 	private ArrayList<SpellGroup> children=new ArrayList<SpellGroup>();
@@ -107,11 +108,14 @@ public class SpellGroup implements Collection<Spell>, Iterable<Spell>{
 		return result;
 	}
 	public void place(Spell spell,String group) {
-		if(group.startsWith(getName()+"."))group=group.replaceFirst(getName()+".", "");
+		if(group.startsWith("."))group.replaceFirst(Pattern.quote("."), "");
+		if(group.startsWith(getName()))group=group.replaceFirst(getName(), "");
 		Scanner s=new Scanner(group);
-		s.useDelimiter(".");
+		s.useDelimiter(Pattern.quote("."));
+		System.out.println(spell.getName()+" ("+group+")");
 		if(s.hasNext()){
 			String str=s.next();
+			System.out.println("ABC"+str);
 			if(str.equals("")){
 				spells.add(spell);
 			}
@@ -125,7 +129,10 @@ public class SpellGroup implements Collection<Spell>, Iterable<Spell>{
 				}
 			}
 		}
-		else spells.add(spell);
+		else {
+			System.out.println("??? "+group);
+			spells.add(spell);
+		}
 	}
 	public int groupAndSpellSize() {
 		return spells.size()+children.size();
