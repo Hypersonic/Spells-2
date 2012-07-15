@@ -35,7 +35,7 @@ public class Decoy extends Spell {
     }
     @Override
     public void cast(Player player) {
-        Location spawnLoc = player.getTargetBlock(null, MAXDISTANCE).getLocation().add(0,1,0);
+        Location spawnLoc = player.getTargetBlock(null, MAXDISTANCE).getLocation().add(0,1,0); //Get the block the player is looking at, offset one up so we spawn the mob on top of it
         LivingEntity spawnedCow = player.getWorld().spawnCreature(spawnLoc, EntityType.COW);
         for (Entity nearbyEntity : spawnedCow.getNearbyEntities(RADIUS, RADIUS, RADIUS)) {
             if (nearbyEntity instanceof Creature) {
@@ -43,7 +43,5 @@ public class Decoy extends Spell {
             }
         }
     }
-
-
 
 }
