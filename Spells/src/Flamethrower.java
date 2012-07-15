@@ -14,9 +14,12 @@ import aor.spells.Spell;
  */
 public class Flamethrower extends Spell {
 
-	private static final int MAXDISTANCE = 16;
+	private static final int MAXDISTANCE = 12;
+    private static final double SPREADMULTIPLIER = 3.5; // Multiplier for the distance to spread as it gets farther from the player
     private Method ignite;
-	public Flamethrower(){
+	
+    
+    public Flamethrower(){
 		try {
 			ignite=Flamethrower.class.getMethod("ignite", Player.class);
 		} catch (Exception e) {
@@ -41,7 +44,7 @@ public class Flamethrower extends Spell {
 	
     @Override
 	public void cast(Player player) {
-	    for (int i = 0; i < 60; i++) {
+	    for (int i = 0; i < 40; i++) {
             schedule(i, ignite, player);
         }
     }
@@ -50,7 +53,7 @@ public class Flamethrower extends Spell {
         List<Block> seenBlocks = player.getLineOfSight(null, MAXDISTANCE);
         List<Block> burnBlocks = player.getLineOfSight(null, MAXDISTANCE);
         for (Block block : seenBlocks) {
-            for (int i = 0; i < block.getLocation().distance(player.getLocation())/3; i++) {
+            for (int i = 0; i < block.getLocation().distance(player.getLocation())/SPREADMULTIPLIER; i++) {
                 for (BlockFace face : BlockFace.values()){
                     burnBlocks.add(block.getRelative(face, i));
                 }
@@ -60,7 +63,8 @@ public class Flamethrower extends Spell {
         Location playerLoc = player.getLocation();
         for (Block block : burnBlocks) {
             if (block.getType() == Material.AIR &&
-                    block.getLocation().distance(playerLoc) > 2 
+                    block.getLocation().distance(playerLoc) > 2 &&
+                    !(block.getLocation().distance(playerLoc) > MAXDISTANCE)
                 ) {
                 block.setType(Material.FIRE);
             }
