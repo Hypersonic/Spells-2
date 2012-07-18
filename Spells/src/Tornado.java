@@ -1,9 +1,12 @@
 import java.util.List;
+import java.lang.Math;
 import java.lang.reflect.Method;
 
 import org.bukkit.util.Vector;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.Material;
+import org.bukkit.Location;
 
 import aor.spells.Spell;
 
@@ -11,6 +14,8 @@ import aor.spells.Spell;
 public class Tornado extends Spell {
 
     private Method cast;
+    
+    private static final double DILUTEAMOUNT = 10.0;
     public Tornado() {
         try {
 			cast=Tornado.class.getMethod("cast", Player.class);
@@ -27,8 +32,9 @@ public class Tornado extends Spell {
     }
 
     public void cast(Player player) {
-    
-        List<Entity> nearbyEntities = player.getNearbyEntities(5,5,5);
+        
+        boolean castAgain = false;
+        List<Entity> nearbyEntities = player.getNearbyEntities(10,50,10);
         for (Entity entity : nearbyEntities) {
             // Y is actually height in minecraft, so the value we'll be calling Y is really Z
             double playerX = player.getLocation().getX();
@@ -36,31 +42,26 @@ public class Tornado extends Spell {
             double entityX = entity.getLocation().getX();
             double entityY = entity.getLocation().getZ();
             
-            double slope = (playerY - entityY) / (playerX - entityX);   //Rise over run :D
-            /*
-            // To get a line perpendicular to a given line with the formula: y = mx + b,
-            // The formula will be: y = -x/m + c
-            // B and C are any number.
-            
             // if we increase the x value we're using by the difference in the y value... maybe
-            double Ydiff = 5; //playerY - entityY;
-            double newX = entityX + Ydiff;
+            double Ydiff = entityY - playerY;
+            double Xdiff = entityX - playerX;
 
-            double newY = playerY; //((-1 * newX) / slope / entityY) + entityY;
+            double newX = Ydiff / DILUTEAMOUNT; // -1 * (Ydiff / 4);
+            double newY = Xdiff / DILUTEAMOUNT; // -1 * (Xdiff / 4);//newX * ((-1 / slope) / 10);
 
             // and now create the vector and apply the force, hopefully.
-            Vector force = new Vector(newX - entityX, entity.getLocation().getY(), newY - entityY);
-            */
-            Vector force = new Vector(entityX - playerX, 0, entityY - playerY);
-            entity.setVelocity(entity.getVelocity().add(force));
-            
+            Vector force = new Vector(newX, 0.5, newY);
+
+            //entity.setVelocity(entity.getVelocity().add(force));
+            entity.setVelocity(force);
+
+            entity.getLocation().getBlock().getRelative(0,-1,0).setType(Material.DIAMOND_BLOCK);
             
             player.sendMessage(force.toString());
-            player.sendMessage("Slope: " + slope);
-            schedule(2, cast, player);
+            castAgain = true;
         }
-    
+        if (castAgain) {
+            schedule(5, cast, player);
+        }
     }
-
-
 }
