@@ -73,7 +73,7 @@ public class Tornado extends Spell {
             double rotatedX = Math.cos(theta) * RADIUS;
             double rotatedY = Math.sin(theta) * RADIUS;
 
-            Vector force = new Vector(rotatedX, 0.5, rotatedY);
+            Vector force = new Vector(rotatedX, Math.random(), rotatedY);
             //entity.setVelocity(entity.getVelocity().add(force));
             entity.setVelocity(force);
 
