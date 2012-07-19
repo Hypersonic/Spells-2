@@ -16,7 +16,7 @@ public class Tornado extends Spell {
     private Method cast;
     
     private static final double DILUTEAMOUNT = 10.0;
-    private static final double RADIUS = 1.0;
+    private static final double RADIUS = 0.5;
     public Tornado() {
         try {
 			cast=Tornado.class.getMethod("cast", Player.class);
@@ -61,16 +61,25 @@ public class Tornado extends Spell {
             double distance = player.getLocation().distance(entity.getLocation());
             double theta = Math.acos(Xdiff / distance);
             
-            theta -= Math.PI / 2; // Decrement by 90 degrees (or Pi/2 radians)
-            
+            //theta -= Math.PI / 2; // Decrement by 90 degrees (or Pi/2 radians)
+            if (theta > (3 / 2) * Math.PI) {
+                theta -= Math.PI / 2;
+            } else if (theta < Math.PI / 2) {
+                theta += Math.PI / 2;
+            } else {
+                theta += Math.PI / 2;
+            }
+
             double rotatedX = Math.cos(theta) * RADIUS;
             double rotatedY = Math.sin(theta) * RADIUS;
 
             Vector force = new Vector(rotatedX, 0.5, rotatedY);
+            //entity.setVelocity(entity.getVelocity().add(force));
             entity.setVelocity(force);
 
-            //entity.getLocation().getBlock().getRelative(0,-1,0).setType(Material.DIAMOND_BLOCK);
+            entity.getLocation().getBlock().getRelative(0,-1,0).setType(Material.DIAMOND_BLOCK);
             
+            player.sendMessage("Theta: " + theta);
             player.sendMessage(force.toString());
             castAgain = true;
         }
