@@ -17,7 +17,7 @@ public class Tornado extends Spell {
     
     private static final double DILUTEAMOUNT = 10.0;
     private static final double MAGNITUDE = 0.5;
-    private static final double RADUS = 10;
+    private static final double RADIUS = 10;
     public Tornado() {
         try {
 			cast=Tornado.class.getMethod("cast", Player.class);
