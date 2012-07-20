@@ -49,7 +49,7 @@ public class Tornado extends Spell {
             double Xdiff = entityX - playerX;
             
             double distance = player.getLocation().distance(entity.getLocation());
-            double theta = Math.acos(Xdiff / distance); // Use the arc cosine of the X difference to get the relative theta
+            double theta = Math.acos(Xdiff / distance); // Use the arc cosine of the X difference to get the relative theta (we have to normalize the X over the distance so it is the value on the unit circle)
             
             // We don't want the theta to go over 2Pi, because then it starts acting funky. Yeah, I know.
             if (theta > (3 / 2) * Math.PI) {
