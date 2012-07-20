@@ -16,7 +16,8 @@ public class Tornado extends Spell {
     private Method cast;
     
     private static final double DILUTEAMOUNT = 10.0;
-    private static final double RADIUS = 0.5;
+    private static final double MAGNITUDE = 0.5;
+    private static final double RADUS = 10;
     public Tornado() {
         try {
 			cast=Tornado.class.getMethod("cast", Player.class);
@@ -35,7 +36,7 @@ public class Tornado extends Spell {
     public void cast(Player player) {
         
         boolean castAgain = false; // We only want to be casting it one additional time, so lets use a variable
-        List<Entity> nearbyEntities = player.getNearbyEntities(10,50,10);
+        List<Entity> nearbyEntities = player.getNearbyEntities(RADIUS, RADIUS * 5, RADIUS);
         for (Entity entity : nearbyEntities) {
             // Y is actually height in minecraft, so the value we'll be calling Y is really Z
             double playerX = player.getLocation().getX();
@@ -59,8 +60,8 @@ public class Tornado extends Spell {
                 theta += Math.PI / 2;
             }
 
-            double rotatedX = Math.cos(theta) * RADIUS;
-            double rotatedY = Math.sin(theta) * RADIUS;
+            double rotatedX = Math.cos(theta) * MAGNITUDE;
+            double rotatedY = Math.sin(theta) * MAGNITUDE;
             
             // Slight random offsets.
             double Yoffset = (Math.random() - 0.5);
