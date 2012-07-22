@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 import java.lang.Math;
 import java.lang.reflect.Method;
 
@@ -7,6 +8,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.Material;
 import org.bukkit.Location;
+import org.bukkit.Effect;
 
 import aor.spells.Spell;
 
@@ -71,7 +73,21 @@ public class Tornado extends Spell {
             Vector force = new Vector(rotatedX + Xoffset, HeightOffset, rotatedY + Yoffset); // Our actual force that acts on the entity, uses a random offset
             //entity.setVelocity(entity.getVelocity().add(force)); // apply the velocity
             entity.setVelocity(force);
-
+            
+            Location entityLoc = entity.getLocation();
+            ArrayList<Location> smokeLocs = new ArrayList<Location>();
+            for (double i = 0; i < 10; i += 0.1) {
+                smokeLocs.add(entityLoc.add(i,0,0));
+                smokeLocs.add(entityLoc.add(i,i,0));
+                smokeLocs.add(entityLoc.add(i,0,i));
+                smokeLocs.add(entityLoc.add(0,i,i));
+                smokeLocs.add(entityLoc.add(i,i,i));
+                smokeLocs.add(entityLoc.add(0,i,0));
+                smokeLocs.add(entityLoc.add(0,0,i));
+            }
+            for (Location loc : smokeLocs) {
+                entity.getWorld().playEffect(loc, Effect.SMOKE, 0);
+            }
             //entity.getLocation().getBlock().getRelative(0,-1,0).setType(Material.DIAMOND_BLOCK); //Trace the path with diamond blocks
             
             //player.sendMessage("Theta: " + theta);
