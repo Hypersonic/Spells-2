@@ -16,7 +16,7 @@ public class GravityField extends Spell {
 
     private Method AttractEntities;
     
-    private static final double RADIUS = 1000;
+    private static final double RADIUS = 100;
     
     public GravityField() {
         try {
