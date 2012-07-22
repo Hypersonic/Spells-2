@@ -74,20 +74,20 @@ public class Tornado extends Spell {
             //entity.setVelocity(entity.getVelocity().add(force)); // apply the velocity
             entity.setVelocity(force);
             
-            Location entityLoc = entity.getLocation();
-            ArrayList<Location> smokeLocs = new ArrayList<Location>();
-            for (double i = 0; i < 10; i += 0.1) {
-                smokeLocs.add(entityLoc.add(i,0,0));
-                smokeLocs.add(entityLoc.add(i,i,0));
-                smokeLocs.add(entityLoc.add(i,0,i));
-                smokeLocs.add(entityLoc.add(0,i,i));
-                smokeLocs.add(entityLoc.add(i,i,i));
-                smokeLocs.add(entityLoc.add(0,i,0));
-                smokeLocs.add(entityLoc.add(0,0,i));
-            }
-            for (Location loc : smokeLocs) {
-                entity.getWorld().playEffect(loc, Effect.SMOKE, 0);
-            }
+            //Location entityLoc = entity.getLocation();
+            //ArrayList<Location> smokeLocs = new ArrayList<Location>();
+            //for (double i = 0; i < 10; i += 0.1) {
+                //smokeLocs.add(entityLoc.add(i,0,0));
+                //smokeLocs.add(entityLoc.add(i,i,0));
+                //smokeLocs.add(entityLoc.add(i,0,i));
+                //smokeLocs.add(entityLoc.add(0,i,i));
+                //smokeLocs.add(entityLoc.add(i,i,i));
+                //smokeLocs.add(entityLoc.add(0,i,0));
+                //smokeLocs.add(entityLoc.add(0,0,i));
+            //}
+            //for (Location loc : smokeLocs) {
+                //entity.getWorld().playEffect(loc, Effect.SMOKE, 0);
+            //}
             //entity.getLocation().getBlock().getRelative(0,-1,0).setType(Material.DIAMOND_BLOCK); //Trace the path with diamond blocks
             
             //player.sendMessage("Theta: " + theta);
