@@ -37,7 +37,8 @@ public class GravityField extends Spell {
         List<Entity> nearbyEntities = player.getNearbyEntities(RADIUS, RADIUS, RADIUS);
         for (Entity entity : nearbyEntities) {
             Vector relativeLoc = player.getLocation().subtract(entity.getLocation()).toVector().normalize();
-            entity.setVelocity(relativeLoc);
+            //entity.setVelocity(relativeLoc);
+            entity.setVelocity(entity.getVelocity().add(relativeLoc));
         }
     }
     public void cast(Player player) {
