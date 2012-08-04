@@ -30,14 +30,14 @@ public class Runner implements Runnable{
 	public void stop(){
 		while(data.size()>0)run();
 	}
-		public void schedule(int millis,Spell spell,Method method, Object... args){
-		if(data.size()-1<millis){
-			while(data.size()-1<millis){
+	public void schedule(int ticks,Spell spell,Method method, Object... args){
+		if(data.size()-1<ticks){
+			while(data.size()-1<ticks){
 				data.add(null);
 			}
 		}
-		if(data.get(millis)==null)data.set(millis, new ArrayList<RunData>(1));
-		data.get(millis).add(new RunData(spell, method, args));
+		if(data.get(ticks)==null)data.set(ticks, new ArrayList<RunData>(1));
+		data.get(ticks).add(new RunData(spell, method, args));
 	}
 	private class RunData{
 		private Spell spell;

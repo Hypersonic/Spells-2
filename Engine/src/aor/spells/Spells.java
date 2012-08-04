@@ -17,7 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.PluginClassLoader;
@@ -25,12 +24,10 @@ import org.bukkit.plugin.java.PluginClassLoader;
 public final class Spells extends JavaPlugin implements Listener{
 	public static final Logger log = Logger.getLogger("Minecraft");
 	private HashMap<Player,SpellBook> spellBooks=new HashMap<Player,SpellBook>();
-	private Spell[] spells;
-	static final Runner runner=new Runner();
-	static int numberOfSpells;
+	private SpellGroup spells=new SpellGroup("Spells");
 	public void onDisable() {
 		Bukkit.getServer().getScheduler().cancelTasks(this);
-		runner.stop();
+		Scheduler.stop(this);
 		spells=null;
 		log.info("Spells 2.0 Disabled");
 	}
@@ -48,20 +45,19 @@ public final class Spells extends JavaPlugin implements Listener{
 			return;
 		}
 		loadSpells(spelldir);
-		if(spells==null||spells.length==0){
-			log.warning("No Spells loaded!");
+		if(spells==null||spells.size()==0){
+			log.warning("No Spells Loaded!");
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
-		numberOfSpells=spells.length;
 		for(Spell spell:spells){
 			log.info(spell.getName());
 			getServer().getPluginManager().registerEvents(spell, this);
 		}
-		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, runner, 1, 1);
+		Scheduler.start(this);
 		final Player[] players=Bukkit.getServer().getOnlinePlayers();
 		for(int i=0;i<players.length;i++){
-			spellBooks.put(players[i], new SpellBook());
+			spellBooks.put(players[i], new SpellBook(spells));
 		}
 		getServer().getPluginManager().registerEvents(this, this);
 		log.info("Spells 2.0 enabled");
@@ -104,9 +100,8 @@ public final class Spells extends JavaPlugin implements Listener{
 			}
 			else if(f.isDirectory())loadSpells(f);
 		}
-		spells=new Spell[loadedSpells.size()];
-		for(int i=0;i<spells.length;i++){
-			spells[i]=loadedSpells.get(i);
+		for(Spell spell:loadedSpells){
+			spells.place(spell,spell.getGroup());
 		}
 	}
 	@EventHandler(priority=EventPriority.HIGHEST)
@@ -114,15 +109,49 @@ public final class Spells extends JavaPlugin implements Listener{
 		final Player player=e.getPlayer();
 		if(player.getItemInHand().getType()==Material.GOLD_HOE){
 			final Action action=e.getAction();
-			if(action.equals(Action.LEFT_CLICK_AIR)||action.equals(Action.LEFT_CLICK_BLOCK)){
-				e.setCancelled(true);
-				Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spells[spellBooks.get(player).getCurrentSpellID()],player));
+			final SpellBook book=spellBooks.get(player);
+			Object spellOrGroup=book.getCurrentSpellOrGroup();
+			if(spellOrGroup instanceof Spell){
+				Spell spell=(Spell)spellOrGroup;
+				if(action.equals(Action.LEFT_CLICK_AIR)||action.equals(Action.LEFT_CLICK_BLOCK)){
+					e.setCancelled(true);
+					Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
+				}
+				else if(action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)){
+					e.setCancelled(true);
+					if(player.isSneaking()){
+						book.goOutOfGroup();
+						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
+					}
+					else{
+						book.nextSpell();
+						spellOrGroup=book.getCurrentSpellOrGroup();
+						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
+					}
+				}
 			}
-			else if(action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)){
-				e.setCancelled(true);
-				spellBooks.get(player).nextSpell();
-				player.sendMessage(ChatColor.BLUE+spells[spellBooks.get(player).getCurrentSpellID()].getName()+" selected");
+			else if(spellOrGroup instanceof SpellGroup){
+				final SpellGroup group=(SpellGroup)spellOrGroup;
+				if(action.equals(Action.LEFT_CLICK_AIR)||action.equals(Action.LEFT_CLICK_BLOCK)){
+					e.setCancelled(true);
+					book.goInGroup();
+					spellOrGroup=book.getCurrentSpellOrGroup();
+					player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
+				}
+				else if(action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)){
+					e.setCancelled(true);
+					if(player.isSneaking()){
+						book.goOutOfGroup();
+						spellOrGroup=book.getCurrentSpellOrGroup();
+						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
+					}
+					else{
+						spellBooks.get(player).nextSpell();
+						player.sendMessage(ChatColor.BLUE+group.getName()+" selected");
+					}
+				}
 			}
+			else {assert false: "This shouldn't happen";}
 		}
 	}
 	@EventHandler(priority=EventPriority.HIGHEST)
@@ -139,7 +168,7 @@ public final class Spells extends JavaPlugin implements Listener{
 	}
 	@EventHandler(priority=EventPriority.MONITOR)
 	public void onLogin(PlayerJoinEvent e){
-		spellBooks.put(e.getPlayer(), new SpellBook());
+		spellBooks.put(e.getPlayer(), new SpellBook(spells));
 	}
 	@EventHandler(priority=EventPriority.MONITOR)
 	public void onLogoff(PlayerQuitEvent e){
