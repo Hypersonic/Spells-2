@@ -1,15 +1,10 @@
 
-import java.util.List;
-
-import org.bukkit.World;
+import org.bukkit.Location;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.block.Block;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.EntityType;
 
 import aor.spells.Spell;
 
@@ -36,7 +31,7 @@ public class Decoy extends Spell {
     @Override
     public void cast(Player player) {
         Location spawnLoc = player.getTargetBlock(null, MAXDISTANCE).getLocation().add(0,1,0);
-        LivingEntity spawnedCow = player.getWorld().spawnCreature(spawnLoc, EntityType.COW);
+		LivingEntity spawnedCow = player.getWorld().spawn(spawnLoc, Cow.class);
         for (Entity nearbyEntity : spawnedCow.getNearbyEntities(RADIUS, RADIUS, RADIUS)) {
             if (nearbyEntity instanceof Creature) {
                 ((Creature) nearbyEntity).setTarget(spawnedCow);

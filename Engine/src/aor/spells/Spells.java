@@ -25,10 +25,9 @@ public final class Spells extends JavaPlugin implements Listener{
 	public static final Logger log = Logger.getLogger("Minecraft");
 	private HashMap<Player,SpellBook> spellBooks=new HashMap<Player,SpellBook>();
 	private SpellGroup spells=new SpellGroup("Spells");
-	static final Runner runner=new Runner();
 	public void onDisable() {
 		Bukkit.getServer().getScheduler().cancelTasks(this);
-		runner.stop();
+		Scheduler.stop(this);
 		spells=null;
 		log.info("Spells 2.0 Disabled");
 	}
@@ -55,7 +54,7 @@ public final class Spells extends JavaPlugin implements Listener{
 			log.info(spell.getName());
 			getServer().getPluginManager().registerEvents(spell, this);
 		}
-		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, runner, 1, 1);
+		Scheduler.start(this);
 		final Player[] players=Bukkit.getServer().getOnlinePlayers();
 		for(int i=0;i<players.length;i++){
 			spellBooks.put(players[i], new SpellBook(spells));
@@ -120,15 +119,15 @@ public final class Spells extends JavaPlugin implements Listener{
 				}
 				else if(action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)){
 					e.setCancelled(true);
-					book.nextSpell();
-					spellOrGroup=book.getCurrentSpellOrGroup();
-					if(spellOrGroup instanceof Spell){
-						player.sendMessage(ChatColor.BLUE+((Spell)spellOrGroup).getName()+" selected");
+					if(player.isSneaking()){
+						book.goOutOfGroup();
+						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
 					}
-					else if(spellOrGroup instanceof SpellGroup){
-						player.sendMessage(ChatColor.BLUE+((SpellGroup)spellOrGroup).getName()+" selected");
+					else{
+						book.nextSpell();
+						spellOrGroup=book.getCurrentSpellOrGroup();
+						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
 					}
-					else assert false:"that's strange";
 				}
 			}
 			else if(spellOrGroup instanceof SpellGroup){
@@ -136,11 +135,15 @@ public final class Spells extends JavaPlugin implements Listener{
 				if(action.equals(Action.LEFT_CLICK_AIR)||action.equals(Action.LEFT_CLICK_BLOCK)){
 					e.setCancelled(true);
 					book.goInGroup();
+					spellOrGroup=book.getCurrentSpellOrGroup();
+					player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
 				}
 				else if(action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)){
 					e.setCancelled(true);
 					if(player.isSneaking()){
 						book.goOutOfGroup();
+						spellOrGroup=book.getCurrentSpellOrGroup();
+						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
 					}
 					else{
 						spellBooks.get(player).nextSpell();

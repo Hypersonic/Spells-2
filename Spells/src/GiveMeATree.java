@@ -1,11 +1,10 @@
-import aor.spells.Spell;
-
-import org.bukkit.entity.Player;
+import org.bukkit.Material;
+import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.TreeType;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.entity.Player;
+
+import aor.spells.Spell;
 
 /**
  * Grows a tree where the player is pointing
@@ -35,7 +34,7 @@ public class GiveMeATree extends Spell {
 	public void cast(Player player) {
         final Block target = player.getTargetBlock(null, MAXDISTANCE);
         final Block above = target.getRelative(BlockFace.UP);
-        if ((target.getType().equals(Material.GRASS) || target.getType().equals(Material.DIRT)) && above.getType().equals(Material.AIR)) {
+        if ((target.getType().equals(Material.GRASS) || target.getType().equals(Material.DIRT)) && above.getType().equals(Material.AIR)) {//TODO do you really need to check the block above the tile? I would think it would be taken care of automatically just like every other block... 
             target.getWorld().generateTree(above.getLocation(), TreeType.TREE);
         }
     }
