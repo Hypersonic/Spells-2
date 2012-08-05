@@ -17,7 +17,10 @@ public class Explosion extends Spell {
 	public String getName() {
 		return "Explosion"; 
 	}
-	
+	@Override
+	public String getGroup(){
+		return "test";
+	}
 	@Override
 	public String getDescription() {
 		return "Creates an explosion at the block the player is looking at";
