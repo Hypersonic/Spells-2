@@ -1,8 +1,20 @@
 package aor.spells;
 
+import static java.lang.Math.cos;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.util.Vector;
 
 public final class SpellUtils {
 	public static boolean inInventory(Player player, Iterable<ItemStack> items){
@@ -32,5 +44,21 @@ public final class SpellUtils {
 				}
 			}
 		}
+	}
+	public static Entity getTarget(LivingEntity player,int maxDistance, double maxRadiansOff,boolean needsLineOfSight,Collection<Class<?>> allowedEntityClasses){
+		maxRadiansOff=cos(maxRadiansOff);
+		List<Entity> nearbyEntities=player.getNearbyEntities(maxDistance, maxDistance, maxDistance);
+		Location playerTarget=player.getTargetBlock(new HashSet<Byte>(new ArrayList<Byte>(Arrays.asList(new Byte[]{0}))), 100).getLocation();
+		double nearestAngle=maxRadiansOff;
+		Entity bestEntity=null;
+		Vector playerDirection=player.getLocation().subtract(playerTarget).toVector().normalize();
+		for(Entity entity:nearbyEntities){
+			double angle;
+			if((!needsLineOfSight||player.hasLineOfSight(entity))&&((angle=player.getLocation().subtract(entity.getLocation()).toVector().normalize().dot(playerDirection))<nearestAngle||(entity instanceof LivingEntity)?(angle=player.getLocation().subtract(((LivingEntity)entity).getEyeLocation()).toVector().normalize().dot(playerDirection))<nearestAngle:false)&&allowedEntityClasses.contains(entity.getClass())){
+				nearestAngle=angle;
+				bestEntity=entity;
+			}
+		}
+		return bestEntity;
 	}
 }

@@ -2,12 +2,11 @@ package aor.spells;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 
-public class SpellGroup implements Iterable<Spell>{
+final class SpellGroup implements Iterable<Spell>{
 	private ArrayList<SpellGroup> children=new ArrayList<SpellGroup>();
 	private SpellGroup parent;
 	private String name;

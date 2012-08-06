@@ -23,4 +23,7 @@ public abstract class Spell implements Listener {
 		Scheduler.schedule(ticks, this, null, args);
 	}
 	public void run(Object... args){}
+	public int getCooldown(){
+		return 0;
+	}
 }

@@ -159,12 +159,18 @@ public final class Spells extends JavaPlugin implements Listener{
 		if(e.isCancelled())return;
 		final Spell spell=e.getSpell();
 		final Player player=e.getPlayer();
+		final SpellBook spellBook=spellBooks.get(player);
 		if(!spell.checkRequirements(e.getPlayer())){
 			e.setCancelled(true);
 			return;
 		}
+		else if(spellBook.hasCooldown(spell)){
+			e.setCancelled(false);
+			return;
+		}
 		spell.removeRequirements(player);
 		spell.cast(player);
+		spellBook.addCooldown(spell);
 	}
 	@EventHandler(priority=EventPriority.MONITOR)
 	public void onLogin(PlayerJoinEvent e){

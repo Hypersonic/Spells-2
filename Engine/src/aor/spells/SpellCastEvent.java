@@ -5,8 +5,8 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class SpellCastEvent extends Event implements Cancellable{
-	public enum ReasonCancelled{NOT_CANCELLED, REQUIREMENTS_NOT_MET, CANCELLED_BY_SPELL}
+final class SpellCastEvent extends Event implements Cancellable{
+	public enum ReasonCancelled{NOT_CANCELLED, REQUIREMENTS_NOT_MET, CANCELLED_BY_SPELL, COOLDOWN}
 	private static final HandlerList handlers = new HandlerList();
 	private final Spell spell;
 	private final Player player;
@@ -41,7 +41,10 @@ public class SpellCastEvent extends Event implements Cancellable{
 	@Override
 	public void setCancelled(boolean cancel) {
 		final Class<?> callerClass=Thread.currentThread().getStackTrace()[0].getClass();
-		if(callerClass.equals(Spells.class))reasonCancelled=ReasonCancelled.REQUIREMENTS_NOT_MET;
+		if(callerClass.equals(Spells.class)){
+			if(cancel)reasonCancelled=ReasonCancelled.REQUIREMENTS_NOT_MET;
+			else reasonCancelled=ReasonCancelled.COOLDOWN;
+		}
 		else reasonCancelled=ReasonCancelled.CANCELLED_BY_SPELL;
 	}
 }
