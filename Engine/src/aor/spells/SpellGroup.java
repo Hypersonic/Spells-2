@@ -53,7 +53,7 @@ public class SpellGroup implements Iterable<Spell>{
 	}
 	public void place(Spell spell,String group) {
 		spells.add(spell);
-		/*if(group.startsWith(getName()+"."))group=group.replaceFirst(getName()+".", "");
+		if(group.startsWith(getName()+"."))group=group.replaceFirst(getName()+".", "");
 		System.out.println(group+" ("+name+")");
 		if(group.contains(".")){
 			String subgroupName=group.substring(0, group.indexOf("."));
@@ -83,7 +83,7 @@ public class SpellGroup implements Iterable<Spell>{
 					break;
 				}
 			}
-		}*/
+		}
 	}
 	public int groupAndSpellSize() {
 		return spells.size()+children.size();
