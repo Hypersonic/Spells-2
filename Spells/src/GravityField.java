@@ -32,7 +32,7 @@ public class GravityField extends Spell {
         return "Gravity Field";
     }
     
-    public String getDescription() {
+    public String getDescription() {//TODO should this say you instead of the caster?
         return "A sphere of gravity appears around the caster, and pulls nearby mobs and players towards them.";
     }
 
