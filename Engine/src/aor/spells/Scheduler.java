@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 
 public final class Scheduler{
 	private static final Runner runner=new Scheduler().new Runner();
-	public static void schedule(int ticks,Spell spell,Method method, Object... args){
+	public static void schedule(int ticks,Object spell,Method method, Object... args){
 		runner.schedule(ticks, spell, method, args);
 	}
 	static void start(Spells spells){
@@ -28,11 +28,11 @@ public final class Scheduler{
 				final ArrayList<RunData> currentData=data.remove();
 				if(currentData==null)return;
 				for(RunData data:currentData){
-					final Spell spell=data.getSpell();
+					final Object spell=data.getSpell();
 					final Method method=data.getMethod();
 					final Object[] params=data.getParams();
 					if(method==null){
-						spell.run(params);
+						if(spell instanceof Spell)((Spell)spell).run(params);
 					}
 					else{
 						try {
@@ -46,15 +46,15 @@ public final class Scheduler{
 			while(data.size()>0)run();
 		}
 		private class RunData{
-			private Spell spell;
+			private Object spell;
 			private Method method;
 			private Object[] params;
-			public RunData(Spell spell,Method method,Object[] params){
+			public RunData(Object spell,Method method,Object[] params){
 				this.spell=spell;
 				this.method=method;
 				this.params=params;
 			}
-			public Spell getSpell(){
+			public Object getSpell(){
 				return spell;
 			}
 			public Method getMethod(){
@@ -64,7 +64,7 @@ public final class Scheduler{
 				return params;
 			}
 		}
-		public void schedule(int ticks,Spell spell,Method method, Object... args){
+		public void schedule(int ticks,Object spell,Method method, Object... args){
 			if(data.size()-1<ticks){
 				while(data.size()-1<ticks){
 					data.add(null);

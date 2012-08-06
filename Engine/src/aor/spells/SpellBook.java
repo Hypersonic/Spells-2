@@ -1,8 +1,14 @@
 package aor.spells;
 
-public final class SpellBook {
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+
+final class SpellBook {
+	private static Method getMethod(){try{return SpellBook.class.getMethod("removeCooldown", Spell.class);}catch(Throwable t){throw new RuntimeException();}}
+	private static final Method removeCooldown=getMethod();
 	private int current;
 	private SpellGroup currentGroup;
+	private ArrayList<Spell> spellsWithCooldowns=new ArrayList<Spell>();
 	public SpellBook(SpellGroup mainGroup){
 		this.currentGroup=mainGroup;
 	}
@@ -17,5 +23,15 @@ public final class SpellBook {
 	}
 	public void goInGroup() {
 		currentGroup=currentGroup.getChildren().get(current-currentGroup.spellSize());
+	}
+	public boolean hasCooldown(Spell spell) {
+		return spellsWithCooldowns.contains(spell);
+	}
+	public void addCooldown(Spell spell) {
+		spellsWithCooldowns.add(spell);
+		Scheduler.schedule(spell.getCooldown(), null, removeCooldown, spell);
+	}
+	public void removeCooldown(Spell spell){
+		spellsWithCooldowns.remove(spell);
 	}
 }
