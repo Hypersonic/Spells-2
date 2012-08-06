@@ -31,4 +31,7 @@ final class SpellBook {
 		spellsWithCooldowns.add(spell);
 		Scheduler.schedule(spell.getCooldown(), null, removeCooldown, spell);
 	}
+	public void removeCooldown(Spell spell){
+		spellsWithCooldowns.remove(spell);
+	}
 }
