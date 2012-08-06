@@ -10,7 +10,7 @@ public final class SpellUtils {
 	}
 	public static boolean inInventory(PlayerInventory inventory, Iterable<ItemStack> items){
 		for(ItemStack item:items){
-			if(!inventory.contains(item))return false;
+			if(!inventory.contains(item,item.getAmount()))return false;
 		}
 		return true;
 	}
@@ -19,7 +19,18 @@ public final class SpellUtils {
 	}
 	public static void removeFromInventory(PlayerInventory inventory, Iterable<ItemStack> items){
 		for(ItemStack item:items){
-			inventory.remove(item);
+			int amountLeft=item.getAmount();
+			while(amountLeft>0){
+				int firstFound=inventory.first(item.getType());
+				if(inventory.getItem(firstFound).getAmount()>=amountLeft){
+					inventory.getItem(firstFound).setAmount(inventory.getItem(firstFound).getAmount()-amountLeft);
+					break;
+				}
+				else{
+					amountLeft-=inventory.getItem(inventory.first(item.getType())).getAmount();
+					inventory.clear(inventory.first(item.getType()));
+				}
+			}
 		}
 	}
 }
