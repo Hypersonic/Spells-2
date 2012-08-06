@@ -45,6 +45,16 @@ public final class SpellUtils {
 			}
 		}
 	}
+	public static Entity getPlayerTarget(Player player, boolean needsLineOfSight){
+		Entity result=getTarget(player,100,.5,needsLineOfSight,Arrays.asList(new Class<?>[]{Player.class}));
+		if(result!=null&&result instanceof Player)return (Player)result;
+		return null;
+	}
+	public static Entity getPlayerTarget(Player player){
+		Entity result=getTarget(player,100,.5,true,Arrays.asList(new Class<?>[]{Player.class}));
+		if(result!=null&&result instanceof Player)return (Player)result;
+		return null;
+	}
 	public static Entity getTarget(LivingEntity player,int maxDistance, double maxRadiansOff,boolean needsLineOfSight,Collection<Class<?>> allowedEntityClasses){
 		maxRadiansOff=cos(maxRadiansOff);
 		List<Entity> nearbyEntities=player.getNearbyEntities(maxDistance, maxDistance, maxDistance);
