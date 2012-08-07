@@ -63,9 +63,17 @@ public final class SpellUtils {
 		Entity bestEntity=null;
 		Vector playerDirection=player.getLocation().subtract(playerTarget).toVector().normalize();
 		for(Entity entity:nearbyEntities){
-			double angle;
-			if((!needsLineOfSight||player.hasLineOfSight(entity))&&((angle=player.getLocation().subtract(entity.getLocation()).toVector().normalize().dot(playerDirection))<nearestAngle||(entity instanceof LivingEntity)?(angle=player.getLocation().subtract(((LivingEntity)entity).getEyeLocation()).toVector().normalize().dot(playerDirection))<nearestAngle:false)&&allowedEntityClasses.contains(entity.getClass())){
-				nearestAngle=angle;
+			double footAngle =  player.getLocation().subtract(entity.getLocation()).toVector().normalize().dot(playerDirection);
+            double eyeAngle = player.getLocation().subtract(((LivingEntity)entity).getEyeLocation()).toVector().normalize().dot(playerDirection);
+            boolean hasLineOfSight = !needsLineOfSight || player.hasLineOfSight(entity);
+			boolean isAllowed = allowedEntityClasses.contains(entity.getClass());
+            
+            if(hasLineOfSight && footAngle < nearestAngle || (entity instanceof LivingEntity) ? eyeAngle < nearestAngle : false && isAllowed){
+				if (footAngle < eyeAngle) {
+                    nearestAngle = footAngle;
+                } else {
+                    nearestAngle = eyeAngle;
+                }
 				bestEntity=entity;
 			}
 		}
