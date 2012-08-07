@@ -45,12 +45,12 @@ public final class SpellUtils {
 			}
 		}
 	}
-	public static Entity getPlayerTarget(Player player, boolean needsLineOfSight){
+	public static Player getPlayerTarget(Player player, boolean needsLineOfSight){
 		Entity result=getTarget(player,100,.5,needsLineOfSight,Arrays.asList(new Class<?>[]{Player.class}));
 		if(result!=null&&result instanceof Player)return (Player)result;
 		return null;
 	}
-	public static Entity getPlayerTarget(Player player){
+	public static Player getPlayerTarget(Player player){
 		Entity result=getTarget(player,100,.5,true,Arrays.asList(new Class<?>[]{Player.class}));
 		if(result!=null&&result instanceof Player)return (Player)result;
 		return null;
