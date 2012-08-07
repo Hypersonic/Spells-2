@@ -1,14 +1,13 @@
 package aor.spells;
 
 import static java.lang.Math.cos;
+import static java.lang.Math.min;
+import static java.lang.Math.sin;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -58,23 +57,28 @@ public final class SpellUtils {
 	public static Entity getTarget(LivingEntity player,int maxDistance, double maxRadiansOff,boolean needsLineOfSight,Collection<Class<?>> allowedEntityClasses){
 		maxRadiansOff=cos(maxRadiansOff);
 		List<Entity> nearbyEntities=player.getNearbyEntities(maxDistance, maxDistance, maxDistance);
-		Location playerTarget=player.getTargetBlock(new HashSet<Byte>(new ArrayList<Byte>(Arrays.asList(new Byte[]{0}))), 100).getLocation();
+		double yaw=player.getLocation().getYaw();
+		double pitch=player.getLocation().getPitch();
+		Vector playerDirection=new Vector(cos(yaw)*cos(pitch),sin(yaw), cos(yaw)*sin(pitch)).normalize();
 		double nearestAngle=maxRadiansOff;
 		Entity bestEntity=null;
-		Vector playerDirection=player.getLocation().subtract(playerTarget).toVector().normalize();
 		for(Entity entity:nearbyEntities){
-			double footAngle =  player.getLocation().subtract(entity.getLocation()).toVector().normalize().dot(playerDirection);
-            double eyeAngle = player.getLocation().subtract(((LivingEntity)entity).getEyeLocation()).toVector().normalize().dot(playerDirection);
-            boolean hasLineOfSight = !needsLineOfSight || player.hasLineOfSight(entity);
-			boolean isAllowed = allowedEntityClasses.contains(entity.getClass());
-            
-            if(hasLineOfSight && footAngle < nearestAngle || (entity instanceof LivingEntity) ? eyeAngle < nearestAngle : false && isAllowed){
-				if (footAngle < eyeAngle) {
-                    nearestAngle = footAngle;
-                } else {
-                    nearestAngle = eyeAngle;
-                }
-				bestEntity=entity;
+			if(!needsLineOfSight||player.hasLineOfSight(entity)){
+				double angle=player.getEyeLocation().subtract(entity.getLocation()).toVector().normalize().dot(playerDirection);
+				if(entity instanceof LivingEntity)angle=min(angle, player.getEyeLocation().subtract(((LivingEntity)entity).getEyeLocation()).toVector().normalize().dot(playerDirection));
+				if(angle<nearestAngle){
+					boolean isSubclass=false;
+					for(Class<?> allowedEntityClass:allowedEntityClasses){
+						if(allowedEntityClass.isInstance(entity)){
+							isSubclass=true;
+							break;
+						}
+					}
+					if(isSubclass){
+						nearestAngle=angle;
+						bestEntity=entity;
+					}
+				}
 			}
 		}
 		return bestEntity;
