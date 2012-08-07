@@ -9,8 +9,8 @@ import org.bukkit.Bukkit;
 
 public final class Scheduler{
 	private static final Runner runner=new Scheduler().new Runner();
-	public static void schedule(int ticks,Object spell,Method method, Object... args){
-		runner.schedule(ticks, spell, method, args);
+	public static void schedule(int ticks,Object object,Method method, Object... args){
+		runner.schedule(ticks, object, method, args);
 	}
 	static void start(Spells spells){
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(spells, runner, 1, 1);
