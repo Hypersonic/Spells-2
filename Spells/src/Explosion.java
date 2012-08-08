@@ -19,7 +19,7 @@ public class Explosion extends Spell {
 	}
 	@Override
 	public String getGroup(){
-		return "test";
+		return "test.test2";
 	}
 	@Override
 	public String getDescription() {

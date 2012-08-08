@@ -51,7 +51,6 @@ final class SpellGroup implements Iterable<Spell>{
 		return result;
 	}
 	public void place(Spell spell,String group) {
-		spells.add(spell);
 		if(group.startsWith(getName()+"."))group=group.replaceFirst(getName()+".", "");
 		System.out.println(group+" ("+name+")");
 		if(group.contains(".")){
@@ -93,5 +92,19 @@ final class SpellGroup implements Iterable<Spell>{
 	}
 	public int spellSize(){
 		return spells.size();
+	}
+	public void print(){
+		System.out.println("HI!");
+		print("");
+		System.out.println("BYE!");
+	}
+	private void print(String current){
+		for(Spell spell:spells){
+			System.out.println(current+"spell "+spell.getName());
+		}
+		for(SpellGroup child:children){
+			System.out.println(current+"group "+child.getName());
+			child.print(current+"-");
+		}
 	}
 }

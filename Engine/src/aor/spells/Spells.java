@@ -45,13 +45,14 @@ public final class Spells extends JavaPlugin implements Listener{
 			return;
 		}
 		loadSpells(spelldir);
+		spells.print();
 		if(spells==null||spells.size()==0){
 			log.warning("No Spells Loaded!");
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
 		for(Spell spell:spells){
-			log.info(spell.getName());
+			//log.info(spell.getName());
 			getServer().getPluginManager().registerEvents(spell, this);
 		}
 		Scheduler.start(this);
@@ -121,17 +122,17 @@ public final class Spells extends JavaPlugin implements Listener{
 					e.setCancelled(true);
 					if(player.isSneaking()){
 						book.goOutOfGroup();
+						spellOrGroup=book.getCurrentSpellOrGroup();
 						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
 					}
 					else{
-						book.nextSpell();
+						book.next();
 						spellOrGroup=book.getCurrentSpellOrGroup();
 						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
 					}
 				}
 			}
 			else if(spellOrGroup instanceof SpellGroup){
-				final SpellGroup group=(SpellGroup)spellOrGroup;
 				if(action.equals(Action.LEFT_CLICK_AIR)||action.equals(Action.LEFT_CLICK_BLOCK)){
 					e.setCancelled(true);
 					book.goInGroup();
@@ -146,12 +147,12 @@ public final class Spells extends JavaPlugin implements Listener{
 						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
 					}
 					else{
-						spellBooks.get(player).nextSpell();
-						player.sendMessage(ChatColor.BLUE+group.getName()+" selected");
+						book.next();
+						spellOrGroup=book.getCurrentSpellOrGroup();
+						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
 					}
 				}
 			}
-			else {assert false: "This shouldn't happen";}
 		}
 	}
 	@EventHandler(priority=EventPriority.HIGHEST)

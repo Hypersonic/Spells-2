@@ -37,7 +37,7 @@ public final class Scheduler{
 					else{
 						try {
 							method.invoke(spell, params);
-						} catch (Exception e) {assert false:"FAILLL";}
+						} catch (Exception e) {assert false:e;}
 					}
 				}
 			}

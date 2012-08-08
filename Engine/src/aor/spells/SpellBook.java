@@ -12,7 +12,7 @@ final class SpellBook {
 	public SpellBook(SpellGroup mainGroup){
 		this.currentGroup=mainGroup;
 	}
-	public void nextSpell(){
+	public void next(){
 		current=current+1<currentGroup.groupAndSpellSize()?current+1:0;
 	}
 	public Object getCurrentSpellOrGroup() {
@@ -29,7 +29,7 @@ final class SpellBook {
 	}
 	public void addCooldown(Spell spell) {
 		spellsWithCooldowns.add(spell);
-		Scheduler.schedule(spell.getCooldown(), null, removeCooldown, spell);
+		Scheduler.schedule(spell.getCooldown(), this, removeCooldown, spell);
 	}
 	public void removeCooldown(Spell spell){
 		spellsWithCooldowns.remove(spell);

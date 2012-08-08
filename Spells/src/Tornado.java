@@ -1,15 +1,10 @@
 import java.util.List;
-import java.util.ArrayList;
 import java.lang.Math;
 import java.lang.reflect.Method;
 
 import org.bukkit.util.Vector;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.Material;
-import org.bukkit.Location;
-import org.bukkit.Effect;
-
 import aor.spells.Spell;
 
 
@@ -17,7 +12,7 @@ public class Tornado extends Spell {
 
     private Method cast; // We're doing this through recursion, bitches.
     
-    private static final double DILUTEAMOUNT = 10.0;
+    //private static final double DILUTEAMOUNT = 10.0;
     private static final double MAGNITUDE = 0.5;
     private static final double RADIUS = 10;
     public Tornado() {
