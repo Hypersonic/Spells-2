@@ -39,6 +39,12 @@ public class Waterjet extends Spell {
 	}
 	
     @Override
+    public int getCooldown() {
+        return 100;
+    }
+
+
+    @Override
 	public void cast(Player player) {
 	    for (int i = 0; i < 60; i++) {
             schedule(i, douse, player);
