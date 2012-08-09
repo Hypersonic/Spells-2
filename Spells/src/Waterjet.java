@@ -59,8 +59,7 @@ public class Waterjet extends Spell {
         Location playerLoc = player.getLocation();
         for (Block block : douseBlocks) {
             Block target = block.getRelative(BlockFace.UP);
-            if (block.getType() != Material.WATER &&
-                    block.getType() != Material.STATIONARY_WATER &&
+            if (block.getType() != Material.AIR &&
                     block.getLocation().distance(playerLoc) >= 2 &&
                     target.getType() == Material.AIR
                 ) {
