@@ -45,7 +45,7 @@ public final class Spells extends JavaPlugin implements Listener{
 			return;
 		}
 		loadSpells(spelldir);
-		spells.print();
+		spells.print();//this is just for debugging
 		if(spells==null||spells.size()==0){
 			log.warning("No Spells Loaded!");
 			Bukkit.getServer().getPluginManager().disablePlugin(this);

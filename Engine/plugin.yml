@@ -2,7 +2,7 @@ name: Spells
 main: aor.spells.Spells
 version: 2.0
 commands:
-#   command_name:
-#      description:
-#      usage: |
-#           /command_name [arg1] [arg2] etc...
+   command_name:
+      description: "displays information about the currently selected spell or the spell provided as an argument"
+      usage: |
+           /spellinfo [arg1]
