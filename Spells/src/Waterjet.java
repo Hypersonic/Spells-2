@@ -39,6 +39,12 @@ public class Waterjet extends Spell {
 	}
 	
     @Override
+    public int getCooldown() {
+        return 100;
+    }
+
+
+    @Override
 	public void cast(Player player) {
 	    for (int i = 0; i < 60; i++) {
             schedule(i, douse, player);
@@ -59,8 +65,7 @@ public class Waterjet extends Spell {
         Location playerLoc = player.getLocation();
         for (Block block : douseBlocks) {
             Block target = block.getRelative(BlockFace.UP);
-            if (block.getType() != Material.WATER &&
-                    block.getType() != Material.STATIONARY_WATER &&
+            if (block.getType() != Material.AIR &&
                     block.getLocation().distance(playerLoc) >= 2 &&
                     target.getType() == Material.AIR
                 ) {
