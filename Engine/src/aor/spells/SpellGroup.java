@@ -103,4 +103,17 @@ final class SpellGroup implements Iterable<Spell>{
 			child.print(current+"-");
 		}
 	}
+	public Spell getSpell(String string) {
+		for(Spell spell:spells){
+			if(spell.getName().equals(string))return spell;
+		}
+		for(SpellGroup child:children){
+			Spell spell=child.getSpell(string);
+			if(spell!=null)return spell;
+		}
+		return null;
+	}
+	public int indexOf(SpellGroup group) {
+		return spells.size()+children.indexOf(group);
+	}
 }
