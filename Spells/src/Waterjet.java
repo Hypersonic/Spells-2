@@ -40,13 +40,13 @@ public class Waterjet extends Spell {
 	
     @Override
     public int getCooldown() {
-        return 100;
+        return 100; // 5 sec cooldown
     }
 
 
     @Override
 	public void cast(Player player) {
-	    for (int i = 0; i < 60; i++) {
+	    for (int i = 0; i < 60; i++) { // active for 3 sec
             schedule(i, douse, player);
         }
     }
