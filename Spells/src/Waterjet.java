@@ -6,6 +6,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.World.Environment;
 
 import aor.spells.Spell;
 
@@ -35,7 +37,12 @@ public class Waterjet extends Spell {
 	
     @Override
 	public boolean checkRequirements(Player player){
-		return true;
+		if (player.getWorld().getEnvironment() == Environment.NETHER) {
+            player.sendMessage("You may not cast this spell in the Nether!");
+            return false;
+        } else {
+            return true;
+        }
 	}
 	
     @Override
