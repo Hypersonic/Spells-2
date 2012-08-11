@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,6 +32,28 @@ public final class Spells extends JavaPlugin implements Listener{
 		Scheduler.stop(this);
 		spells=null;
 		log.info("Spells 2.0 Disabled");
+	}
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label,String[] args) {
+		if(label.equalsIgnoreCase("spellinfo")){
+			if(args.length!=0){
+				Spell spell=spells.getSpell(args[0]);
+				if(spell!=null){
+					sender.sendMessage(spell.getDescription());
+					return true;
+				}
+				else{
+					sender.sendMessage(args[0]+" isn't a valid spell! Please try again.");
+					return true;
+				}
+			}
+			else if(sender instanceof Player){
+				final Player player=((Player)sender);
+				Object spellOrGroup= spellBooks.get(player).getCurrentSpellOrGroup();
+				
+			}
+		}
+		return false;
 	}
 	public void onEnable() {
 		final File spelldir=new File("plugins/spells/");

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 final class SpellBook {
 	private static Method getMethod(){try{return SpellBook.class.getMethod("removeCooldown", Spell.class);}catch(Throwable t){throw new RuntimeException();}}
 	private static final Method removeCooldown=getMethod();
-	private int current;
+	private int current=0;
 	private SpellGroup currentGroup;
 	private ArrayList<Spell> spellsWithCooldowns=new ArrayList<Spell>();
 	public SpellBook(SpellGroup mainGroup){
@@ -19,10 +19,13 @@ final class SpellBook {
 		return currentGroup.get(current);
 	}
 	public void goOutOfGroup() {
+		final SpellGroup temp=currentGroup;
 		currentGroup=currentGroup.getParent()==null?currentGroup:currentGroup.getParent();
+		current=currentGroup!=temp?currentGroup.indexOf(temp):0;
 	}
 	public void goInGroup() {
 		currentGroup=currentGroup.getChildren().get(current-currentGroup.spellSize());
+		current=0;
 	}
 	public boolean hasCooldown(Spell spell) {
 		return spellsWithCooldowns.contains(spell);
