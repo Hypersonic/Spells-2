@@ -2,7 +2,24 @@ name: Spells
 main: aor.spells.Spells
 version: 2.0
 commands:
-   command_name:
-      description: "displays information about the currently selected spell or the spell provided as an argument"
-      usage: |
-           /spellinfo [arg1]
+   spellinfo:
+      description: "Displays information about the currently selected spell or the spell provided as an argument"
+      usage: /spellinfo [spell name]
+   cast:
+      description: "Casts the currently selected spell or the spell provided as an argument."
+      usage: /cast [spell name]
+   goin:
+      description: "Goes into the currently selected spellgroup."
+      usage: /goin
+   goout:
+      description: "Goes out of the currently selected spellgroup."
+      usage: /goout
+   nextspell:
+      description: "Goes to the next spell."
+      usage: /nextspell
+   currentlyselected:
+      description: "Reprints the name of the currently selected spell or group."
+      usage: /currentlyselected
+   selectspell:
+      description: "Reprints the name of the currently selected spell or group."
+      usage: /selectspell

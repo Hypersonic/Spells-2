@@ -37,4 +37,11 @@ final class SpellBook {
 	public void removeCooldown(Spell spell){
 		spellsWithCooldowns.remove(spell);
 	}
+	public boolean hasParentGroup() {
+		return currentGroup.getParent()!=null;
+	}
+	public void setGroup(SpellGroup group,int index) {
+		currentGroup=group;
+		current=index;
+	}
 }
