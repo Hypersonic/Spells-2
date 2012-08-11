@@ -1,11 +1,13 @@
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.bukkit.entity.Player;
 import org.bukkit.block.Block;
-import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.World.Environment;
 
 import aor.spells.Spell;
 
@@ -35,18 +37,23 @@ public class Waterjet extends Spell {
 	
     @Override
 	public boolean checkRequirements(Player player){
-		return true;
+		if (player.getWorld().getEnvironment() == Environment.NETHER) {
+            player.sendMessage("You may not cast this spell in the Nether!");
+            return false;
+        } else {
+            return true;
+        }
 	}
 	
     @Override
     public int getCooldown() {
-        return 100;
+        return 100; // 5 sec cooldown
     }
 
 
     @Override
 	public void cast(Player player) {
-	    for (int i = 0; i < 60; i++) {
+	    for (int i = 0; i < 60; i++) { // active for 3 sec
             schedule(i, douse, player);
         }
     }
