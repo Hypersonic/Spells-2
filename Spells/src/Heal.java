@@ -1,6 +1,8 @@
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.Material;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import static aor.spells.SpellUtils.getPlayerTarget;
 
@@ -18,13 +20,13 @@ public class Heal extends Spell {
 	public String getName() {
 		return "Heal"; 
 	}
-	@Override
-	public String getGroup(){
-		return "test";
-	}
+	//@Override
+	//public String getGroup(){
+		//return "";
+	//}
 	@Override
 	public String getDescription() {
-		return "Heals target player";
+		return "Gives 3 seconds of powerful regeneration to target player.";
 	}
 	@Override
 	public boolean checkRequirements(Player player){
@@ -41,7 +43,7 @@ public class Heal extends Spell {
         Player target = getPlayerTarget(player);
         player.sendMessage("Good work, you targetted something");
         player.sendMessage("Their old health was: " + target.getHealth());
-        target.setHealth(target.getHealth() + 1);
+        target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 60, 1));
         player.sendMessage("Their new health is: " + target.getHealth());
         target.sendMessage("Tada, healification!");
     } catch (NullPointerException e) {
