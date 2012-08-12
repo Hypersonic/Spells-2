@@ -1,15 +1,16 @@
-import static aor.spells.SpellUtils.inInventory;
-import static aor.spells.SpellUtils.removeFromInventory;
-
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.Material;
 
 import aor.spells.Spell;
+import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
+
+
 
 public class Invisibility extends Spell {
 		private Method undo;
