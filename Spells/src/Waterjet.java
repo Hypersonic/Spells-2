@@ -22,7 +22,7 @@ public class Waterjet extends Spell {
 	public Waterjet(){
 		try {
 			douse = Waterjet.class.getMethod("douse", Player.class);
-		} catch (Exception e) {assert false:"Who broke it???";}
+		} catch (Exception e) {}
 	}
 	
     @Override
