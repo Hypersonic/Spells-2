@@ -18,9 +18,7 @@ public class Tornado extends Spell {
     public Tornado() {
         try {
 			cast=Tornado.class.getMethod("cast", Player.class);
-		} catch (Exception e) {
-            assert false:"Who broke it???";
-        }
+		} catch (Exception e) {}
     }
     public String getName() {
         return "Tornado";
