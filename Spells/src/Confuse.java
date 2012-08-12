@@ -47,7 +47,12 @@ public class Confuse extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
-        return true;
+        if (getPlayerTarget(player) == null) {
+            player.sendMessage("Point at someone, you numbskull!");
+            return false;
+        } else {
+            return true;
+        }
 	}
 
     @Override
@@ -75,7 +80,6 @@ public class Confuse extends Spell {
     }
 	@Override
 	public void cast(Player player) {
-	try {
         Player target = getPlayerTarget(player);
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 500, 2));
         player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 500, 3));
@@ -83,9 +87,5 @@ public class Confuse extends Spell {
             schedule(i, harass, player);
         }
         //schedule(500, removeFakes, player);
-    } catch (NullPointerException e) {
-        player.sendMessage("Point at someone, you numbskull!");
-    } catch (Exception e) {
-    }
     }
 }
