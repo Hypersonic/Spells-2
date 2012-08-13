@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Cow;
@@ -5,6 +6,8 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import aor.spells.Spell;
 
@@ -26,7 +29,10 @@ public class Decoy extends Spell {
     }
     @Override
     public boolean checkRequirements(Player player) {
-        return true;    
+        return inInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE_WIRE, 2) }));
+    }
+    public void removeRequirements(Player player) {
+        removeFromInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE_WIRE, 2) }));
     }
     @Override
     public void cast(Player player) {
