@@ -43,4 +43,5 @@ public class GiveMeATree extends Spell {
         final Block above = target.getRelative(BlockFace.UP);
         target.getWorld().generateTree(above.getLocation(), TreeType.TREE);
     }
+    
 }
