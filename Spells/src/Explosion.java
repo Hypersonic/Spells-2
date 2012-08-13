@@ -1,6 +1,9 @@
+import java.util.Arrays;
+
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import aor.spells.Spell;
 
@@ -27,12 +30,24 @@ public class Explosion extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
-		if (player.getTargetBlock(null, MAXDISTANCE).getType().equals(Material.AIR)){
+        if (!inInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_DUST, 8),
+            new ItemStack(Material.SULPHUR, 2),
+            new ItemStack(Material.SAND, 10)
+        }))) {
+            return false;
+        }
+
+        if (player.getTargetBlock(null, MAXDISTANCE).getType().equals(Material.AIR)){
 			player.sendMessage("Could not cast, you're not pointing at anything!");
 			return false;
 		}
 		else return true;
 	}
+    @Override
+    public void removeRequirements(Player player) {
+			removeFromInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.REDSTONE_DUST, 8), new ItemStack(Material.SULPHUR, 2), new ItemStack(Material.SAND, 10)}));
+    }
 	@Override
 	public void cast(Player player) {
 		final Block targetBlock=player.getTargetBlock(null, MAXDISTANCE);
