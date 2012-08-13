@@ -1,11 +1,13 @@
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Arrays;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import aor.spells.Spell;
 
@@ -39,8 +41,20 @@ public class Flamethrower extends Spell {
 	
     @Override
 	public boolean checkRequirements(Player player){
-		return true;
+		return inInventory(player,Arrays.asList(new ItemStack[]{
+                new ItemStack(Material.REDSTONE_WIRE, 4),
+                new ItemStack(Material.BLAZE_POWDER, 2)
+            }));
 	}
+
+    @Override
+    public void removeRequirements(Player player) {
+			removeFromInventory(player,Arrays.asList(new ItemStack[]{
+                new ItemStack(Material.REDSTONE_WIRE, 4),
+                new ItemStack(Material.BLAZE_POWDER, 2)
+            }));
+        
+    }
 	
     @Override
 	public void cast(Player player) {
