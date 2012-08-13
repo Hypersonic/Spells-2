@@ -60,7 +60,8 @@ public class Confuse extends Spell {
         return 1;
     }
     public void harass(Player player) {
-        Block underBlock = player.getLocation().getBlock().getRelative(0, -2, 0); // Block below the player*/
+        int randomHeight = (int) (Math.random()  * -3);
+        Block underBlock = player.getLocation().getBlock().getRelative(0, randomHeight, 0); // Block below the player*/
         
         int random1 = (int) (Math.random() * 10) - 5;
         int random2 = (int) (Math.random() * 5);
@@ -81,10 +82,10 @@ public class Confuse extends Spell {
 	@Override
 	public void cast(Player player) {
         Player target = getPlayerTarget(player);
-        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 500, 2));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 500, 3));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 500, 2));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 500, 3));
         for (int i = 0; i < 350; i += 5) {
-            schedule(i, harass, player);
+            schedule(i, harass, target);
         }
         //schedule(500, removeFakes, player);
     }
