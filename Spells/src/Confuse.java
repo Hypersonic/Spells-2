@@ -49,11 +49,11 @@ public class Confuse extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
-        if( inInventory(player,Arrays.asList(new ItemStack[]{
+        if( !inInventory(player,Arrays.asList(new ItemStack[]{
             new ItemStack(Material.REDSTONE_WIRE, 4),
             new ItemStack(Material.SPIDER_EYE, 2),
             new ItemStack(Material.EYE_OF_ENDER, 1)
-        }))) { return true; }
+        }))) { return false; }
         if (getPlayerTarget(player) == null) {
             player.sendMessage("Point at someone, you numbskull!");
             return false;
