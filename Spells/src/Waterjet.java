@@ -1,5 +1,9 @@
+import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
+
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Arrays;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -8,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
+import org.bukkit.inventory.ItemStack;
 
 import aor.spells.Spell;
 
@@ -36,8 +41,21 @@ public class Waterjet extends Spell {
 	}
 	
     @Override
+    public void removeRequirements(Player player) {
+        removeFromInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 4),
+            new ItemStack(Material.WATER_BUCKET, 1)
+        }));
+    }
+    @Override
 	public boolean checkRequirements(Player player){
-		if (player.getWorld().getEnvironment() == Environment.NETHER) {
+
+        if ( !inInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 4),
+            new ItemStack(Material.WATER_BUCKET, 1)
+        }))) { return false; }
+        
+        if (player.getWorld().getEnvironment() == Environment.NETHER) {
             player.sendMessage("You may not cast this spell in the Nether!");
             return false;
         } else {
