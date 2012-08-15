@@ -1,3 +1,6 @@
+import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
+
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Arrays;
