@@ -1,3 +1,5 @@
+import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import org.bukkit.Material;
 import org.bukkit.TreeType;
@@ -29,8 +31,8 @@ public class GiveMeATree extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
-		final Block target = player.getTargetBlock(null, MAXDISTANCE);
-        if (target.getType() == Material.GRASS || target.getType() == Material.DIRT) {
+		final Block targetBlock = player.getTargetBlock(null, MAXDISTANCE);
+        if (targetBlock.getType() == Material.GRASS || targetBlock.getType() == Material.DIRT) {
             return true;
         } else {
             return false;
