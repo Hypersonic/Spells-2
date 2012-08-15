@@ -1,3 +1,6 @@
+import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
+
 import java.util.Arrays;
 
 import org.bukkit.Location;
