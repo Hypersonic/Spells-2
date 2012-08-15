@@ -41,15 +41,18 @@ public final class SpellUtils {
 	public static void removeFromInventory(PlayerInventory inventory, Iterable<ItemStack> items){
 		for(ItemStack item:items){
 			int amountLeft=item.getAmount();
-			for(ItemStack inventoryItem:inventory){
-				int firstFound=inventory.first(item.getType());
-				if(inventory.getItem(firstFound).getAmount()>=amountLeft){
-					inventory.getItem(firstFound).setAmount(inventory.getItem(firstFound).getAmount()-amountLeft);
-					break;
-				}
-				else{
-					amountLeft-=inventory.getItem(inventory.first(item.getType())).getAmount();
-					inventory.clear(inventory.first(item.getType()));
+			for(int i=0;i<45;i++){
+				ItemStack inventoryItem=inventory.getItem(i);
+				if(inventoryItem.getType()==item.getType()){
+					if(inventoryItem.getAmount()>amountLeft){
+						inventoryItem.setAmount(inventoryItem.getAmount()-amountLeft);
+						break;
+					}
+					else{
+						amountLeft-=inventoryItem.getAmount();
+						inventory.remove(i);
+						if(amountLeft==0)break;
+					}
 				}
 			}
 		}
