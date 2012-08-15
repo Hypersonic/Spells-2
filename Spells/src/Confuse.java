@@ -43,7 +43,7 @@ public class Confuse extends Spell {
 	//}
 	@Override
 	public String getDescription() {
-		return "Gives 3 seconds of powerful regeneration to target player.";
+		return "Target player begins to hallucinate for 20 seconds.";
 	}
 	@Override
 	public boolean checkRequirements(Player player){
