@@ -1,10 +1,15 @@
+import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
+import static aor.spells.SpellUtils.getPlayerTarget;
+
+import java.util.Arrays;
+
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.Material;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import static aor.spells.SpellUtils.getPlayerTarget;
+import org.bukkit.inventory.ItemStack;
 
 import aor.spells.Spell;
 
@@ -30,6 +35,11 @@ public class Heal extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
+        
+		if ( !inInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 4),
+            new ItemStack(Material.GLOWSTONE_DUST, 1)
+        }))) { return false; }
         Player target = getPlayerTarget(player);
         if (target == null) {
             player.sendMessage("Point at someone, you numbskull!");
@@ -38,7 +48,10 @@ public class Heal extends Spell {
             return true;
         }
 	}
-
+    @Override
+    public void removeRequirements(Player player) {
+        
+    }
     @Override
     public int getCooldown() {
         return 1;
