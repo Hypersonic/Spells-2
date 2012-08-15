@@ -1,3 +1,6 @@
+import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
+
 import java.util.Arrays;
 
 import org.bukkit.block.Block;
@@ -31,7 +34,7 @@ public class Explosion extends Spell {
 	@Override
 	public boolean checkRequirements(Player player){
         if (!inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_DUST, 8),
+            new ItemStack(Material.REDSTONE_WIRE, 8),
             new ItemStack(Material.SULPHUR, 2),
             new ItemStack(Material.SAND, 10)
         }))) {
@@ -46,7 +49,11 @@ public class Explosion extends Spell {
 	}
     @Override
     public void removeRequirements(Player player) {
-			removeFromInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.REDSTONE_DUST, 8), new ItemStack(Material.SULPHUR, 2), new ItemStack(Material.SAND, 10)}));
+			removeFromInventory(player,Arrays.asList(new ItemStack[]{
+                new ItemStack(Material.REDSTONE_WIRE, 8),
+                new ItemStack(Material.SULPHUR, 2),
+                new ItemStack(Material.SAND, 10)
+            }));
     }
 	@Override
 	public void cast(Player player) {
