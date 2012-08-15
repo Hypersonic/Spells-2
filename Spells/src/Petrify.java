@@ -1,3 +1,8 @@
+import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
+
+import java.util.Arrays;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Creature;
@@ -6,6 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.entity.Tameable;
+import org.bukkit.inventory.ItemStack;
 
 import aor.spells.Spell;
 
@@ -27,6 +33,20 @@ public class Petrify extends Spell {
 	public String getDescription() {
 		return "Causes mobs around the player to turn into sand blocks.";
 	}
+    
+    @Override
+    public boolean checkRequirements(Player player) {
+        return inInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 8)
+        }));
+    }
+
+    @Override
+    public void removeRequirements(Player player) {
+        removeFromInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 8)
+        }));
+    }
 
 	@Override
 	public void cast(Player player) {
