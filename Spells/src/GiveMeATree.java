@@ -1,11 +1,14 @@
 import static aor.spells.SpellUtils.inInventory;
 import static aor.spells.SpellUtils.removeFromInventory;
 
+import java.util.Arrays;
+
 import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import aor.spells.Spell;
 
@@ -31,13 +34,24 @@ public class GiveMeATree extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
+		if ( inInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 2),
+            new ItemStack(Material.SAPLING, 1)
+        }))) { return true; }
 		final Block targetBlock = player.getTargetBlock(null, MAXDISTANCE);
         if (targetBlock.getType() == Material.GRASS || targetBlock.getType() == Material.DIRT) {
             return true;
         } else {
             return false;
         }
-	}
+    }
+    @Override
+    public void removeRequirements(Player player) {
+        removeFromInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 2),
+            new ItemStack(Material.SAPLING, 1)
+        }));
+    }
 	
 	@Override
 	public void cast(Player player) {
