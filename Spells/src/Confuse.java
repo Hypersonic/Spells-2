@@ -22,8 +22,6 @@ public class Confuse extends Spell {
     private Method harass;
     private Method removeFake;
 	
-    private ArrayList<Block> changedBlocks = new ArrayList<Block>();
-
     public Confuse(){	
 		try {
 			harass=Confuse.class.getMethod("harass", Player.class);
@@ -67,7 +65,6 @@ public class Confuse extends Spell {
         int random2 = (int) (Math.random() * 5);
         int random3 = (int) (Math.random() * 10) - 5;
         Block changedBlock = player.getLocation().getBlock().getRelative(random1, random2, random3);
-        changedBlocks.add(changedBlock);
         player.sendBlockChange(changedBlock.getLocation(), underBlock.getType(), (byte) 0);
         
         schedule(60, removeFake, player, changedBlock);
