@@ -34,10 +34,10 @@ public class GiveMeATree extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
-		if ( inInventory(player,Arrays.asList(new ItemStack[]{
+		if ( !inInventory(player,Arrays.asList(new ItemStack[]{
             new ItemStack(Material.REDSTONE_WIRE, 2),
             new ItemStack(Material.SAPLING, 1)
-        }))) { return true; }
+        }))) { return false; }
 		final Block targetBlock = player.getTargetBlock(null, MAXDISTANCE);
         if (targetBlock.getType() == Material.GRASS || targetBlock.getType() == Material.DIRT) {
             return true;
