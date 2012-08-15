@@ -1,3 +1,6 @@
+import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
+
 import java.util.List;
 import java.lang.Math;
 import java.util.Arrays;
@@ -36,15 +39,21 @@ public class GravityField extends Spell {
         return "A sphere of gravity appears around the caster, and pulls nearby mobs and players towards them.";
     }
 
-    //@Override
-    //public boolean checkRequirements(Player player) {
-        //return inInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.BONE, 1)}));
-    //}
+    @Override
+    public boolean checkRequirements(Player player) {
+        return inInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 16),
+            new ItemStack(Material.ENDER_PEARL, 16)
+        }));
+    }
 
-    //@Override
-    //public void removeRequirements(Player player) {
-        //removeFromInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.BONE, 1)}));
-    //}
+    @Override
+    public void removeRequirements(Player player) {
+        removeFromInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 16),
+            new ItemStack(Material.ENDER_PEARL, 16)
+        }));
+    }
 
     public void AttractEntities(Player player) {
         List<Entity> nearbyEntities = player.getNearbyEntities(RADIUS, RADIUS, RADIUS);
