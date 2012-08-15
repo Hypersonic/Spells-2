@@ -36,6 +36,7 @@ public class GiveMeATree extends Spell {
             return false;
         }
 	}
+	
 	@Override
 	public void cast(Player player) {
         final Block target = player.getTargetBlock(null, MAXDISTANCE);
