@@ -40,7 +40,10 @@ public final class Spells extends JavaPlugin implements Listener{
 			if(args.length!=0){
 				Spell spell=spells.getSpell(args[0]);
 				if(spell!=null){
-					sender.sendMessage(spell.getDescription());
+					if(spell.getDescription()==null){
+						sender.sendMessage(spell.getName()+" doesn't have a description!");
+					}
+					else sender.sendMessage(spell.getDescription());
 				}
 				else{
 					sender.sendMessage(args[0]+" isn't a valid spell! Please try again!");
@@ -250,6 +253,8 @@ public final class Spells extends JavaPlugin implements Listener{
 		}
 		for(Spell spell:loadedSpells){
 			if(spell.getName().contains(" "))log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because its name contains a space.");
+			else if(spell.getName()==null)log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because names cannot be null.");
+			else if(spell.getName()==null)log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because names cannot be empty.");
 			else if(spells.getSpell(spell.getName())==null)spells.place(spell,spell.getGroup());
 			else log.log(Level.WARNING, spell.getName()+" could not be loaded, because a spell with the same name was already loaded.");
 		}

@@ -29,19 +29,17 @@ public class GiveMeATree extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
-		final Block targetBlock = player.getTargetBlock(null, MAXDISTANCE);
+		final Block target = player.getTargetBlock(null, MAXDISTANCE);
         if (target.getType() == Material.GRASS || target.getType() == Material.DIRT) {
             return true;
         } else {
             return false;
         }
-}
 	}
 	@Override
 	public void cast(Player player) {
         final Block target = player.getTargetBlock(null, MAXDISTANCE);
         final Block above = target.getRelative(BlockFace.UP);
         target.getWorld().generateTree(above.getLocation(), TreeType.TREE);
-        }
     }
 }
