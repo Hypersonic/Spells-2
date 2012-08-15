@@ -1,6 +1,9 @@
+import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
+
 import java.lang.Math;
-import java.util.ArrayList;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -9,6 +12,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 
 import static aor.spells.SpellUtils.getPlayerTarget;
 
@@ -45,6 +49,11 @@ public class Confuse extends Spell {
 	}
 	@Override
 	public boolean checkRequirements(Player player){
+        if( inInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 4),
+            new ItemStack(Material.SPIDER_EYE, 2),
+            new ItemStack(Material.EYE_OF_ENDER, 1)
+        }))) { return true; }
         if (getPlayerTarget(player) == null) {
             player.sendMessage("Point at someone, you numbskull!");
             return false;
@@ -52,6 +61,14 @@ public class Confuse extends Spell {
             return true;
         }
 	}
+    @Override
+    public void removeRequirements(Player player) {
+        removeFromInventory(player,Arrays.asList(new ItemStack[]{
+            new ItemStack(Material.REDSTONE_WIRE, 4),
+            new ItemStack(Material.SPIDER_EYE, 2),
+            new ItemStack(Material.EYE_OF_ENDER, 1)
+        }));
+    }
 
     @Override
     public int getCooldown() {
