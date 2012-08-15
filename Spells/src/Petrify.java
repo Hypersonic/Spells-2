@@ -37,14 +37,14 @@ public class Petrify extends Spell {
     @Override
     public boolean checkRequirements(Player player) {
         return inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 8)
+            new ItemStack(Material.REDSTONE, 8)
         }));
     }
 
     @Override
     public void removeRequirements(Player player) {
         removeFromInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 8)
+            new ItemStack(Material.REDSTONE, 8)
         }));
     }
 

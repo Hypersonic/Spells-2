@@ -34,7 +34,7 @@ public class Explosion extends Spell {
 	@Override
 	public boolean checkRequirements(Player player){
         if (!inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 8),
+            new ItemStack(Material.REDSTONE, 8),
             new ItemStack(Material.SULPHUR, 2),
             new ItemStack(Material.SAND, 10)
         }))) {
@@ -50,7 +50,7 @@ public class Explosion extends Spell {
     @Override
     public void removeRequirements(Player player) {
 			removeFromInventory(player,Arrays.asList(new ItemStack[]{
-                new ItemStack(Material.REDSTONE_WIRE, 8),
+                new ItemStack(Material.REDSTONE, 8),
                 new ItemStack(Material.SULPHUR, 2),
                 new ItemStack(Material.SAND, 10)
             }));

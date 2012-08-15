@@ -45,7 +45,7 @@ public class Flamethrower extends Spell {
     @Override
 	public boolean checkRequirements(Player player){
 		return inInventory(player,Arrays.asList(new ItemStack[]{
-                new ItemStack(Material.REDSTONE_WIRE, 4),
+                new ItemStack(Material.REDSTONE, 4),
                 new ItemStack(Material.BLAZE_POWDER, 2)
             }));
 	}
@@ -53,7 +53,7 @@ public class Flamethrower extends Spell {
     @Override
     public void removeRequirements(Player player) {
 			removeFromInventory(player,Arrays.asList(new ItemStack[]{
-                new ItemStack(Material.REDSTONE_WIRE, 4),
+                new ItemStack(Material.REDSTONE, 4),
                 new ItemStack(Material.BLAZE_POWDER, 2)
             }));
         

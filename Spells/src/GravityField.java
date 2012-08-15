@@ -42,7 +42,7 @@ public class GravityField extends Spell {
     @Override
     public boolean checkRequirements(Player player) {
         return inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 16),
+            new ItemStack(Material.REDSTONE, 16),
             new ItemStack(Material.ENDER_PEARL, 16)
         }));
     }
@@ -50,7 +50,7 @@ public class GravityField extends Spell {
     @Override
     public void removeRequirements(Player player) {
         removeFromInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 16),
+            new ItemStack(Material.REDSTONE, 16),
             new ItemStack(Material.ENDER_PEARL, 16)
         }));
     }

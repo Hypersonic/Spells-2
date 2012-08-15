@@ -36,7 +36,7 @@ public class Cakeify extends Spell {
             new ItemStack(Material.SUGAR, 2),
             new ItemStack(Material.MILK_BUCKET, 1),
             new ItemStack(Material.EGG, 1),
-            new ItemStack(Material.REDSTONE_WIRE, 4)
+            new ItemStack(Material.REDSTONE, 4)
         }))) { return false; } 
         
         if (player.getTargetBlock(null, MAXDISTANCE).getType() == Material.AIR) {
@@ -56,7 +56,7 @@ public class Cakeify extends Spell {
                 new ItemStack(Material.SUGAR, 2),
                 new ItemStack(Material.MILK_BUCKET, 1),
                 new ItemStack(Material.EGG, 1),
-                new ItemStack(Material.REDSTONE_WIRE, 4)
+                new ItemStack(Material.REDSTONE, 4)
             }));
     
     }

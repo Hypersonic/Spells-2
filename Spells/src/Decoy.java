@@ -32,11 +32,11 @@ public class Decoy extends Spell {
     }
     @Override
     public boolean checkRequirements(Player player) {
-        return inInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE_WIRE, 2) }));
+        return inInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2) }));
     }
     @Override
     public void removeRequirements(Player player) {
-        removeFromInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE_WIRE, 2) }));
+        removeFromInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2) }));
     }
     @Override
     public void cast(Player player) {

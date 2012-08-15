@@ -50,7 +50,7 @@ public class Confuse extends Spell {
 	@Override
 	public boolean checkRequirements(Player player){
         if( !inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 4),
+            new ItemStack(Material.REDSTONE, 4),
             new ItemStack(Material.SPIDER_EYE, 2),
             new ItemStack(Material.EYE_OF_ENDER, 1)
         }))) { return false; }
@@ -64,7 +64,7 @@ public class Confuse extends Spell {
     @Override
     public void removeRequirements(Player player) {
         removeFromInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 4),
+            new ItemStack(Material.REDSTONE, 4),
             new ItemStack(Material.SPIDER_EYE, 2),
             new ItemStack(Material.EYE_OF_ENDER, 1)
         }));

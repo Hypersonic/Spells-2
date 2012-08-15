@@ -37,7 +37,7 @@ public class Heal extends Spell {
 	public boolean checkRequirements(Player player){
         
 		if ( !inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 4),
+            new ItemStack(Material.REDSTONE, 4),
             new ItemStack(Material.GLOWSTONE_DUST, 1)
         }))) { return false; }
         Player target = getPlayerTarget(player);
@@ -51,7 +51,7 @@ public class Heal extends Spell {
     @Override
     public void removeRequirements(Player player) {
         removeFromInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 4),
+            new ItemStack(Material.REDSTONE, 4),
             new ItemStack(Material.GLOWSTONE_DUST, 1)
         }));
     }

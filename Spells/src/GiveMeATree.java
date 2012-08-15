@@ -35,7 +35,7 @@ public class GiveMeATree extends Spell {
 	@Override
 	public boolean checkRequirements(Player player){
 		if ( !inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 2),
+            new ItemStack(Material.REDSTONE, 2),
             new ItemStack(Material.SAPLING, 1)
         }))) { return false; }
 		final Block targetBlock = player.getTargetBlock(null, MAXDISTANCE);
@@ -48,7 +48,7 @@ public class GiveMeATree extends Spell {
     @Override
     public void removeRequirements(Player player) {
         removeFromInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE_WIRE, 2),
+            new ItemStack(Material.REDSTONE, 2),
             new ItemStack(Material.SAPLING, 1)
         }));
     }
