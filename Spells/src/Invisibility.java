@@ -1,14 +1,14 @@
+import static aor.spells.SpellUtils.inInventory;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.Material;
 
 import aor.spells.Spell;
-import static aor.spells.SpellUtils.inInventory;
-import static aor.spells.SpellUtils.removeFromInventory;
 
 
 
@@ -40,7 +40,7 @@ public class Invisibility extends Spell {
 		}
 		@Override
 		public void removeRequirements(Player player) {
-			removeFromInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.BONE, 1)}));
+			player.getInventory().removeItem(new ItemStack[]{new ItemStack(Material.BONE, 1)});
 		}
 		public void undo(Player player){
 			for (Player players : Bukkit.getOnlinePlayers()) {

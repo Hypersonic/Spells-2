@@ -1,18 +1,16 @@
 import static aor.spells.SpellUtils.inInventory;
-import static aor.spells.SpellUtils.removeFromInventory;
 
-import java.util.List;
-import java.lang.Math;
-import java.util.Arrays;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
-import org.bukkit.util.Vector;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.Material;
-import org.bukkit.Location;
-import org.bukkit.Effect;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import aor.spells.Spell;
 
@@ -49,10 +47,10 @@ public class GravityField extends Spell {
 
     @Override
     public void removeRequirements(Player player) {
-        removeFromInventory(player,Arrays.asList(new ItemStack[]{
+        player.getInventory().removeItem(new ItemStack[]{
             new ItemStack(Material.REDSTONE, 16),
             new ItemStack(Material.ENDER_PEARL, 16)
-        }));
+        });
     }
 
     public void AttractEntities(Player player) {

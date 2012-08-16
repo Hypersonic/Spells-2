@@ -1,15 +1,13 @@
-import static aor.spells.SpellUtils.inInventory;
-import static aor.spells.SpellUtils.removeFromInventory;
 import static aor.spells.SpellUtils.getPlayerTarget;
+import static aor.spells.SpellUtils.inInventory;
 
 import java.util.Arrays;
 
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.inventory.ItemStack;
 
 import aor.spells.Spell;
 
@@ -50,10 +48,10 @@ public class Heal extends Spell {
 	}
     @Override
     public void removeRequirements(Player player) {
-        removeFromInventory(player,Arrays.asList(new ItemStack[]{
+        player.getInventory().removeItem(new ItemStack[]{
             new ItemStack(Material.REDSTONE, 4),
             new ItemStack(Material.GLOWSTONE_DUST, 1)
-        }));
+        });
     }
     @Override
     public int getCooldown() {

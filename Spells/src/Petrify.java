@@ -1,5 +1,4 @@
 import static aor.spells.SpellUtils.inInventory;
-import static aor.spells.SpellUtils.removeFromInventory;
 
 import java.util.Arrays;
 
@@ -43,9 +42,9 @@ public class Petrify extends Spell {
 
     @Override
     public void removeRequirements(Player player) {
-        removeFromInventory(player,Arrays.asList(new ItemStack[]{
+        player.getInventory().removeItem(new ItemStack[]{
             new ItemStack(Material.REDSTONE, 8)
-        }));
+        });
     }
 
 	@Override

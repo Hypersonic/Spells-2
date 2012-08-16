@@ -1,5 +1,4 @@
 import static aor.spells.SpellUtils.inInventory;
-import static aor.spells.SpellUtils.removeFromInventory;
 
 import java.lang.Math;
 import java.lang.reflect.Method;
@@ -10,8 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.Material;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import static aor.spells.SpellUtils.getPlayerTarget;
@@ -63,11 +60,11 @@ public class Confuse extends Spell {
 	}
     @Override
     public void removeRequirements(Player player) {
-        removeFromInventory(player,Arrays.asList(new ItemStack[]{
+        player.getInventory().removeItem(new ItemStack[]{
             new ItemStack(Material.REDSTONE, 4),
             new ItemStack(Material.SPIDER_EYE, 2),
             new ItemStack(Material.EYE_OF_ENDER, 1)
-        }));
+        });
     }
 
     @Override

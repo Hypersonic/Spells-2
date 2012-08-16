@@ -1,5 +1,4 @@
 import static aor.spells.SpellUtils.inInventory;
-import static aor.spells.SpellUtils.removeFromInventory;
 
 import java.util.Arrays;
 
@@ -36,7 +35,7 @@ public class Decoy extends Spell {
     }
     @Override
     public void removeRequirements(Player player) {
-        removeFromInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2) }));
+        player.getInventory().removeItem(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2) });
     }
     @Override
     public void cast(Player player) {

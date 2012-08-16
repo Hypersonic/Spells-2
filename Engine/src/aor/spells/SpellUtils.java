@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -16,46 +17,24 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.Vector;
 
 public final class SpellUtils {
-	public static boolean inInventory(Player player, Iterable<ItemStack> items){
-		return inInventory(player.getInventory(),items);
+	public static boolean inInventory(Player player, ItemStack... items){
+		return inInventory(player, Arrays.asList(items));
 	}
-	public static boolean inInventory(PlayerInventory inventory, Iterable<ItemStack> items){
+	public static boolean inInventory(Player player, Iterable<ItemStack> items){
+		if(player.getGameMode().equals(GameMode.CREATIVE))return true;
+		PlayerInventory inventory=player.getInventory();
 		Outer:
 		for(ItemStack item:items){
-			if(!inventory.contains(item,item.getAmount())){
-				int needed=item.getAmount();
-				for(ItemStack inventoryItem:inventory){
-					if(inventoryItem.getType()==item.getType()){
-						if(inventoryItem.getAmount()<needed)needed-=inventoryItem.getAmount();
-						else continue Outer;
-					}
+			int needed=item.getAmount();
+			for(ItemStack inventoryItem:inventory){
+				if(inventoryItem!=null&&inventoryItem.getType().equals(item.getType())){
+					if(inventoryItem.getAmount()<needed)needed-=inventoryItem.getAmount();
+					else continue Outer;
 				}
-				return false;
 			}
+			return false;
 		}
 		return true;
-	}
-	public static void removeFromInventory(Player player, Iterable<ItemStack> items){
-		removeFromInventory(player.getInventory(),items);
-	}
-	public static void removeFromInventory(PlayerInventory inventory, Iterable<ItemStack> items){
-		for(ItemStack item:items){
-			int amountLeft=item.getAmount();
-			for(int i=0;i<45;i++){
-				ItemStack inventoryItem=inventory.getItem(i);
-				if(inventoryItem.getType()==item.getType()){
-					if(inventoryItem.getAmount()>amountLeft){
-						inventoryItem.setAmount(inventoryItem.getAmount()-amountLeft);
-						break;
-					}
-					else{
-						amountLeft-=inventoryItem.getAmount();
-						inventory.remove(i);
-						if(amountLeft==0)break;
-					}
-				}
-			}
-		}
 	}
 	public static Player getPlayerTarget(Player player, boolean needsLineOfSight){
 		Entity result=getTarget(player,100,.5,needsLineOfSight,Arrays.asList(new Class<?>[]{Player.class}));
@@ -70,9 +49,9 @@ public final class SpellUtils {
 	public static Entity getTarget(LivingEntity player,int maxDistance, double maxRadiansOff,boolean needsLineOfSight,Collection<Class<?>> allowedEntityClasses){
 		maxRadiansOff=cos(maxRadiansOff);
 		List<Entity> nearbyEntities=player.getNearbyEntities(maxDistance, maxDistance, maxDistance);
-		double yaw=player.getLocation().getYaw();
-		double pitch=player.getLocation().getPitch();
-		Vector playerDirection=new Vector(cos(yaw)*cos(pitch),sin(yaw), cos(yaw)*sin(pitch)).normalize();
+		//double yaw=player.getLocation().getYaw();
+		//double pitch=player.getLocation().getPitch();
+		Vector playerDirection=player.getLocation().getDirection();//new Vector(cos(yaw)*cos(pitch),sin(yaw), cos(yaw)*sin(pitch)).normalize();
 		double nearestAngle=maxRadiansOff;
 		Entity bestEntity=null;
 		for(Entity entity:nearbyEntities){
