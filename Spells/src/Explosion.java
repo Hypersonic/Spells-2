@@ -1,7 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
 
-import java.util.Arrays;
-
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.Material;
