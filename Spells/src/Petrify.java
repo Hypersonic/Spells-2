@@ -1,7 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
 
-import java.util.Arrays;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Creature;
@@ -39,16 +37,12 @@ public class Petrify extends Spell {
     
     @Override
     public boolean checkRequirements(Player player) {
-        return inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 8)
-        }));
+        return inInventory(player,new ItemStack(Material.REDSTONE, 8));
     }
 
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 8)
-        });
+        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 8));
     }
 
 	@Override

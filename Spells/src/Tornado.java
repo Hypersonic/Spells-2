@@ -13,9 +13,7 @@ import aor.spells.Spell;
 
 
 public class Tornado extends Spell {
-
     private final Method cast=getMethod("cast"); // We're doing this through recursion, bitches.
-    private static final ItemStack[] reqs={new ItemStack(Material.REDSTONE, 4), new ItemStack(Material.GHAST_TEAR, 2)};
     //private static final double DILUTEAMOUNT = 10.0;
     private static final double MAGNITUDE = 0.5;
     private static final double RADIUS = 10;
@@ -34,13 +32,13 @@ public class Tornado extends Spell {
 
     @Override
     public boolean checkRequirements(Player player) {
-    	if(inInventory(player,reqs))return true;
+    	if(inInventory(player,new ItemStack(Material.REDSTONE, 4), new ItemStack(Material.GHAST_TEAR, 2)))return true;
     	return false;
     }
 
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(reqs);
+        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 4), new ItemStack(Material.GHAST_TEAR, 2));
     }
 
     public void cast(Player player) {

@@ -11,7 +11,6 @@ import aor.spells.Spell;
  * Causes an explosion at the block the player is pointing at.
  */
 public class Explosion extends Spell {
-	private static final ItemStack[] itemreqs={new ItemStack(Material.REDSTONE, 8),new ItemStack(Material.SULPHUR, 2),new ItemStack(Material.SAND, 10)};
 	private static final int MAXDISTANCE = 200;
 
 	public Explosion(){	
@@ -34,7 +33,7 @@ public class Explosion extends Spell {
     }
 	@Override
 	public boolean checkRequirements(Player player){
-        if (!inInventory(player,itemreqs)){
+        if (!inInventory(player,new ItemStack(Material.REDSTONE, 8),new ItemStack(Material.SULPHUR, 2),new ItemStack(Material.SAND, 10))){
             return false;
         }
 
@@ -46,7 +45,7 @@ public class Explosion extends Spell {
 	}
     @Override
     public void removeRequirements(Player player) {
-			player.getInventory().removeItem(itemreqs);
+			player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 8),new ItemStack(Material.SULPHUR, 2),new ItemStack(Material.SAND, 10));
     }
 	@Override
 	public void cast(Player player) {

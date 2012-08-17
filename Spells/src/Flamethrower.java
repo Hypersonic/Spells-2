@@ -2,13 +2,12 @@ import static aor.spells.SpellUtils.inInventory;
 
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Arrays;
 
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import aor.spells.Spell;
@@ -20,16 +19,10 @@ public class Flamethrower extends Spell {
 
 	private static final int MAXDISTANCE = 12;
     private static final double SPREADMULTIPLIER = 3.5; // Multiplier for the distance to spread as it gets farther from the player
-    private Method ignite;
+    private final Method ignite=getMethod("ignite",Player.class);
 	
     
-    public Flamethrower(){
-		try {
-			ignite=Flamethrower.class.getMethod("ignite", Player.class);
-		} catch (Exception e) {
-            assert false:"Who broke it???";
-        }
-	}
+    public Flamethrower(){}
 	
     @Override
 	public String getName() {
@@ -47,18 +40,12 @@ public class Flamethrower extends Spell {
     }
     @Override
 	public boolean checkRequirements(Player player){
-		return inInventory(player,Arrays.asList(new ItemStack[]{
-                new ItemStack(Material.REDSTONE, 4),
-                new ItemStack(Material.BLAZE_POWDER, 2)
-            }));
+		return inInventory(player,new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.BLAZE_POWDER, 2));
 	}
 
     @Override
     public void removeRequirements(Player player) {
-			player.getInventory().removeItem(new ItemStack[]{
-                new ItemStack(Material.REDSTONE, 4),
-                new ItemStack(Material.BLAZE_POWDER, 2)
-            });
+			player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.BLAZE_POWDER, 2));
         
     }
 	

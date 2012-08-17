@@ -2,6 +2,9 @@ name: Spells
 main: aor.spells.Spells
 version: 2.0
 commands:
+   s:
+      description: "This command is used for all spells commands. The first argument is the name of the spells command you wish to use. Other arguments are arguements for the commands and something not recognized results in help being displayed."
+      usage: /spells [command name] [args...]
    spells:
       description: "This command is used for all spells commands. The first argument is the name of the spells command you wish to use. Other arguments are arguements for the commands and something not recognized results in help being displayed."
       usage: /spells [command name] [args...]

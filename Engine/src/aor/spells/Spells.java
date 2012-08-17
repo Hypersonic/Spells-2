@@ -42,7 +42,7 @@ public final class Spells extends JavaPlugin implements Listener{
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label,String[] args) {
-		if(command.getName().equalsIgnoreCase("spells")){
+		if(command.getName().equalsIgnoreCase("spells")||command.getName().equalsIgnoreCase("s")){
 			String name="help";
 			if(args.length>0){
 				name=args[0];
@@ -80,7 +80,9 @@ public final class Spells extends JavaPlugin implements Listener{
 						Object spellOrGroup=spellBook.getCurrentSpellOrGroup();
 						if(player.getItemInHand().getType().equals(Material.GOLD_HOE)){
 							if(spellOrGroup instanceof Spell){
-								Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent((Spell)spellOrGroup,player));
+								final Spell spell=(Spell) spellOrGroup;
+								if(!player.isPermissionSet("spells."+spell.getGroup()+"."+spell.getName())||player.hasPermission("spells."+spell.getGroup()+"."+spell.getName()))Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
+								else player.sendMessage("You do not have the required permissions to use this spell!");
 							}
 							else{
 								player.sendMessage("You can't use cast unless you provide a spellname as an argument or you have a spell selected.");
@@ -93,11 +95,10 @@ public final class Spells extends JavaPlugin implements Listener{
 					else{
 						Spell spell=spells.getSpell(args[0]);
 						if(spell!=null){
-							Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
+							if(!player.isPermissionSet("spells."+spell.getGroup()+"."+spell.getName())||player.hasPermission("spells."+spell.getGroup()+"."+spell.getName()))Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
+							else player.sendMessage("You do not have the required permissions to use this spell!");
 						}
-						else{
-							player.sendMessage("That spell doesn't exist!");
-						}
+						else player.sendMessage("That spell doesn't exist!");
 					}
 				}
 				else sender.sendMessage("The console can't cast spells! That wouldn't make sense!");
@@ -183,10 +184,11 @@ public final class Spells extends JavaPlugin implements Listener{
 				}
 				else sender.sendMessage("The console can't have a spell or spell group selected! That wouldn't make sense!");
 			}
-			else{
-				sender.sendMessage("Spells Help - These commands are not case sensitive:");
+			else if(name.equalsIgnoreCase("help")){
+				sender.sendMessage("Spells Help - These commands are not case sensitive. You may use either /spells or /s in each example:");
 				sender.sendMessage("/Spells cast [spellname] - Casts the currently selected spell or the spell provided as an argument. ");
 				sender.sendMessage("/Spells current - Displays the name of the currently selected spell and its description.");
+				sender.sendMessage("/Spells help - Displays this message");
 				sender.sendMessage("/Spells in - Goes into the currently selected spellgroup.");
 				sender.sendMessage("/Spells info [spellname] - Displays information about the currently selected spell or the spell provided as an argument.");
 				sender.sendMessage("/Spells next - Selects the next spell. Equivalent to right clicking with a scepter.");
@@ -194,6 +196,9 @@ public final class Spells extends JavaPlugin implements Listener{
 				sender.sendMessage("/Spells prev[ious] - selects the previous spell.");
 				sender.sendMessage("/Spells selectspell spellname - selects the spell provided as an argument");
 				sender.sendMessage("For more information, see our wiki at https://github.com/Hypersonic/Spells-2/wiki");
+			}
+			else{
+				sender.sendMessage(name+" isn't a known command! Type /spells help or /s help for a list of commands.");
 			}
 			return true;
 		}
@@ -324,7 +329,8 @@ public final class Spells extends JavaPlugin implements Listener{
 				Spell spell=(Spell)spellOrGroup;
 				if(action.equals(Action.LEFT_CLICK_AIR)||action.equals(Action.LEFT_CLICK_BLOCK)){
 					e.setCancelled(true);
-					Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
+					if(!player.isPermissionSet("spells."+spell.getGroup()+"."+spell.getName())||player.hasPermission("spells."+spell.getGroup()+"."+spell.getName()))Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
+					else player.sendMessage("You do not have the required permissions to use this spell!");
 				}
 				else if(action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)){
 					e.setCancelled(true);
@@ -369,13 +375,13 @@ public final class Spells extends JavaPlugin implements Listener{
 		final Player player=e.getPlayer();
 		final SpellBook spellBook=spellBooks.get(player);
 		if(!spell.checkRequirements(e.getPlayer())){
-			player.sendMessage(ChatColor.RED+"You cannot cast "+spell.getName()+", because you do not meet the requirements.");
+			player.sendMessage(ChatColor.RED+"You cannot cast "+spell.getName().replaceAll("_"," ")+", because you do not meet the requirements.");
 			player.sendMessage(ChatColor.RED+spell.getRequirements());
 			e.setCancelled(true);
 			return;
 		}
 		else if(spellBook.hasCooldown(spell)){
-			player.sendMessage(ChatColor.RED+"You cannot cast, because theis spell has a cooldown of "+(spell.getCooldown()/20.0)+"seconds.");
+			player.sendMessage(ChatColor.RED+spell.getCooldownMessage());
 			e.setCancelled(false);
 			return;
 		}

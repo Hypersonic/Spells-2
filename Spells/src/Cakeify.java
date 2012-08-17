@@ -1,7 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
 
-import java.util.Arrays;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -36,33 +34,32 @@ public class Cakeify extends Spell {
 	@Override
 	public boolean checkRequirements(Player player){
 
-        if(!inInventory(player,Arrays.asList(new ItemStack[]{
+        if(!inInventory(player,
             new ItemStack(Material.WHEAT, 3),
             new ItemStack(Material.SUGAR, 2),
             new ItemStack(Material.MILK_BUCKET, 1),
             new ItemStack(Material.EGG, 1),
             new ItemStack(Material.REDSTONE, 4)
-        }))) { return false; } 
+        ))return false;
         
         if (player.getTargetBlock(null, MAXDISTANCE).getType() == Material.AIR) {
             player.sendMessage("Nothing in range!");
             return false;
         } else if (player.getTargetBlock(null, MAXDISTANCE).getType() == Material.BEDROCK) {
+        	player.sendMessage("You cannot target bedrock!");
             return false;
-        } else {
-            return true;
         }
+        return true;
 	}
 	
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack[]{
+        player.getInventory().removeItem(
                 new ItemStack(Material.WHEAT, 3),
                 new ItemStack(Material.SUGAR, 2),
                 new ItemStack(Material.MILK_BUCKET, 1),
                 new ItemStack(Material.EGG, 1),
-                new ItemStack(Material.REDSTONE, 4)
-            });
+                new ItemStack(Material.REDSTONE, 4));
     
     }
     @Override

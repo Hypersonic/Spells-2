@@ -33,6 +33,9 @@ public abstract class Spell implements Listener {
 	public String getGroup(){
 		return "";
 	}
+	public String getCooldownMessage(){
+		return "You cannot cast, because theis spell has a cooldown of "+getCooldown()/20.0+" seconds.";
+	}
 	public boolean checkRequirements(Player player){
 		return true;
 	}

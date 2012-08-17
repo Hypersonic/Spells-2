@@ -1,7 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
 
-import java.util.Arrays;
-
 import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.block.Block;
@@ -37,23 +35,14 @@ public class GiveMeATree extends Spell {
     }
 	@Override
 	public boolean checkRequirements(Player player){
-		if ( !inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 2),
-            new ItemStack(Material.SAPLING, 1)
-        }))) { return false; }
+		if ( !inInventory(player,new ItemStack(Material.REDSTONE, 2),new ItemStack(Material.SAPLING, 1)))return false;
 		final Block targetBlock = player.getTargetBlock(null, MAXDISTANCE);
-        if (targetBlock.getType() == Material.GRASS || targetBlock.getType() == Material.DIRT) {
-            return true;
-        } else {
-            return false;
-        }
+        if (!(targetBlock.getType() == Material.GRASS || targetBlock.getType() == Material.DIRT))return true;
+        return true;
     }
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 2),
-            new ItemStack(Material.SAPLING, 1)
-        });
+        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 2),new ItemStack(Material.SAPLING, 1));
     }
 	
 	@Override

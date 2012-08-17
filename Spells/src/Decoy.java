@@ -1,14 +1,12 @@
 import static aor.spells.SpellUtils.inInventory;
 
-import java.util.Arrays;
-
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import aor.spells.Spell;
@@ -27,7 +25,7 @@ public class Decoy extends Spell {
     }
     @Override
     public String getDescription() {
-        return "Spawns a decoy mob that draws the attention of nearby mobs.";
+        return "Spawns a decoy cow that draws the attention of nearby mobs.";
     }
     @Override
     public String getRequirements() {
@@ -35,11 +33,11 @@ public class Decoy extends Spell {
     }
     @Override
     public boolean checkRequirements(Player player) {
-        return inInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2) }));
+        return inInventory(player,new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2));
     }
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2) });
+        player.getInventory().removeItem(new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2));
     }
     @Override
     public void cast(Player player) {

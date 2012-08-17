@@ -19,7 +19,6 @@ import aor.spells.Spell;
  */
 public class Waterjet extends Spell {
 	private final Method douse=getMethod("douse",Player.class);
-	private static final ItemStack[] reqs={new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.WATER_BUCKET, 1)};
 	private static final int MAXDISTANCE = 16;
 	public Waterjet(){}
 	
@@ -39,11 +38,11 @@ public class Waterjet extends Spell {
 	
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(reqs);
+        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.WATER_BUCKET, 1));
     }
     @Override
 	public boolean checkRequirements(Player player){
-        if (!inInventory(player,reqs)){
+        if (!inInventory(player,new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.WATER_BUCKET, 1))){
         	return false;
         }
         

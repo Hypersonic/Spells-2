@@ -1,8 +1,6 @@
 import static aor.spells.SpellUtils.getPlayerTarget;
 import static aor.spells.SpellUtils.inInventory;
 
-import java.util.Arrays;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,25 +35,17 @@ public class Heal extends Spell {
     }
 	@Override
 	public boolean checkRequirements(Player player){
-        
-		if ( !inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 4),
-            new ItemStack(Material.GLOWSTONE_DUST, 1)
-        }))) { return false; }
+		if ( !inInventory(player,new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.GLOWSTONE_DUST, 1)))return false;
         Player target = getPlayerTarget(player);
         if (target == null) {
             player.sendMessage("Point at someone, you numbskull!");
             return false;
-        } else {
-            return true;
         }
+        return true;
 	}
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 4),
-            new ItemStack(Material.GLOWSTONE_DUST, 1)
-        });
+        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.GLOWSTONE_DUST, 1));
     }
     @Override
     public int getCooldown() {
@@ -64,10 +54,10 @@ public class Heal extends Spell {
 	@Override
 	public void cast(Player player) {
         Player target = getPlayerTarget(player);
-        player.sendMessage("Good work, you targetted something");
+        player.sendMessage("Good work, you targetted something");//TODO I don't think we should send the player so many messages and this is quite unnecesary.
         player.sendMessage("Their old health was: " + target.getHealth());
         target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 60, 1));
-        player.sendMessage("Their new health is: " + target.getHealth());
+        player.sendMessage("Their new health is: " + target.getHealth());//TODO does this really change?
         target.sendMessage("Tada, healification!");
     }
 }

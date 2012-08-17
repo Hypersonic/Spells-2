@@ -1,7 +1,7 @@
 package aor.spells;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 public abstract class SpellSet {
-	public abstract ArrayList<Spell> getSpells();
+	public abstract Collection<Spell> getSpells();
 }

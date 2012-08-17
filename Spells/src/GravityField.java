@@ -1,7 +1,6 @@
 import static aor.spells.SpellUtils.inInventory;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Effect;
@@ -43,18 +42,12 @@ public class GravityField extends Spell {
     }
     @Override
     public boolean checkRequirements(Player player) {
-        return inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 16),
-            new ItemStack(Material.ENDER_PEARL, 16)
-        }));
+        return inInventory(player,new ItemStack(Material.REDSTONE, 16),new ItemStack(Material.ENDER_PEARL, 16));
     }
 
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 16),
-            new ItemStack(Material.ENDER_PEARL, 16)
-        });
+        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 16), new ItemStack(Material.ENDER_PEARL, 16));
     }
 
     public void AttractEntities(Player player) {

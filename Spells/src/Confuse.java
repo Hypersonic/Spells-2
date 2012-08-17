@@ -1,17 +1,14 @@
+import static aor.spells.SpellUtils.getPlayerTarget;
 import static aor.spells.SpellUtils.inInventory;
 
-import java.lang.Math;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.inventory.ItemStack;
-
-import static aor.spells.SpellUtils.getPlayerTarget;
 
 import aor.spells.Spell;
 
@@ -20,17 +17,10 @@ import aor.spells.Spell;
  */
 public class Confuse extends Spell {
 
-    private Method harass;
-    private Method removeFake;
+    private final Method harass=getMethod("harass");
+    private final Method removeFake=getMethod("removeFake");
 	
-    public Confuse(){	
-		try {
-			harass=Confuse.class.getMethod("harass", Player.class);
-			removeFake=Confuse.class.getMethod("removeFake", Player.class, Block.class);
-		} catch (Exception e) {
-            assert false:"Who broke it???";
-        }
-	}
+    public Confuse(){}
 
 	@Override
 	public String getName() {
@@ -50,25 +40,16 @@ public class Confuse extends Spell {
     }
 	@Override
 	public boolean checkRequirements(Player player){
-        if( !inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 4),
-            new ItemStack(Material.SPIDER_EYE, 2),
-            new ItemStack(Material.EYE_OF_ENDER, 1)
-        }))) { return false; }
+        if( !inInventory(player,new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.SPIDER_EYE, 2),new ItemStack(Material.EYE_OF_ENDER, 1)))return false;
         if (getPlayerTarget(player) == null) {
             player.sendMessage("Point at someone, you numbskull!");
             return false;
-        } else {
-            return true;
         }
+        return true;
 	}
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 4),
-            new ItemStack(Material.SPIDER_EYE, 2),
-            new ItemStack(Material.EYE_OF_ENDER, 1)
-        });
+        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.SPIDER_EYE, 2),new ItemStack(Material.EYE_OF_ENDER, 1));
     }
 
     @Override

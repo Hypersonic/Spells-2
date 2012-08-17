@@ -2,7 +2,7 @@ import static aor.spells.SpellUtils.inInventory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,12 +14,8 @@ import aor.spells.SpellSet;
 
 public class ExampleSpellSet extends SpellSet{
 	public class ExampleSpell extends Spell {
-		private Method sendMessage;
-		public ExampleSpell(){
-			try {
-				sendMessage=ExampleSpell.class.getMethod("sendMessage", Player.class);
-			} catch (Exception e) {assert false:"Who broke it???";}
-		}
+		private Method sendMessage=getMethod("sendMessage",Player.class);
+		public ExampleSpell(){}
 		@Override
 		public String getName() {
 			return "Example Spell";
@@ -38,11 +34,11 @@ public class ExampleSpellSet extends SpellSet{
 		}
 		@Override
 		public boolean checkRequirements(Player player) {
-			return inInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.BONE, 1)}));
+			return inInventory(player,new ItemStack(Material.BONE, 1));
 		}
 		@Override
 		public void removeRequirements(Player player) {
-			player.getInventory().removeItem(new ItemStack[]{new ItemStack(Material.BONE, 1)});
+			player.getInventory().removeItem(new ItemStack(Material.BONE, 1));
 		}
 		public void sendMessage(Player player){
 			player.sendMessage(""+ChatColor.LIGHT_PURPLE+ChatColor.BOLD+"You cast ExampleSpell 10 seconds ago!");
@@ -50,7 +46,7 @@ public class ExampleSpellSet extends SpellSet{
 	}
 
 	@Override
-	public ArrayList<Spell> getSpells() {
+	public Collection<Spell> getSpells() {
 		ArrayList<Spell> result=new ArrayList<Spell>();
 		result.add(new ExampleSpell());
 		return result;
