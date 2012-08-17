@@ -13,12 +13,15 @@ import org.bukkit.inventory.*;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import aor.spells.Spell;
 
 
 public class MidasTouch extends Spell{
+	private static final HashSet<Material> allowedBlocks=new HashSet<Material>(Arrays.asList(new Material[]{Material.BED_BLOCK,Material.BEDROCK,Material.BOAT,Material.BOOKSHELF,Material.BRICK,Material.BRICK,Material.CAKE_BLOCK,Material.COAL_ORE,Material.COBBLESTONE,Material.COBBLESTONE_STAIRS,Material.DEAD_BUSH,Material.DIAMOND_BLOCK,Material.DIAMOND_ORE,Material.DIRT,Material.FENCE,Material.GLASS,Material.GLOWING_REDSTONE_ORE,Material.GLOWSTONE,Material.GOLD_ORE,Material.GRASS,Material.GRAVEL,Material.ICE,Material.IRON_BLOCK,Material.IRON_DOOR_BLOCK,Material.IRON_ORE,Material.JACK_O_LANTERN,Material.LAPIS_BLOCK,Material.LAPIS_ORE,Material.LAVA,Material.LEAVES,Material.MOSSY_COBBLESTONE,Material.NETHERRACK,Material.OBSIDIAN,Material.PUMPKIN,Material.REDSTONE_ORE,Material.SAND,Material.SNOW_BLOCK,Material.SOIL,Material.SOUL_SAND,Material.STATIONARY_LAVA,Material.STATIONARY_WATER,Material.STEP,Material.STONE,Material.SUGAR_CANE_BLOCK,Material.TNT,Material.TRAP_DOOR,Material.WOOD,Material.LOG,Material.WOOD_STAIRS,Material.WOODEN_DOOR,Material.WOOL,Material.WORKBENCH}));
 	private final Method removeMidas=getMethod("removeMidas");
 	private ArrayList<Player> players=new ArrayList<Player>(0);
 	private HashMap<Player,ArrayList<Location>> locations=new HashMap<Player,ArrayList<Location>>();
@@ -108,7 +111,7 @@ public class MidasTouch extends Spell{
 		}
 	}
 	public void changeToGold(Block block,Player player){
-		if(block.getType()==Material.BED_BLOCK||block.getType()==Material.BEDROCK||block.getType()==Material.BOAT||block.getType()==Material.BOOKSHELF||block.getType()==Material.BRICK||block.getType()==Material.BRICK||block.getType()==Material.CAKE_BLOCK||block.getType()==Material.COAL_ORE||block.getType()==Material.COBBLESTONE||block.getType()==Material.COBBLESTONE_STAIRS||block.getType()==Material.DEAD_BUSH||block.getType()==Material.DIAMOND_BLOCK||block.getType()==Material.DIAMOND_ORE||block.getType()==Material.DIRT||block.getType()==Material.FENCE||block.getType()==Material.GLASS||block.getType()==Material.GLOWING_REDSTONE_ORE||block.getType()==Material.GLOWSTONE||block.getType()==Material.GOLD_ORE||block.getType()==Material.GRASS||block.getType()==Material.GRAVEL||block.getType()==Material.ICE||block.getType()==Material.IRON_BLOCK||block.getType()==Material.IRON_DOOR_BLOCK||block.getType()==Material.IRON_ORE||block.getType()==Material.JACK_O_LANTERN||block.getType()==Material.LAPIS_BLOCK||block.getType()==Material.LAPIS_ORE||block.getType()==Material.LAVA||block.getType()==Material.LEAVES||block.getType()==Material.MOSSY_COBBLESTONE||block.getType()==Material.NETHERRACK||block.getType()==Material.OBSIDIAN||block.getType()==Material.PUMPKIN||block.getType()==Material.REDSTONE_ORE||block.getType()==Material.SAND||block.getType()==Material.SNOW_BLOCK||block.getType()==Material.SOIL||block.getType()==Material.SOUL_SAND||block.getType()==Material.STATIONARY_LAVA||block.getType()==Material.STATIONARY_WATER||block.getType()==Material.STEP||block.getType()==Material.STONE||block.getType()==Material.SUGAR_CANE_BLOCK||block.getType()==Material.TNT||block.getType()==Material.TRAP_DOOR||block.getType()==Material.WOOD||block.getType()==Material.LOG||block.getType()==Material.WOOD_STAIRS||block.getType()==Material.WOODEN_DOOR||block.getType()==Material.WOOL||block.getType()==Material.WORKBENCH){
+		if(allowedBlocks.contains(block.getType())){
 			locations.get(player).add(block.getLocation());
 			materials.get(player).add(block.getType());
 			bytes.get(player).add(block.getData());

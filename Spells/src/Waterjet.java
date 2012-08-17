@@ -74,7 +74,6 @@ public class Waterjet extends Spell {
                     douseBlocks.add(block.getRelative(face, i));
                 }
             }
-            
         }
         Location playerLoc = player.getLocation();
         for (Block block : douseBlocks) {
