@@ -17,7 +17,7 @@ import org.bukkit.util.Vector;
 
 public final class SpellUtils {
 	public static boolean inInventory(Player player, ItemStack... items){
-		return inInventory(player, Arrays.asList(items));
+		return inInventory(player, items);
 	}
 	public static boolean inInventory(Player player, Iterable<ItemStack> items){
 		if(player.getGameMode().equals(GameMode.CREATIVE))return true;
