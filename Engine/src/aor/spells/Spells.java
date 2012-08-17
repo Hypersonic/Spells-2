@@ -42,146 +42,158 @@ public final class Spells extends JavaPlugin implements Listener{
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label,String[] args) {
-		if(command.getName().equalsIgnoreCase("spellinfo")){
-			if(args.length!=0){
-				Spell spell=spells.getSpell(args[0]);
-				if(spell!=null){
-					if(spell.getDescription()==null){
-						sender.sendMessage(spell.getName()+" doesn't have a description!");
-					}
-					else sender.sendMessage(spell.getDescription());
-				}
-				else{
-					sender.sendMessage(args[0]+" isn't a valid spell! Please try again!");
-				}
+		if(command.getName().equalsIgnoreCase("spells")){
+			String name="help";
+			if(args.length>0){
+				name=args[0];
+				args=Arrays.copyOfRange(args, 1, args.length);
 			}
-			else if(sender instanceof Player){
-				final Player player=((Player)sender);
-				Object spellOrGroup= spellBooks.get(player).getCurrentSpellOrGroup();
-				if(spellOrGroup instanceof Spell){
-					player.sendMessage(((Spell)spellOrGroup).getDescription());
-				}
-				else{
-					player.sendMessage("You must have a spell selected to be able to use spellinfo with no argument!");
-				}
-			}
-			else {
-				sender.sendMessage("You cannot use spellinfo from the commandline without giving a spell as an argument!");
-			}
-			return true;
-		}
-		else if(command.getName().equalsIgnoreCase("cast")){
-			if(sender instanceof Player){
-				final Player player=(Player)sender;
-				if(args.length==0){
-					final SpellBook spellBook=spellBooks.get(player);
-					Object spellOrGroup=spellBook.getCurrentSpellOrGroup();
-					if(spellOrGroup instanceof Spell){
-						Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent((Spell)spellOrGroup,player));
-					}
-					else{
-						player.sendMessage("You can't use cast unless you provide a spellname as an argument or you have a spell selected.");
-					}
-				}
-				else{
+			if(name.equalsIgnoreCase("info")){
+				if(args.length!=0){
 					Spell spell=spells.getSpell(args[0]);
 					if(spell!=null){
-						Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
+						if(spell.getDescription()==null){
+							sender.sendMessage(spell.getName()+" doesn't have a description!");
+						}
+						else sender.sendMessage(spell.getDescription());
 					}
-					else{
-						player.sendMessage("That spell doesn't exist!");
-					}
+					else sender.sendMessage(args[0]+" isn't a valid spell! Please try again!");
 				}
-			}
-			else{
-				sender.sendMessage("The console can't cast spells! That wouldn't make sense!");
-			}
-			return true;
-		}
-		else if(command.getName().equalsIgnoreCase("goin")){
-			if(sender instanceof Player){
-				final Player player=(Player)sender;
-				if(args.length==0){
-					final SpellBook spellBook=spellBooks.get(player);
-					Object spellOrGroup=spellBook.getCurrentSpellOrGroup();
+				else if(sender instanceof Player){
+					final Player player=((Player)sender);
+					Object spellOrGroup= spellBooks.get(player).getCurrentSpellOrGroup();
 					if(spellOrGroup instanceof Spell){
-						player.sendMessage("You can't go into a spell! You need to select a spellgroup first.");
+						player.sendMessage(((Spell)spellOrGroup).getDescription());
 					}
 					else{
-						spellBook.goInGroup();
-						final Object spellOrGroup2=spellBook.getCurrentSpellOrGroup();
-						player.sendMessage(ChatColor.BLUE+((spellOrGroup2 instanceof Spell?((Spell)spellOrGroup2).getName():((SpellGroup)spellOrGroup2).getName())+" selected"));
+						player.sendMessage("You must have a spell selected to be able to use spellinfo with no argument!");
 					}
 				}
+				else sender.sendMessage("You cannot use spellinfo from the commandline without giving a spell as an argument!");
+				return true;
 			}
-			else{
-				sender.sendMessage("The console can't go into groups! That wouldn't make sense!");
-			}
-			return true;
-		}
-		else if(command.getName().equalsIgnoreCase("goout")){
-			if(sender instanceof Player){
-				final Player player=(Player)sender;
-				if(args.length==0){
-					final SpellBook spellBook=spellBooks.get(player);
-					if(spellBook.hasParentGroup()){
-						spellBook.goOutOfGroup();
-						final Object spellOrGroup=spellBook.getCurrentSpellOrGroup();
-						player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
-					}
-					else{
-						player.sendMessage("You can't go out of your current group, because you are in the highest group in the hierarchy!");
-					}
-				}
-			}
-			else{
-				sender.sendMessage("The console can't go out of groups! That wouldn't make sense!");
-			}
-			return true;
-		}
-		else if(command.getName().equalsIgnoreCase("nextspell")){
-			if(sender instanceof Player){
-				final Player player=(Player)sender;
-				final SpellBook spellBook=spellBooks.get(player);
-				spellBook.next();
-				sendPlayerCurrentSpellOrGroup(player);
-			}
-			else{
-				sender.sendMessage("The console can't go to the next spell! That wouldn't make sense!");
-			}
-			return true;
-		}
-		else if(command.getName().equalsIgnoreCase("currentlyselected")){
-			if(sender instanceof Player){
-				final Player player=(Player)sender;
-				sendPlayerCurrentSpellOrGroup(player);
-			}
-			else{
-				sender.sendMessage("The console can't have a spell or spell group selected! That wouldn't make sense!");
-			}
-			return true;
-		}
-		else if(command.getName().equalsIgnoreCase("selectspell")){
-			if(sender instanceof Player){
-				final Player player=(Player)sender;
-				if(args.length>0){
-					Spell spell=spells.getSpell(args[0]);
-					if(spell==null){
-						player.sendMessage("That is not a valid spell!");
-					}
-					else{
+			else if(name.equalsIgnoreCase("cast")){
+				if(sender instanceof Player){
+					final Player player=(Player)sender;
+					if(args.length==0){
 						final SpellBook spellBook=spellBooks.get(player);
-						final SpellGroup group=spells.getGroup(spell);
-						spellBook.setGroup(group, group.indexOf(spell));
-						sendPlayerCurrentSpellOrGroup(player);
+						Object spellOrGroup=spellBook.getCurrentSpellOrGroup();
+						if(player.getItemInHand().getType().equals(Material.GOLD_HOE)){
+							if(spellOrGroup instanceof Spell){
+								Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent((Spell)spellOrGroup,player));
+							}
+							else{
+								player.sendMessage("You can't use cast unless you provide a spellname as an argument or you have a spell selected.");
+							}
+						}
+						else{
+							player.sendMessage("You must create a scepter to be able to cast spells!");
+						}
+					}
+					else{
+						Spell spell=spells.getSpell(args[0]);
+						if(spell!=null){
+							Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
+						}
+						else{
+							player.sendMessage("That spell doesn't exist!");
+						}
 					}
 				}
-				else{
-					player.sendMessage("You must provide a spell that you'd like to select.");
+				else sender.sendMessage("The console can't cast spells! That wouldn't make sense!");
+				return true;
+			}
+			else if(name.equalsIgnoreCase("in")){
+				if(sender instanceof Player){
+					final Player player=(Player)sender;
+					if(args.length==0){
+						final SpellBook spellBook=spellBooks.get(player);
+						Object spellOrGroup=spellBook.getCurrentSpellOrGroup();
+						if(spellOrGroup instanceof Spell){
+							player.sendMessage("You can't go into a spell! You need to select a spellgroup first.");
+						}
+						else{
+							spellBook.goInGroup();
+							final Object spellOrGroup2=spellBook.getCurrentSpellOrGroup();
+							player.sendMessage(ChatColor.BLUE+((spellOrGroup2 instanceof Spell?((Spell)spellOrGroup2).getName():((SpellGroup)spellOrGroup2).getName())+" selected"));
+						}
+					}
 				}
+				else sender.sendMessage("The console can't go into groups! That wouldn't make sense!");
+				return true;
+			}
+			else if(name.equalsIgnoreCase("out")){
+				if(sender instanceof Player){
+					final Player player=(Player)sender;
+					if(args.length==0){
+						final SpellBook spellBook=spellBooks.get(player);
+						if(spellBook.hasParentGroup()){
+							spellBook.goOutOfGroup();
+							final Object spellOrGroup=spellBook.getCurrentSpellOrGroup();
+							player.sendMessage(ChatColor.BLUE+((spellOrGroup instanceof Spell?((Spell)spellOrGroup).getName():((SpellGroup)spellOrGroup).getName())+" selected"));
+						}
+						else{
+							player.sendMessage("You can't go out of your current group, because you are in the highest group in the hierarchy!");
+						}
+					}
+				}
+				else sender.sendMessage("The console can't go out of groups! That wouldn't make sense!");
+			}
+			else if(name.equalsIgnoreCase("next")){
+				if(sender instanceof Player){
+					final Player player=(Player)sender;
+					final SpellBook spellBook=spellBooks.get(player);
+					spellBook.next();
+					sendPlayerCurrentSpellOrGroup(player);
+				}
+				else sender.sendMessage("The console can't go to the next spell! That wouldn't make sense!");
+			}
+			else if(name.equalsIgnoreCase("prev")||command.getName().equalsIgnoreCase("previous")){
+				if(sender instanceof Player){
+					final Player player=(Player)sender;
+					final SpellBook spellBook=spellBooks.get(player);
+					spellBook.next();
+					sendPlayerCurrentSpellOrGroup(player);
+				}
+				else sender.sendMessage("The console can't go to the previous spell! That wouldn't make sense!");
+			}
+			else if(name.equalsIgnoreCase("current")){
+				if(sender instanceof Player){
+					final Player player=(Player)sender;
+					sendPlayerCurrentSpellOrGroup(player);
+				}
+				else sender.sendMessage("The console can't have a spell or spell group selected! That wouldn't make sense!");
+			}
+			else if(name.equalsIgnoreCase("selectspell")){
+				if(sender instanceof Player){
+					final Player player=(Player)sender;
+					if(args.length>0){
+						Spell spell=spells.getSpell(args[0]);
+						if(spell==null){
+							player.sendMessage("That is not a valid spell!");
+						}
+						else{
+							final SpellBook spellBook=spellBooks.get(player);
+							final SpellGroup group=spells.getGroup(spell);
+							spellBook.setGroup(group, group.indexOf(spell));
+							sendPlayerCurrentSpellOrGroup(player);
+						}
+					}
+					else player.sendMessage("You must provide a spell that you'd like to select.");
+				}
+				else sender.sendMessage("The console can't have a spell or spell group selected! That wouldn't make sense!");
 			}
 			else{
-				sender.sendMessage("The console can't have a spell or spell group selected! That wouldn't make sense!");
+				sender.sendMessage("Spells Help - These commands are not case sensitive:");
+				sender.sendMessage("/Spells cast [spellname] - Casts the currently selected spell or the spell provided as an argument. ");
+				sender.sendMessage("/Spells current - Displays the name of the currently selected spell and its description.");
+				sender.sendMessage("/Spells in - Goes into the currently selected spellgroup.");
+				sender.sendMessage("/Spells info [spellname] - Displays information about the currently selected spell or the spell provided as an argument.");
+				sender.sendMessage("/Spells next - Selects the next spell. Equivalent to right clicking with a scepter.");
+				sender.sendMessage("/Spells out - Selects the spellgroup you are currently within.");
+				sender.sendMessage("/Spells prev[ious] - selects the previous spell.");
+				sender.sendMessage("/Spells selectspell spellname - selects the spell provided as an argument");
+				sender.sendMessage("For more information, see our wiki at https://github.com/Hypersonic/Spells-2/wiki");
 			}
 			return true;
 		}
@@ -201,14 +213,13 @@ public final class Spells extends JavaPlugin implements Listener{
 			return;
 		}
 		loadSpells(spelldir);
-		spells.print();//this is just for debugging
+		//spells.print(); this is just for debugging
 		if(spells==null||spells.size()==0){
 			log.warning("No Spells Loaded!");
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
 		for(Spell spell:spells){
-			//log.info(spell.getName());
 			getServer().getPluginManager().registerEvents(spell, this);
 		}
 		Scheduler.start(this);
@@ -218,7 +229,7 @@ public final class Spells extends JavaPlugin implements Listener{
 		}
 		getServer().getPluginManager().registerEvents(this, this);
 		changeGoldHoeCraftingRecipe(false);
-		log.info("Spells 2.0 enabled");
+		log.info("Spells 2.0 Enabled");
 	}
 	private static final void changeGoldHoeCraftingRecipe(boolean normal) {
 		LinkedList<Recipe> recipes=new LinkedList<Recipe>();
@@ -358,10 +369,13 @@ public final class Spells extends JavaPlugin implements Listener{
 		final Player player=e.getPlayer();
 		final SpellBook spellBook=spellBooks.get(player);
 		if(!spell.checkRequirements(e.getPlayer())){
+			player.sendMessage(ChatColor.RED+"You cannot cast "+spell.getName()+", because you do not meet the requirements.");
+			player.sendMessage(ChatColor.RED+spell.getRequirements());
 			e.setCancelled(true);
 			return;
 		}
 		else if(spellBook.hasCooldown(spell)){
+			player.sendMessage(ChatColor.RED+"You cannot cast, because theis spell has a cooldown of "+(spell.getCooldown()/20.0)+"seconds.");
 			e.setCancelled(false);
 			return;
 		}

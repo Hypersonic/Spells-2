@@ -15,6 +15,9 @@ final class SpellBook {
 	public void next(){
 		current=current+1<currentGroup.groupAndSpellSize()?current+1:0;
 	}
+	public void previous(){
+		current=current-1<0?currentGroup.groupAndSpellSize():current-1;
+	}
 	public Object getCurrentSpellOrGroup() {
 		return currentGroup.get(current);
 	}
