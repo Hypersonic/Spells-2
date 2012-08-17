@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +23,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.PluginClassLoader;
 
@@ -32,6 +37,7 @@ public final class Spells extends JavaPlugin implements Listener{
 		Bukkit.getServer().getScheduler().cancelTasks(this);
 		Scheduler.stop(this);
 		spells=null;
+		changeGoldHoeCraftingRecipe(true);
 		log.info("Spells 2.0 Disabled");
 	}
 	@Override
@@ -211,7 +217,42 @@ public final class Spells extends JavaPlugin implements Listener{
 			spellBooks.put(players[i], new SpellBook(spells));
 		}
 		getServer().getPluginManager().registerEvents(this, this);
+		changeGoldHoeCraftingRecipe(false);
 		log.info("Spells 2.0 enabled");
+	}
+	private static final void changeGoldHoeCraftingRecipe(boolean normal) {
+		LinkedList<Recipe> recipes=new LinkedList<Recipe>();
+		Iterator<Recipe> iterator=Bukkit.getServer().recipeIterator();
+		while(iterator.hasNext()){
+			Recipe recipe=iterator.next();
+			if(recipe.getResult().getType()!=Material.GOLD_HOE)recipes.add(recipe);
+		}
+		Bukkit.getServer().clearRecipes();
+		for(Recipe recipe:recipes){
+			Bukkit.getServer().addRecipe(recipe);
+		}
+		ShapedRecipe goldHoe=new ShapedRecipe(new ItemStack(Material.GOLD_HOE));
+		if(normal){
+			goldHoe.shape("GGE","ESE","ESE");
+			goldHoe.setIngredient('G', Material.GOLD_INGOT);
+		}
+		else{
+			goldHoe.shape("ESG","ESS","SEE");
+			goldHoe.setIngredient('G', Material.GOLD_BLOCK);
+		}
+		goldHoe.setIngredient('S', Material.STICK);
+		Bukkit.getServer().addRecipe(goldHoe);
+		ShapedRecipe goldHoe2=new ShapedRecipe(new ItemStack(Material.GOLD_HOE));
+		if(normal){
+			goldHoe2.shape("GSE","SSE","EES");
+			goldHoe2.setIngredient('G', Material.GOLD_INGOT);
+		}
+		else{
+			goldHoe2.shape("EGG","ESE","ESE");
+			goldHoe2.setIngredient('G', Material.GOLD_BLOCK);
+		}
+		goldHoe2.setIngredient('S', Material.STICK);
+		Bukkit.getServer().addRecipe(goldHoe2);
 	}
 	private void loadSpells(File spelldir){
 		final ArrayList<Spell> loadedSpells=new ArrayList<Spell>();
@@ -231,7 +272,9 @@ public final class Spells extends JavaPlugin implements Listener{
 						Class<? extends SpellSet> s=clazz.asSubclass(SpellSet.class);
 						loadedSpells.addAll(s.newInstance().getSpells());
 					}
-				} catch (Throwable t) {}
+				} catch (Throwable t) {
+					log.log(Level.WARNING, f.getName()+" not loaded, because of an error. "+t.getLocalizedMessage());
+				}
 			}
 			else if(f.getName().endsWith(".jar")){
 				try{
@@ -246,7 +289,7 @@ public final class Spells extends JavaPlugin implements Listener{
 						loadedSpells.addAll(s.newInstance().getSpells());
 					}
 				} catch(Throwable t){
-					t.printStackTrace();
+					log.log(Level.WARNING, f.getName()+" not loaded, because of an error. "+t.getLocalizedMessage());
 				}
 			}
 			else if(f.isDirectory())loadSpells(f);

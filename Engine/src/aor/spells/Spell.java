@@ -22,6 +22,11 @@ public abstract class Spell implements Listener {
 	 */
 	public abstract void cast(Player player);
 	/**
+	 * Every Spell must override this method. It returns a string to be sent to the player displaying all of the requirements of a spell.
+	 * @return the requirements
+	 */
+	public abstract String getRequirements();
+	/**
 	 * This method does not need to be overriden, but it is probably a good idea to override this method. This method returns the group the spell will be placed in by Spells. The syntax for spell groups is groupname1.groupname2...groupnamen. For more information about spell groups, see the wiki at google.com.
 	 * @return String - the name of the spellgroup you would like the spell to be placed in.
 	 */
@@ -41,5 +46,13 @@ public abstract class Spell implements Listener {
 	public void run(Object... args){}
 	public int getCooldown(){
 		return 0;
+	}
+	protected Method getMethod(String name,Class<?>... argClasses){
+		try{
+			return getClass().getMethod(name,argClasses);
+		}
+		catch(Exception e){
+			throw new RuntimeException("Spell "+getName()+" doesn't have a method called "+name+"!");
+		}
 	}
 }

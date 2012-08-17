@@ -1,7 +1,6 @@
 import static aor.spells.SpellUtils.inInventory;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -15,38 +14,30 @@ import aor.spells.Spell;
 
 public class Tornado extends Spell {
 
-    private Method cast; // We're doing this through recursion, bitches.
-    
+    private final Method cast=getMethod("cast"); // We're doing this through recursion, bitches.
+    private static final ItemStack[] reqs={new ItemStack(Material.REDSTONE, 4), new ItemStack(Material.GHAST_TEAR, 2)};
     //private static final double DILUTEAMOUNT = 10.0;
     private static final double MAGNITUDE = 0.5;
     private static final double RADIUS = 10;
-    public Tornado() {
-        try {
-			cast=Tornado.class.getMethod("cast", Player.class);
-		} catch (Exception e) {}
-    }
+    public Tornado() {}
     public String getName() {
         return "Tornado";
     }
     
     public String getDescription() {
-        return "A powerful tornado is summoned around the caster. It whips up mobs, blocks, and even other players in its tremendous power";
+        return "A powerful tornado is summoned around the caster. It whips up mobs, blocks, and even other players in its tremendous power.";
     }
 
     @Override
     public boolean checkRequirements(Player player) {
-        return inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 4),
-            new ItemStack(Material.GHAST_TEAR, 2)
-        }));
+    	if(inInventory(player,reqs))return true;
+    	player.sendMessage("You need 4 redstone and 2 ghast tears to be able to cast this spell.");
+    	return false;
     }
 
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 4),
-            new ItemStack(Material.GHAST_TEAR, 2)
-        });
+        player.getInventory().removeItem(reqs);
     }
 
     public void cast(Player player) {

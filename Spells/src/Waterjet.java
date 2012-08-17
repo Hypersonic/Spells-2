@@ -1,7 +1,6 @@
 import static aor.spells.SpellUtils.inInventory;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -19,14 +18,10 @@ import aor.spells.Spell;
  * Creates a line of water in the direction that the player is looking at for a few seconds
  */
 public class Waterjet extends Spell {
-
+	private final Method douse=getMethod("douse",Player.class);
+	private static final ItemStack[] reqs={new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.WATER_BUCKET, 1)};
 	private static final int MAXDISTANCE = 16;
-    private Method douse;
-	public Waterjet(){
-		try {
-			douse = Waterjet.class.getMethod("douse", Player.class);
-		} catch (Exception e) {}
-	}
+	public Waterjet(){}
 	
     @Override
 	public String getName() {
@@ -35,30 +30,25 @@ public class Waterjet extends Spell {
 	
 	@Override
 	public String getDescription() {
-		return "Creates a line of water in the direction that the player is looking at for a few seconds";
+		return "Creates a line of water in the direction that the player is looking at for a few seconds.";
 	}
 	
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 4),
-            new ItemStack(Material.WATER_BUCKET, 1)
-        });
+        player.getInventory().removeItem(reqs);
     }
     @Override
 	public boolean checkRequirements(Player player){
-
-        if ( !inInventory(player,Arrays.asList(new ItemStack[]{
-            new ItemStack(Material.REDSTONE, 4),
-            new ItemStack(Material.WATER_BUCKET, 1)
-        }))) { return false; }
+        if (!inInventory(player,reqs)){
+        	player.sendMessage("You need 4 redstone and a bucket of water to cast this spell. You may not be in the nether.");
+        	return false;
+        }
         
         if (player.getWorld().getEnvironment() == Environment.NETHER) {
-            player.sendMessage("You may not cast this spell in the Nether!");
+        	player.sendMessage("You need 4 redstone and a bucket of water to cast this spell. You may not be in the nether.");
             return false;
-        } else {
-            return true;
         }
+        return true;
 	}
 	
     @Override
