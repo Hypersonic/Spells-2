@@ -35,7 +35,6 @@ public class Tornado extends Spell {
     @Override
     public boolean checkRequirements(Player player) {
     	if(inInventory(player,reqs))return true;
-    	player.sendMessage("You need 4 redstone and 2 ghast tears to be able to cast this spell.");
     	return false;
     }
 

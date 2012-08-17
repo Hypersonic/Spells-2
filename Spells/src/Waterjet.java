@@ -34,7 +34,7 @@ public class Waterjet extends Spell {
 	}
     @Override
     public String getRequirements() {
-        return "You need: 1 Bucket of Water and 4 Redstone Dust.";
+        return "You need: 1 Bucket of Water and 4 Redstone Dust. You may not be in The Nether.";
     }
 	
     @Override
@@ -44,12 +44,10 @@ public class Waterjet extends Spell {
     @Override
 	public boolean checkRequirements(Player player){
         if (!inInventory(player,reqs)){
-        	player.sendMessage("You need 4 redstone and a bucket of water to cast this spell. You may not be in the nether.");
         	return false;
         }
         
         if (player.getWorld().getEnvironment() == Environment.NETHER) {
-        	player.sendMessage("You need 4 redstone and a bucket of water to cast this spell. You may not be in the nether.");
             return false;
         }
         return true;
