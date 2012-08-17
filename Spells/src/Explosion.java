@@ -21,7 +21,7 @@ public class Explosion extends Spell {
 	}
 	@Override
 	public String getGroup(){
-		return "test.test2";
+		return "";
 	}
 	@Override
 	public String getDescription() {
