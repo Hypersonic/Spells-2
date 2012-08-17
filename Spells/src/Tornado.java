@@ -32,6 +32,10 @@ public class Tornado extends Spell {
     public String getDescription() {
         return "A powerful tornado is summoned around the caster. It whips up mobs, blocks, and even other players in its tremendous power";
     }
+    @Override
+    public String getRequirements() {
+        return "You need: 2 Ghast Tears and 4 Redstone Dust.";
+    }
 
     @Override
     public boolean checkRequirements(Player player) {

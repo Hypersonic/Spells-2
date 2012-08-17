@@ -32,6 +32,10 @@ public class Petrify extends Spell {
 	public String getDescription() {
 		return "Causes mobs around the player to turn into sand blocks.";
 	}
+    @Override
+    public String getRequirements() {
+        return "You need: 8 Redstone Dust.";
+    }
     
     @Override
     public boolean checkRequirements(Player player) {

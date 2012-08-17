@@ -37,6 +37,10 @@ public class Waterjet extends Spell {
 	public String getDescription() {
 		return "Creates a line of water in the direction that the player is looking at for a few seconds";
 	}
+    @Override
+    public String getRequirements() {
+        return "You need: 1 Bucket of Water and 4 Redstone Dust.";
+    }
 	
     @Override
     public void removeRequirements(Player player) {

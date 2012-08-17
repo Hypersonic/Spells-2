@@ -31,6 +31,10 @@ public class GiveMeATree extends Spell {
 	public String getDescription() {
 		return "Grows a tree where the player is pointing";
 	}
+    @Override
+    public String getRequirements() {
+        return "You need: 1 Sapling and 2 Redstone Dust.";
+    }
 	@Override
 	public boolean checkRequirements(Player player){
 		if ( !inInventory(player,Arrays.asList(new ItemStack[]{

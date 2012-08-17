@@ -27,6 +27,12 @@ public class Cakeify extends Spell {
 	public String getDescription() {
 		return "Creates a cake where the player is looking at (YUM!)";
 	}
+    
+    @Override
+    public String getRequirements() {
+        return "You need: 3 Wheat, 2 Sugar, 1 Bucket of Milk, 1 Egg, and 4 Redstone Dust.";
+    }
+
 	@Override
 	public boolean checkRequirements(Player player){
 

@@ -27,6 +27,10 @@ public class Invisibility extends Spell {
 		public String getDescription() {
 			return "Makes you temporarily invisible to other players";
 		}
+        @Override
+        public String getRequirements() {
+            return "Nobody even knows what the hell you need, it won't work.";
+        }
 		@Override
 		public void cast(Player player) {
 			for (Player players : Bukkit.getOnlinePlayers()){

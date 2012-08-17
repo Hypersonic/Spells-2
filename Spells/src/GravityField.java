@@ -38,6 +38,10 @@ public class GravityField extends Spell {
     }
 
     @Override
+    public String getRequirements() {
+        return "You need: 16 Ender Pearls and 16 Redstone Dust.";
+    }
+    @Override
     public boolean checkRequirements(Player player) {
         return inInventory(player,Arrays.asList(new ItemStack[]{
             new ItemStack(Material.REDSTONE, 16),

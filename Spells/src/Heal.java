@@ -31,6 +31,10 @@ public class Heal extends Spell {
 	public String getDescription() {
 		return "Gives 3 seconds of powerful regeneration to target player.";
 	}
+    @Override
+    public String getRequirements() {
+        return "You need: 1 Glowstone Dust and 4 Redstone Dust.";
+    }
 	@Override
 	public boolean checkRequirements(Player player){
         

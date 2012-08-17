@@ -30,6 +30,10 @@ public class Decoy extends Spell {
         return "Spawns a decoy mob that draws the attention of nearby mobs.";
     }
     @Override
+    public String getRequirements() {
+        return "You need: 2 Leather and 2 Redstone Dust.";
+    }
+    @Override
     public boolean checkRequirements(Player player) {
         return inInventory(player,Arrays.asList(new ItemStack[]{new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2) }));
     }

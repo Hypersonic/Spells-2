@@ -28,6 +28,10 @@ public class ExampleSpellSet extends SpellSet{
 		public String getDescription() {
 			return "";
 		}
+        @Override
+        public String getRequirements() {
+            return "You need: 1 Bone.";
+        }
 		@Override
 		public void cast(Player player) {
 			schedule(10000, sendMessage, player);

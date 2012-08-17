@@ -28,6 +28,10 @@ public class Explosion extends Spell {
 	public String getDescription() {
 		return "Creates an explosion at the block the player is looking at";
 	}
+    @Override
+    public String getRequirements() {
+        return "You need: 2 Sulphur, 10 Sand, and 8 Redstone Dust.";
+    }
 	@Override
 	public boolean checkRequirements(Player player){
         if (!inInventory(player,itemreqs)){

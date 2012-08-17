@@ -42,6 +42,10 @@ public class Flamethrower extends Spell {
 	}
 	
     @Override
+    public String getRequirements() {
+        return "You need: 2 Blaze Powder and 4 Redstone Dust.";
+    }
+    @Override
 	public boolean checkRequirements(Player player){
 		return inInventory(player,Arrays.asList(new ItemStack[]{
                 new ItemStack(Material.REDSTONE, 4),

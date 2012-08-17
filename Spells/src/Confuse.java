@@ -44,6 +44,10 @@ public class Confuse extends Spell {
 	public String getDescription() {
 		return "Target player begins to hallucinate for 20 seconds.";
 	}
+    @Override
+    public String getRequirements() {
+        return "You need: 1 Eye of Ender, 2 Spider Eyes, and 4 Redstone Dust.";
+    }
 	@Override
 	public boolean checkRequirements(Player player){
         if( !inInventory(player,Arrays.asList(new ItemStack[]{
