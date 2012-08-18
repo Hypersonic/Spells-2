@@ -36,7 +36,6 @@ public class Explosion extends Spell {
         if (!inInventory(player,new ItemStack(Material.REDSTONE, 8),new ItemStack(Material.SULPHUR, 2),new ItemStack(Material.SAND, 10))){
             return false;
         }
-
         if (player.getTargetBlock(null, MAXDISTANCE).getType().equals(Material.AIR)){
 			player.sendMessage("Could not cast, you're not pointing at anything!");
 			return false;
