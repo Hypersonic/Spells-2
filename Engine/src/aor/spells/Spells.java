@@ -58,11 +58,9 @@ public final class Spells extends JavaPlugin implements Listener{
 			}
 			if(name.equalsIgnoreCase("info")){
 				if(args.length!=0){
-					Spell spell=spells.getSpell(args[0]);
+					Spell spell=spells.getSpell(combine(args));
 					if(spell!=null){
-						if(spell.getDescription()==null){
-							sender.sendMessage(spell.getName()+" doesn't have a description!");
-						}
+						if(spell.getDescription()==null)sender.sendMessage(spell.getName()+" doesn't have a description!");
 						else sender.sendMessage(spell.getDescription());
 					}
 					else sender.sendMessage(args[0]+" isn't a valid spell! Please try again!");
@@ -101,7 +99,7 @@ public final class Spells extends JavaPlugin implements Listener{
 						}
 					}
 					else{
-						Spell spell=spells.getSpell(args[0]);
+						Spell spell=spells.getSpell(combine(args));
 						if(spell!=null){
 							if(!player.isPermissionSet("spells."+spell.getGroup()+"."+spell.getName())||player.hasPermission("spells."+spell.getGroup()+"."+spell.getName()))Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
 							else player.sendMessage("You do not have the required permissions to use this spell!");
@@ -150,10 +148,7 @@ public final class Spells extends JavaPlugin implements Listener{
 			}
 			else if(name.equalsIgnoreCase("next")){
 				if(sender instanceof Player){
-					final Player player=(Player)sender;
-					final SpellBook spellBook=spellBooks.get(player);
-					spellBook.next();
-					sendPlayerCurrentSpellOrGroup(player);
+					next((Player)sender);
 				}
 				else sender.sendMessage("The console can't go to the next spell! That wouldn't make sense!");
 			}
@@ -177,7 +172,7 @@ public final class Spells extends JavaPlugin implements Listener{
 				if(sender instanceof Player){
 					final Player player=(Player)sender;
 					if(args.length>0){
-						Spell spell=spells.getSpell(args[0]);
+						Spell spell=spells.getSpell(combine(args));
 						if(spell==null){
 							player.sendMessage("That is not a valid spell!");
 						}
@@ -211,6 +206,14 @@ public final class Spells extends JavaPlugin implements Listener{
 			return true;
 		}
 		return false;
+	}
+	private void next(final Player player){
+		final SpellBook spellBook=spellBooks.get(player);
+		spellBook.next();
+		sendPlayerCurrentSpellOrGroup(player);
+	}
+	private String combine(String[] args){
+		return Arrays.asList(args).toString().replace("[", "").replace(",", "").replace("]", "");
 	}
 	public void onEnable() {
 		final File spelldir=new File("plugins/spells/");
@@ -345,8 +348,7 @@ public final class Spells extends JavaPlugin implements Listener{
 			else if(f.isDirectory())loadSpells(f);
 		}
 		for(Spell spell:loadedSpells){
-			if(spell.getName().contains(" "))log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because its name contains a space.");
-			else if(spell.getName()==null)log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because names cannot be null.");
+			if(spell.getName()==null)log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because names cannot be null.");
 			else if(spell.getName()==null)log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because names cannot be empty.");
 			else if(spells.getSpell(spell.getName())==null)spells.place(spell,spell.getGroup());
 			else log.log(Level.WARNING, spell.getName()+" could not be loaded, because a spell with the same name was already loaded.");
