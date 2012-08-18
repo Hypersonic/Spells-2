@@ -411,7 +411,7 @@ public final class Spells extends JavaPlugin implements Listener{
 		final Player player=e.getPlayer();
 		final SpellBook spellBook=spellBooks.get(player);
 		if(!spell.checkRequirements(e.getPlayer())){
-			player.sendMessage(ChatColor.RED+"You cannot cast "+spell.getName().replaceAll("_"," ")+", because you do not meet the requirements.");
+			player.sendMessage(ChatColor.RED+"You cannot cast "+spell.getName()+", because you do not meet the requirements.");
 			player.sendMessage(ChatColor.RED+spell.getRequirements());
 			e.setCancelled(true);
 			return;
