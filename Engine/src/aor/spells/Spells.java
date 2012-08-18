@@ -1,14 +1,26 @@
 package aor.spells;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -221,7 +233,33 @@ public final class Spells extends JavaPlugin implements Listener{
 		//spells.print(); this is just for debugging
 		if(spells==null||spells.size()==0){
 			log.warning("No Spells Loaded!");
-			Bukkit.getServer().getPluginManager().disablePlugin(this);
+			log.info("Spells is attempting to download the default spells. You can always delete ones you don't want and add news ones.");
+			try {
+				ReadableByteChannel c=Channels.newChannel(new URL("https://dl.dropbox.com/u/36992498/Spells.zip").openStream());
+				FileOutputStream fos=new FileOutputStream("plugins/spells/Spells.zip");
+				fos.getChannel().transferFrom(c, 0, Long.MAX_VALUE);
+				fos.close();
+				ZipInputStream zis=new ZipInputStream(new BufferedInputStream(new FileInputStream("plugins/spells/Spells.zip"),2048));
+				ZipEntry entry;
+				while((entry=zis.getNextEntry())!=null){
+					byte[] data=new byte[2048];
+					BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream("plugins/spells/"+entry.getName()),2048);
+					int amount;
+					while((amount=zis.read(data, 0, 2048))!=-1){
+						bos.write(data,0,amount);
+					}
+					bos.flush();
+					bos.close();
+				}
+				zis.close();
+				new File("plugins/spells/Spells.zip").delete();
+			} catch (Exception e) {
+				log.warning("Spells was unable to download the spells, because of the following error:\n");
+				e.printStackTrace();
+				Bukkit.getServer().getPluginManager().disablePlugin(this);
+			}
+			loadSpells(spelldir);
+			if(spells==null||spells.size()==0)Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
 		for(Spell spell:spells){
