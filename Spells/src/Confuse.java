@@ -17,7 +17,7 @@ import aor.spells.Spell;
  */
 public class Confuse extends Spell {
 
-    private final Method harass=getMethod("harass");
+    private final Method harass=getMethod("harass",Player.class);
     private final Method removeFake=getMethod("removeFake");
 	
     public Confuse(){}

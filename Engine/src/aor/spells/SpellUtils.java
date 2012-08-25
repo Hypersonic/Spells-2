@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -73,5 +74,12 @@ public final class SpellUtils {
 			}
 		}
 		return bestEntity;
+	}
+	public static boolean flavorText(Player player,String text){
+		if(Spells.flavorTextEnabled()){
+			player.sendMessage(ChatColor.GRAY+text);
+			return true;
+		}
+		return false;
 	}
 }

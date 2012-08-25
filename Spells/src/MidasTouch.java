@@ -120,7 +120,7 @@ public class MidasTouch extends Spell{
 	}
 	@Override
 	public String getName() {
-		return "Midas'_Touch";
+		return "Midas' Touch";
 	}
 	@Override
 	public String getDescription() {

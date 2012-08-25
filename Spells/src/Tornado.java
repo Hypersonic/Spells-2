@@ -13,7 +13,7 @@ import aor.spells.Spell;
 
 
 public class Tornado extends Spell {
-    private final Method cast=getMethod("cast"); // We're doing this through recursion, bitches.
+    private final Method cast=getMethod("cast",Player.class); // We're doing this through recursion, bitches.
     //private static final double DILUTEAMOUNT = 10.0;
     private static final double MAGNITUDE = 0.5;
     private static final double RADIUS = 10;
