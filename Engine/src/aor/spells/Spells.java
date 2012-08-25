@@ -363,7 +363,7 @@ public final class Spells extends JavaPlugin implements Listener{
 			}
 			if(name.equalsIgnoreCase("info")){
 				if(args.length!=0){
-					Spell spell=spells.getSpell(args[0]);
+					Spell spell=spells.getSpell(combine(args));
 					if(spell!=null){
 						if(spell.getDescription()==null){
 							sender.sendMessage(spell.getName()+" doesn't have a description!");
@@ -404,7 +404,7 @@ public final class Spells extends JavaPlugin implements Listener{
 						}
 					}
 					else{
-						Spell spell=spells.getSpell(args[0]);
+						Spell spell=spells.getSpell(combine(args));
 						if(spell!=null){
 							if(!player.isPermissionSet("spells."+spell.getGroup()+"."+spell.getName())||player.hasPermission("spells."+spell.getGroup()+"."+spell.getName()))Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
 							else player.sendMessage("You do not have the required permissions to use this spell!");
@@ -480,7 +480,7 @@ public final class Spells extends JavaPlugin implements Listener{
 				if(sender instanceof Player){
 					final Player player=(Player)sender;
 					if(args.length>0){
-						Spell spell=spells.getSpell(args[0]);
+						Spell spell=spells.getSpell(combine(args));
 						if(spell==null){
 							player.sendMessage("That is not a valid spell!");
 						}
@@ -515,6 +515,14 @@ public final class Spells extends JavaPlugin implements Listener{
 		}
 		return false;
 	}
+	private String combine(String... strings){
+		String result="";
+		for(int i=0;i<strings.length-1;i++){
+			result+=strings[i]+" ";
+		}
+		result+=strings[strings.length-1];
+		return result;
+	}
 	public void castSpell(Player player, Spell spell){
 		if(permissions==0||(permissions==1&&player.isOp())||(permissions==2&&player.hasPermission("spells."+spell.getGroup()+"."+spell.getName())))
 			Bukkit.getServer().getPluginManager().callEvent(new SpellCastEvent(spell,player));
@@ -527,7 +535,7 @@ public final class Spells extends JavaPlugin implements Listener{
 		final Player player=e.getPlayer();
 		final SpellBook spellBook=spellBooks.get(player);
 		if(!spell.checkRequirements(e.getPlayer())){
-			player.sendMessage(ChatColor.RED+"You cannot cast "+spell.getName().replaceAll("_"," ")+", because you do not meet the requirements.");
+			player.sendMessage(ChatColor.RED+"You cannot cast "+spell.getName()+", because you do not meet the requirements.");
 			player.sendMessage(ChatColor.RED+spell.getRequirements());
 			e.setCancelled(true);
 			return;
