@@ -356,6 +356,7 @@ public final class Spells extends JavaPlugin implements Listener{
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label,String[] args) {
 		if(command.getName().equalsIgnoreCase("spells")||command.getName().equalsIgnoreCase("s")){
+			if(sender instanceof Player&&!((Player)sender).hasPermission("spells.commands"))sender.sendMessage("You do not have the required permissions to use spells commands!");
 			String name="help";
 			if(args.length>0){
 				name=args[0];

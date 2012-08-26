@@ -5,6 +5,7 @@ import static java.lang.Math.min;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -21,7 +22,7 @@ public final class SpellUtils {
 		return inInventory(player, Arrays.asList(items));
 	}
 	public static boolean inInventory(Player player, Iterable<ItemStack> items){
-		if(player.getGameMode().equals(GameMode.CREATIVE))return true;
+		if(player.getGameMode().equals(GameMode.CREATIVE)||player.hasPermission("spells.freespells"))return true;
 		PlayerInventory inventory=player.getInventory();
 		Outer:
 		for(ItemStack item:items){
@@ -35,6 +36,10 @@ public final class SpellUtils {
 			return false;
 		}
 		return true;
+	}
+	public static HashMap<Integer,ItemStack> removeFromInventory(Player player, ItemStack... items){
+		if(player.hasPermission("spells.freespells"))return new HashMap<Integer,ItemStack>();
+		return player.getInventory().removeItem(items);
 	}
 	public static Player getPlayerTarget(Player player, boolean needsLineOfSight){
 		Entity result=getTarget(player,100,.5,needsLineOfSight,Arrays.asList(new Class<?>[]{Player.class}));
