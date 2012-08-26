@@ -1,4 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,7 +41,7 @@ public class MidasTouch extends Spell{
 	}
 	@Override
 	public void removeRequirements(Player player){
-		player.getInventory().removeItem(new ItemStack(Material.GOLD_BLOCK,10));
+		removeFromInventory(player,new ItemStack(Material.GOLD_BLOCK,10));
 	}
 	@Override
 	public void cast(Player player){

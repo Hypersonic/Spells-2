@@ -1,4 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,7 +38,7 @@ public class Decoy extends Spell {
     }
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2));
+        removeFromInventory(player,new ItemStack(Material.LEATHER, 2), new ItemStack(Material.REDSTONE, 2));
     }
     @Override
     public void cast(Player player) {

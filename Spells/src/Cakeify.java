@@ -1,4 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -54,7 +55,7 @@ public class Cakeify extends Spell {
 	
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(
+        removeFromInventory(player,
                 new ItemStack(Material.WHEAT, 3),
                 new ItemStack(Material.SUGAR, 2),
                 new ItemStack(Material.MILK_BUCKET, 1),

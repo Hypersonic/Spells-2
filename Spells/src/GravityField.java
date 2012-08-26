@@ -1,4 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -47,7 +48,7 @@ public class GravityField extends Spell {
 
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 16), new ItemStack(Material.ENDER_PEARL, 16));
+        removeFromInventory(player,new ItemStack(Material.REDSTONE, 16), new ItemStack(Material.ENDER_PEARL, 16));
     }
 
     public void AttractEntities(Player player) {

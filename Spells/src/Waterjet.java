@@ -1,4 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -38,7 +39,7 @@ public class Waterjet extends Spell {
 	
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.WATER_BUCKET, 1));
+        removeFromInventory(player,new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.WATER_BUCKET, 1));
     }
     @Override
 	public boolean checkRequirements(Player player){

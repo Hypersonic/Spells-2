@@ -1,5 +1,6 @@
 import static aor.spells.SpellUtils.getPlayerTarget;
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import java.lang.reflect.Method;
 
@@ -49,7 +50,7 @@ public class Confuse extends Spell {
 	}
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.SPIDER_EYE, 2),new ItemStack(Material.EYE_OF_ENDER, 1));
+        removeFromInventory(player,new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.SPIDER_EYE, 2),new ItemStack(Material.EYE_OF_ENDER, 1));
     }
 
     @Override

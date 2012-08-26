@@ -38,7 +38,7 @@ public final class SpellUtils {
 		return true;
 	}
 	public static HashMap<Integer,ItemStack> removeFromInventory(Player player, ItemStack... items){
-		if(player.hasPermission("spells.freespells"))return new HashMap<Integer,ItemStack>();
+		if(player.getGameMode().equals(GameMode.CREATIVE)||player.hasPermission("spells.freespells"))return new HashMap<Integer,ItemStack>();
 		return player.getInventory().removeItem(items);
 	}
 	public static Player getPlayerTarget(Player player, boolean needsLineOfSight){

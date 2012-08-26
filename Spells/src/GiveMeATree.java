@@ -1,4 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import org.bukkit.Material;
 import org.bukkit.TreeType;
@@ -42,7 +43,7 @@ public class GiveMeATree extends Spell {
     }
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 2),new ItemStack(Material.SAPLING, 1));
+        removeFromInventory(player,new ItemStack(Material.REDSTONE, 2),new ItemStack(Material.SAPLING, 1));
     }
 	
 	@Override

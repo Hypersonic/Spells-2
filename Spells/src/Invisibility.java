@@ -1,4 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import java.lang.reflect.Method;
 
@@ -39,7 +40,7 @@ public class Invisibility extends Spell {
 		}
 		@Override
 		public void removeRequirements(Player player) {
-			player.getInventory().removeItem(new ItemStack(Material.BONE, 1));
+			removeFromInventory(player,new ItemStack(Material.BONE, 1));
 		}
 		public void undo(Player player){
 			for (Player players : Bukkit.getOnlinePlayers()) {

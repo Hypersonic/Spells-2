@@ -1,5 +1,6 @@
 import static aor.spells.SpellUtils.getPlayerTarget;
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -45,7 +46,7 @@ public class Heal extends Spell {
 	}
     @Override
     public void removeRequirements(Player player) {
-        player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.GLOWSTONE_DUST, 1));
+        removeFromInventory(player,new ItemStack(Material.REDSTONE, 4),new ItemStack(Material.GLOWSTONE_DUST, 1));
     }
     @Override
     public int getCooldown() {

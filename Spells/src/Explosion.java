@@ -1,4 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -44,7 +45,7 @@ public class Explosion extends Spell {
 	}
     @Override
     public void removeRequirements(Player player) {
-			player.getInventory().removeItem(new ItemStack(Material.REDSTONE, 8),new ItemStack(Material.SULPHUR, 2),new ItemStack(Material.SAND, 10));
+			removeFromInventory(player,new ItemStack(Material.REDSTONE, 8),new ItemStack(Material.SULPHUR, 2),new ItemStack(Material.SAND, 10));
     }
 	@Override
 	public void cast(Player player) {

@@ -1,4 +1,5 @@
 import static aor.spells.SpellUtils.inInventory;
+import static aor.spells.SpellUtils.removeFromInventory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class ExampleSpellSet extends SpellSet{
 		}
 		@Override
 		public void removeRequirements(Player player) {
-			player.getInventory().removeItem(new ItemStack(Material.BONE, 1));
+			removeFromInventory(player,new ItemStack(Material.BONE, 1));
 		}
 		public void sendMessage(Player player){
 			player.sendMessage(""+ChatColor.LIGHT_PURPLE+ChatColor.BOLD+"You cast ExampleSpell 10 seconds ago!");
