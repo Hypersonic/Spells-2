@@ -25,9 +25,7 @@ final class SpellGroup implements Iterable<Spell>{
 	}
 	public int size() {
 		int result=0;
-		if(children!=null)for(SpellGroup child:children){
-			result+=child.size();
-		}
+		if(children!=null)for(SpellGroup child:children)result+=child.size();
 		result+=spells.size();
 		return result;
 	}
@@ -105,7 +103,7 @@ final class SpellGroup implements Iterable<Spell>{
 	}
 	public Spell getSpell(String string) {
 		for(Spell spell:spells){
-			if(spell.getName().equalsIgnoreCase(string))return spell;
+			if(spell.getName().equals(string))return spell;
 		}
 		for(SpellGroup child:children){
 			Spell spell=child.getSpell(string);

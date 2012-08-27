@@ -19,7 +19,7 @@ import aor.spells.Spell;
 public class Confuse extends Spell {
 
     private final Method harass=getMethod("harass",Player.class);
-    private final Method removeFake=getMethod("removeFake");
+    private final Method removeFake=getMethod("removeFake",Player.class,Block.class);
 	
     public Confuse(){}
 

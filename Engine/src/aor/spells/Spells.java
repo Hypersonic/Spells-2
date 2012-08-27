@@ -67,18 +67,18 @@ public final class Spells extends JavaPlugin implements Listener{
 			}
 			catch (Exception e) { //TODO: Make this error more specific in different cases, if they exist
 				if(outputSetting>0)log.log(Level.WARNING,"No spells folder exists and the plugin can't create it, because the directory is write protected.");
+				Bukkit.getServer().getPluginManager().disablePlugin(this);
+				return;
 			}
-			Bukkit.getServer().getPluginManager().disablePlugin(this);
-			return;
 		}
 		loadConfig();
 		loadSpells(spelldir);
 		if(outputSetting>1)spells.print();
-		if(spells==null||spells.size()==0){
+		if(spells.size()==0){
 			log.log(Level.WARNING,"No Spells Loaded!");
 			if(downloadSpells()){
 				loadSpells(spelldir);
-				if(spells==null||spells.size()==0){
+				if(spells.size()==0){
 					Bukkit.getServer().getPluginManager().disablePlugin(this);
 					return;
 				}
@@ -174,9 +174,9 @@ public final class Spells extends JavaPlugin implements Listener{
 			}
 			else if(f.isDirectory())loadSpells(f);
 		}
-		for(Spell spell:loadedSpells){
-			if(spell.getName()==null)if(outputSetting>0){log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because names cannot be null.");}
-			else if(spell.getName()==null)if(outputSetting>0){log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because names cannot be empty.");}
+		for(Spell spell:loadedSpells){ 
+			if(spell.getName()==null){if(outputSetting>0)log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because names cannot be null.");}
+			else if(spell.getName().equals("")){if(outputSetting>0)log.log(Level.WARNING, spell.getName()+" couldn't be loaded, because names cannot be empty.");}
 			else if(spells.getSpell(spell.getName())==null)spells.place(spell,spellGroups?forcedSpellGroups.containsKey(spell.getName())?forcedSpellGroups.get(spell.getName()):spell.getGroup():"");
 			else if(outputSetting>0)log.log(Level.WARNING, spell.getName()+" could not be loaded, because a spell with the same name was already loaded.");
 		}
@@ -211,10 +211,10 @@ public final class Spells extends JavaPlugin implements Listener{
 	}
 	private void loadConfig(){
 		final File spellsdir=new File("plugins/spells/");
-		final File config=new File("plugins/spells/config.properties");
+		final File config=new File("plugins/spells/Spells.properties");
 		if(!spellsdir.exists()||!config.exists()){
 			try{
-				if(!spellsdir.exists())spellsdir.createNewFile();
+				if(!spellsdir.exists())spellsdir.mkdir();
 				config.createNewFile();
 				FileWriter writer=new FileWriter(config,false);
 				writer.write("#Everything in a line after a # is ignored and considered a comment.\n" +
