@@ -42,6 +42,11 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.PluginClassLoader;
 
+/**
+ * The main plugin class! Spells really shouldn't do anything with this, except perhaps using the Logger (log)
+ * @author Jay
+ *
+ */
 public final class Spells extends JavaPlugin implements Listener{
 	public static final Logger log = Logger.getLogger("Minecraft");
 	private HashMap<Player,SpellBook> spellBooks=new HashMap<Player,SpellBook>();
@@ -184,7 +189,7 @@ public final class Spells extends JavaPlugin implements Listener{
 	private boolean downloadSpells(){
 		if(outputSetting>0)log.log(Level.INFO,"Spells is attempting to download the default spells. You can always delete ones you don't want and add news ones.");
 		try {
-			ReadableByteChannel c=Channels.newChannel(new URL("https://dl.dropbox.com/u/36992498/Spells.zip").openStream());
+			ReadableByteChannel c=Channels.newChannel(new URL("https://github.com/downloads/Hypersonic/Spells-2/Spells.zip").openStream());
 			FileOutputStream fos=new FileOutputStream("plugins/spells/Spells.zip");
 			fos.getChannel().transferFrom(c, 0, Long.MAX_VALUE);
 			fos.close();
@@ -356,7 +361,7 @@ public final class Spells extends JavaPlugin implements Listener{
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label,String[] args) {
 		if(command.getName().equalsIgnoreCase("spells")||command.getName().equalsIgnoreCase("s")){
-			if(sender instanceof Player&&!((Player)sender).hasPermission("spells.commands"))sender.sendMessage("You do not have the required permissions to use spells commands!");
+			if(sender instanceof Player&&(permissions==1&&!(((Player)sender).isOp())||(permissions==2&&!((Player)sender).hasPermission("spells.commands"))))sender.sendMessage("You do not have the required permissions to use spells commands!");
 			String name="help";
 			if(args.length>0){
 				name=args[0];

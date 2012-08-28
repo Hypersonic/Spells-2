@@ -3,6 +3,9 @@ package aor.spells;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+/**
+ * @author Jay
+ */
 final class SpellBook {
 	private static Method getMethod(){try{return SpellBook.class.getMethod("removeCooldown", Spell.class);}catch(Throwable t){throw new RuntimeException();}}
 	private static final Method removeCooldown=getMethod();

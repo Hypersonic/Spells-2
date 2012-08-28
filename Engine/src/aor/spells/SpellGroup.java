@@ -6,6 +6,9 @@ import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 
+/**
+ * @author Jay
+ */
 final class SpellGroup implements Iterable<Spell>{
 	private ArrayList<SpellGroup> children=new ArrayList<SpellGroup>();
 	private SpellGroup parent;

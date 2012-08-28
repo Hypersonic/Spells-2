@@ -7,8 +7,19 @@ import java.lang.reflect.Method;
 
 import org.bukkit.Bukkit;
 
+/**
+ * This class controls all scheduling for Spells. Usually  you can just use the methods in Spell for scheduling, but you can schedule stuff directly though this class' schedule method, which allows ou to choose the object for the method to be invoked on.
+ * @author Jay
+ */
 public final class Scheduler{
 	private static final Runner runner=new Scheduler().new Runner();
+	/**
+	 * This method gives you more flexibility in scheduling tasks than the version in Spell. It allows you to have whichever method you like called on any object, instead of just a spell class. See schedule in spell for more information.
+	 * @param ticks - the number of ticks to wait before calling the method.
+	 * @param object - the object to have the method invoked upon.
+	 * @param method - the method to be called after the number of ticks
+	 * @param args - the arguments to be passed to the method.
+	 */
 	public static void schedule(int ticks,Object object,Method method, Object... args){
 		runner.schedule(ticks, object, method, args);
 	}

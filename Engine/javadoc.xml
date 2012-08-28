@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="C:\Users\Jay\Desktop\Minecraft\Test Server\import\bukkit-1.3.2-R0.2-20120825.225250-2.jar" destdir="doc" doctitle="Spells Documentation" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="aor.spells" source="1.6" sourcepath="src" splitindex="true" use="true" version="true">
+            <link href="file:/C:/Users/Jay/Spells-2/Engine/doc/"/>
+        </javadoc>
+    </target>
+</project>
