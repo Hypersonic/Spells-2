@@ -5,6 +5,8 @@
 *.war
 *.ear
 
+# Settings files
+*.properties
 
 # OSX crap
 .DS_Store
